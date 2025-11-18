@@ -2,9 +2,12 @@
 
 int	close_game(t_vars *vars)
 {
+	kill_cam(vars->cam);
 	mlx_destroy_image(vars->mlx, vars->colors->img);
 	mlx_destroy_window(vars->mlx, vars->win);
 	mlx_destroy_display(vars->mlx);
+	free(vars->mlx);
+	free(vars->colors);
 	exit(0);
 	return (0);
 }
@@ -70,9 +73,6 @@ int main()
 
 	int	screendim[2] = {1400,800};
 
-	t_camera	*cam;
-	cam = cam_init(campos, camdir, fov, screendim);
-	dirVector_init(cam);
 
 	t_item	ball;
 
@@ -83,6 +83,8 @@ int main()
 
 	t_vars	vars;
 	init_vars(&vars, screendim);
+	vars.cam = cam_init(campos, camdir, fov, screendim);
+	dirVector_init(vars.cam);
 	vars.colors = init_data(&vars, screendim);
 	double dist;
 	int i = -1;
@@ -91,7 +93,7 @@ int main()
 		int j = -1;
 		while(++j < screendim[0])
 		{
-			dist = hitSp(cam->dirvectors[i][j], ball);
+			dist = hitSp(vars.cam->dirvectors[i][j], ball);
 			if (dist != -1.0)
 			{
 				vars.colors->addr[i*screendim[0]+j] =  ((int)(dist * 256 ));
@@ -104,8 +106,6 @@ int main()
 	mlx_hook(vars.win, 2, 1L << 0, key_hook, &vars);
 	mlx_hook(vars.win, DestroyNotify, StructureNotifyMask, &close_game, &vars);
 	mlx_loop(vars.mlx);
-
-	free(colors);
 
 	return (0);
 }

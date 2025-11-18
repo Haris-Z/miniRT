@@ -41,12 +41,14 @@ typedef struct	s_data
 
 typedef struct s_vars
 {
-	void	*mlx;
-	void	*win;
-	t_data	*colors;
+	void		*mlx;
+	void		*win;
+	t_camera	*cam;
+	t_data		*colors;
 }	t_vars;
 
 t_camera	*cam_init(vector pos, vector orientation, int fov, int screendi[2]);
+void	kill_cam(t_camera	*cam);
 double	hitSp(vector ray, t_item ball);
 int	dirVector_init(t_camera *cam);
 #endif
