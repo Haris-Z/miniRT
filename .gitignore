@@ -1,0 +1,101 @@
+# build artifacts
+*.o
+*.out
+*.obj
+*.dll
+*.pdb
+#*.a
+#*.so
+#*.dylib
+#*.exe
+#*.dSYM/
+
+# build dirs
+build/*
+bin/*
+obj/*
+
+# vscode configs
+.vscode/*
+
+# editor/OS
+.DS_Store
+*.swp
+.idea/*
+
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+#*.ilk
+#*.map
+#*.exp
+
+# Precompiled Headers
+#*.gch
+#*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# debug information files
+#.gdb_history
+#.gdbinit
+
+# source dirs/files
+libs/libft/*
+libs/libft/src/ft_error/*
+libs/libft/src/ft_utils/*
+libs/libft/src/ft_utils/*.c
+libs/libft/src/ft_string/*.c
+libs/libft/src/ft_slist/*.c
+libs/libft/src/ft_mem/*.c
+libs/libft/src/ft_io/*.c
+libs/libft/src/ft_getline/*.c
+libs/libft/src/ft_ctype/*.c
+# tests dirs/files
+libs/libft/tests/*
+
+# format
+.clang-format
+.editorconfig
+
+# misc
+.clang-format
+misc/*
+#snippets.c
+
+# Documentation
+docs/.*
+#Doxyfile
+#examples/
+#MY_DOCS/
