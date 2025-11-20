@@ -92,6 +92,7 @@ libs/libft/tests/*
 # misc
 .clang-format
 misc/*
+todo.txt
 #snippets.c
 
 # Documentation
