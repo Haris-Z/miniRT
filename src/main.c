@@ -2,9 +2,12 @@
 
 int	close_game(t_vars *vars)
 {
+	kill_cam(vars->cam);
 	mlx_destroy_image(vars->mlx, vars->colors->img);
 	mlx_destroy_window(vars->mlx, vars->win);
 	mlx_destroy_display(vars->mlx);
+	free(vars->mlx);
+	free(vars->colors);
 	exit(0);
 	return (0);
 }
@@ -42,7 +45,6 @@ int	init_vars(t_vars *vars, int screendim[2])
 	vars->mlx = mlx_init();
 	if (!(vars->mlx))
 		return (0);
-	
 	vars->win = mlx_new_window(vars->mlx, screendim[0], screendim[1], "Hello world!");
 	if (!(vars->win))
 	{
@@ -62,50 +64,69 @@ int main()
 	vector		campos;
 	vector		camdir;
 	campos.x = 0;
-	campos.y = 0;
-	campos.z = 0;
+	campos.y = 0.5;
+	campos.z = 0.5;
 	camdir.x = 1;
-	camdir.y = 0;
-	camdir.z = 0;
+	camdir.y = -0.5;
+	camdir.z = -0.5;
 
 	int	screendim[2] = {1400,800};
 
-	t_camera	*cam;
-	cam = cam_init(campos, camdir, fov, screendim);
-	dirVector_init(cam);
 
 	t_item	ball;
 
-	ball.pos.x = 1;
-	ball.pos.y = 0.5;
+	ball.pos.x = 2;
+	ball.pos.y = 0.35;
 	ball.pos.z = 0;
-	ball.radius = 0.8;
+	ball.radius = 0.4;
 
+	t_item	ball2;
+
+	ball2.pos.x = 2;
+	ball2.pos.y = -0.35;
+	ball2.pos.z = 0;
+	ball2.radius = 0.4;
+
+	ball.pos = addv(ball.pos, multiv(campos ,-1.0));
+	ball2.pos = addv(ball2.pos, multiv(campos ,-1.0));
+	
 	t_vars	vars;
 	init_vars(&vars, screendim);
+	vars.cam = cam_init(campos, camdir, fov, screendim);
+	dirVector_init(vars.cam);
 	vars.colors = init_data(&vars, screendim);
 	double dist;
-	int i = -1;
+	t_rays	*rays;
+	rays = malloc(sizeof(t_rays) * screendim[0]);
+	int	i = -1;
 	while(++i < screendim[1])
 	{
 		int j = -1;
 		while(++j < screendim[0])
 		{
-			dist = hitSp(cam->dirvectors[i][j], ball);
-			if (dist != -1.0)
-			{
-				vars.colors->addr[i*screendim[0]+j] =  ((int)(dist * 256 ));
-				// printf("dist: %f\n",(0x00FF0000 + (dist -1) * 255.9999));
-			}
+			(rays+j)->dist = -1.0;
+			(rays+j)->closestitem = NULL;
+		}
+		updateRayDist(screendim[0], i, &vars, &ball, rays);
+		updateRayDist(screendim[0], i, &vars, &ball2, rays);
+		j = -1;
+		while(++j < screendim[0])
+		{
+			if (rays[j].dist == -1.0)
+				continue;
+			if (rays[j].closestitem == &ball)
+				vars.colors->addr[i*screendim[0]+j] = 0x00FF00FF;
+			else if (rays[j].closestitem == &ball2)
+				vars.colors->addr[i*screendim[0]+j] = (0x00FF0000);
+			else
+				vars.colors->addr[i*screendim[0]+j] = (0x00FFFF00 );
 		}
 	}
-		mlx_put_image_to_window(vars.mlx, vars.win, vars.colors->img, 0, 0);
+	mlx_put_image_to_window(vars.mlx, vars.win, vars.colors->img, 0, 0);
 
 	mlx_hook(vars.win, 2, 1L << 0, key_hook, &vars);
 	mlx_hook(vars.win, DestroyNotify, StructureNotifyMask, &close_game, &vars);
 	mlx_loop(vars.mlx);
-
-	free(colors);
 
 	return (0);
 }

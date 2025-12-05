@@ -63,3 +63,16 @@ int	dirVector_init(t_camera *cam)
 	}
 	return 1;
 }
+
+void	kill_cam(t_camera	*cam)
+{
+	int	i;
+	int j;
+	i = -1;
+	while (++i < cam->pixels[1])
+	{
+		free(cam->dirvectors[i]);
+	}
+	free(cam->dirvectors);
+	free(cam);
+}

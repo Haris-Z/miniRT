@@ -28,7 +28,7 @@ typedef struct s_rays
 {
 	double	dist;
 	t_item	*closestitem;
-} s_rays;
+} t_rays;
 
 typedef struct	s_data
 {
@@ -41,12 +41,15 @@ typedef struct	s_data
 
 typedef struct s_vars
 {
-	void	*mlx;
-	void	*win;
-	t_data	*colors;
+	void		*mlx;
+	void		*win;
+	t_camera	*cam;
+	t_data		*colors;
 }	t_vars;
 
 t_camera	*cam_init(vector pos, vector orientation, int fov, int screendi[2]);
+void	kill_cam(t_camera	*cam);
 double	hitSp(vector ray, t_item ball);
+void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays	*rays);
 int	dirVector_init(t_camera *cam);
 #endif
