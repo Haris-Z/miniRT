@@ -11,8 +11,32 @@
 
 typedef struct s_item
 {
-	double	radius;
-	vector	pos;
+	enum e_type
+	{
+		PLANE,
+		SHPERE,
+		CYLINDER
+	} t_type;
+	union {
+		struct
+		{
+			double	radius;
+			vector	pos;
+		} sphere;
+		struct
+		{
+			vector	point;
+			vector	orientation;
+		} plane;
+		struct
+		{
+			double	radius;
+			double	height;
+			vector	pos;
+		} cylinder;
+	};
+	int				color;
+	struct s_item	*next;
 } t_item;
 
 typedef struct s_camera
@@ -28,7 +52,7 @@ typedef struct s_rays
 {
 	double	dist;
 	t_item	*closestitem;
-} s_rays;
+} t_rays;
 
 typedef struct	s_data
 {
@@ -50,5 +74,6 @@ typedef struct s_vars
 t_camera	*cam_init(vector pos, vector orientation, int fov, int screendi[2]);
 void	kill_cam(t_camera	*cam);
 double	hitSp(vector ray, t_item ball);
+void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays	*rays);
 int	dirVector_init(t_camera *cam);
 #endif
