@@ -9,8 +9,8 @@ double	hitSp(vector ray, t_item ball)
 	double	discriminant;
 
 	a = dotv(ray, ray);
-	b = -2.0 * dotv(ray, ball.pos);
-	c = dotv(ball.pos, ball.pos) - ball.radius * ball.radius;
+	b = -2.0 * dotv(ray, ball.sphere.pos);
+	c = dotv(ball.sphere.pos, ball.sphere.pos) - ball.sphere.radius * ball.sphere.radius;
 	discriminant = (b*b - 4*a*c);
 	if (discriminant < 0)
 		return -1.0;

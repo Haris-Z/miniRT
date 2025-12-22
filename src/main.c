@@ -52,8 +52,6 @@ int	init_vars(t_vars *vars, int screendim[2])
 		free(vars->mlx);
 		return (0);
 	}
-
-
 	return (1);
 }
 
@@ -75,20 +73,20 @@ int main()
 
 	t_item	ball;
 
-	ball.pos.x = 2;
-	ball.pos.y = 0.35;
-	ball.pos.z = 0;
-	ball.radius = 0.4;
+	ball.sphere.pos.x = 2;
+	ball.sphere.pos.y = 0.35;
+	ball.sphere.pos.z = 0;
+	ball.sphere.radius = 0.4;
 
 	t_item	ball2;
 
-	ball2.pos.x = 2;
-	ball2.pos.y = -0.35;
-	ball2.pos.z = 0;
-	ball2.radius = 0.4;
+	ball2.sphere.pos.x = 2;
+	ball2.sphere.pos.y = -0.35;
+	ball2.sphere.pos.z = 0;
+	ball2.sphere.radius = 0.4;
 
-	ball.pos = addv(ball.pos, multiv(campos ,-1.0));
-	ball2.pos = addv(ball2.pos, multiv(campos ,-1.0));
+	ball.sphere.pos = addv(ball.sphere.pos, multiv(campos ,-1.0));
+	ball2.sphere.pos = addv(ball2.sphere.pos, multiv(campos ,-1.0));
 	
 	t_vars	vars;
 	init_vars(&vars, screendim);

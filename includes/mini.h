@@ -11,8 +11,32 @@
 
 typedef struct s_item
 {
-	double	radius;
-	vector	pos;
+	enum e_type
+	{
+		PLANE,
+		SHPERE,
+		CYLINDER
+	} t_type;
+	union {
+		struct
+		{
+			double	radius;
+			vector	pos;
+		} sphere;
+		struct
+		{
+			vector	point;
+			vector	orientation;
+		} plane;
+		struct
+		{
+			double	radius;
+			double	height;
+			vector	pos;
+		} cylinder;
+	};
+	int				color;
+	struct s_item	*next;
 } t_item;
 
 typedef struct s_camera
