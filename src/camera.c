@@ -13,6 +13,7 @@ t_camera	*cam_init(vector pos, vector orientation, int fov, int screendim[2])
 	return (cam);
 }
 
+
 void	addDirVectorRow(vector row[], t_camera *cam, double rangeA, double horOffset, double deltaA, double verOffset)
 {
 	int	i;
@@ -20,9 +21,23 @@ void	addDirVectorRow(vector row[], t_camera *cam, double rangeA, double horOffse
 	i = -1;
 	while(++i < cam->pixels[0])
 	{
-		row[i].x = cos(horOffset + rangeA) * sin((90.0/57.2958) - verOffset);
-		row[i].y = sin(horOffset + rangeA) * sin((90.0/57.2958) - verOffset);
-		row[i].z = cos((90.0/57.2958) - verOffset);
+		// cilyndical viewport
+		// row[i].x = cos(horOffset + rangeA);
+		// row[i].y = sin(horOffset + rangeA);
+		// row[i].z = verOffset;
+		// rangeA -= deltaA;
+		
+		// spherical viewport
+		// row[i].x = cos(horOffset + rangeA) * sin((90.0/57.2958) - verOffset);
+		// row[i].y = sin(horOffset + rangeA) * sin((90.0/57.2958) - verOffset);
+		// row[i].z = cos((90.0/57.2958) - verOffset);
+		// rangeA -= deltaA;
+
+		//plain viewport
+		row[i].x = 1;
+		row[i].y = -1 * (rangeA + horOffset);
+		row[i].z = verOffset;
+		normalizev(row[i]);
 		rangeA -= deltaA;
 	}
 }

@@ -10,6 +10,16 @@ vector addv(vector a, vector b)
 	return (res);
 }
 
+vector	subv(vector a, vector b)
+{
+	vector	res;
+
+	res.x = a.x - b.x;
+	res.y = a.y - b.y;
+	res.z = a.z - b.z;
+	return (res);
+}
+
 vector multiv(vector a, double num)
 {
 	vector	res;
@@ -27,6 +37,18 @@ double dotv(vector a, vector b)
 	res = a.x * b.x;
 	res += a.y * b.y;
 	res += a.z * b.z;
+	return (res);
+}
+
+vector	normalizev(vector a)
+{
+	double	magnitude;
+	vector	res;
+
+	magnitude = sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+	res.x = a.x / magnitude;
+	res.y = a.y / magnitude;
+	res.z = a.z / magnitude;
 	return (res);
 }
 

@@ -62,31 +62,57 @@ int main()
 	vector		campos;
 	vector		camdir;
 	campos.x = 0;
-	campos.y = 0.5;
-	campos.z = 0.5;
+	campos.y = 2;
+	campos.z = 0;
 	camdir.x = 1;
-	camdir.y = -0.5;
-	camdir.z = -0.5;
+	camdir.y = 0;
+	camdir.z = 0;
+	camdir = normalizev(camdir);
 
 	int	screendim[2] = {1400,800};
 
+	t_item	plane;
 
+	plane.t_type = PLANE;
+	plane.plane.point.x = 0;
+	plane.plane.point.y = -1;
+	plane.plane.point.z = 0;
+	plane.plane.orientation.x = 0;
+	plane.plane.orientation.y = -1;
+	plane.plane.orientation.z = 0;
+	plane.plane.orientation = normalizev(plane.plane.orientation);
+	plane.color = 0x00F030A0;
+
+	t_item	plane2;
+
+	plane2.t_type = PLANE;
+	plane2.plane.point.x = 0;
+	plane2.plane.point.y = 1;
+	plane2.plane.point.z = 0;
+	plane2.plane.orientation.x = 0;
+	plane2.plane.orientation.y = 1;
+	plane2.plane.orientation.z = 0;
+	plane2.plane.orientation = normalizev(plane2.plane.orientation);
+	plane2.color = 0x00A0AAAA;
+	
 	t_item	ball;
 
-	ball.sphere.pos.x = 2;
-	ball.sphere.pos.y = 0.35;
+	ball.t_type = SHPERE;
+	ball.sphere.pos.x = 10;
+	ball.sphere.pos.y = 0;
 	ball.sphere.pos.z = 0;
-	ball.sphere.radius = 0.4;
+	ball.sphere.radius = 4;
+	ball.color = 0x00AA00FF;
 
 	t_item	ball2;
 
-	ball2.sphere.pos.x = 2;
-	ball2.sphere.pos.y = -0.35;
-	ball2.sphere.pos.z = 0;
-	ball2.sphere.radius = 0.4;
+	ball2.t_type = SHPERE;
+	ball2.sphere.pos.x = 6;
+	ball2.sphere.pos.y = 0;
+	ball2.sphere.pos.z = 0.4;
+	ball2.sphere.radius = 2;
+	ball2.color = 0x001AB0B0;
 
-	ball.sphere.pos = addv(ball.sphere.pos, multiv(campos ,-1.0));
-	ball2.sphere.pos = addv(ball2.sphere.pos, multiv(campos ,-1.0));
 	
 	t_vars	vars;
 	init_vars(&vars, screendim);
@@ -107,17 +133,13 @@ int main()
 		}
 		updateRayDist(screendim[0], i, &vars, &ball, rays);
 		updateRayDist(screendim[0], i, &vars, &ball2, rays);
+		updateRayDist(screendim[0], i, &vars, &plane, rays);
+		updateRayDist(screendim[0], i, &vars, &plane2, rays);
 		j = -1;
 		while(++j < screendim[0])
 		{
-			if (rays[j].dist == -1.0)
-				continue;
-			if (rays[j].closestitem == &ball)
-				vars.colors->addr[i*screendim[0]+j] = 0x00FF00FF;
-			else if (rays[j].closestitem == &ball2)
-				vars.colors->addr[i*screendim[0]+j] = (0x00FF0000);
-			else
-				vars.colors->addr[i*screendim[0]+j] = (0x00FFFF00 );
+			if (rays[j].closestitem)
+				vars.colors->addr[i*screendim[0]+j] = rays[j].closestitem->color;
 		}
 	}
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.colors->img, 0, 0);

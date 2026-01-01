@@ -1,6 +1,8 @@
 #ifndef MINI_RT_H
 # define MINI_RT_H
 
+# define EPSILON 0.0000001
+
 # include <mlx.h>
 # include <stdlib.h>
 # include <limits.h>
@@ -73,7 +75,7 @@ typedef struct s_vars
 
 t_camera	*cam_init(vector pos, vector orientation, int fov, int screendi[2]);
 void	kill_cam(t_camera	*cam);
-double	hitSp(vector ray, t_item ball);
+double	hitSp(vector cam_pos ,vector ray, t_item ball);
 void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays	*rays);
 int	dirVector_init(t_camera *cam);
 #endif
