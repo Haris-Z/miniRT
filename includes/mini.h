@@ -11,6 +11,25 @@
 # include <math.h>
 # include "../includes/vector.h"
 
+typedef struct s_sphere
+{
+	double	radius;
+	vector	pos;
+} t_sphere;
+
+typedef struct s_plane
+{
+	vector	point;
+	vector	orientation;
+} t_plane;
+
+typedef struct s_cylinder
+{
+	double	radius;
+	double	height;
+	vector	pos;
+} t_cylinder;
+
 typedef struct s_item
 {
 	enum e_type
@@ -19,23 +38,11 @@ typedef struct s_item
 		SHPERE,
 		CYLINDER
 	} t_type;
-	union {
-		struct
-		{
-			double	radius;
-			vector	pos;
-		} sphere;
-		struct
-		{
-			vector	point;
-			vector	orientation;
-		} plane;
-		struct
-		{
-			double	radius;
-			double	height;
-			vector	pos;
-		} cylinder;
+	union 
+	{
+		t_plane plane;
+		t_sphere sphere;
+		t_cylinder cylinder;
 	};
 	int				color;
 	struct s_item	*next;
@@ -75,7 +82,7 @@ typedef struct s_vars
 
 t_camera	*cam_init(vector pos, vector orientation, int fov, int screendi[2]);
 void	kill_cam(t_camera	*cam);
-double	hitSp(vector cam_pos ,vector ray, t_item ball);
+double	hitSp(vector origin ,vector ray, t_sphere sphere);
 void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays	*rays);
 int	dirVector_init(t_camera *cam);
 #endif

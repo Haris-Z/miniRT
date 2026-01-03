@@ -1,5 +1,5 @@
 #include "../includes/mini.h"
-double	hitSp(vector cam_pos, vector ray, t_item ball)
+double	hitSp(vector origin, vector ray, t_sphere sphere)
 {
 
 	double	a;
@@ -10,8 +10,8 @@ double	hitSp(vector cam_pos, vector ray, t_item ball)
 	double	distnear;
 
 	a = dotv(ray, ray);
-	b = -2.0 * dotv(ray, subv(cam_pos,ball.sphere.pos));
-	c = dotv(subv(cam_pos,ball.sphere.pos), subv(cam_pos,ball.sphere.pos)) - ball.sphere.radius * ball.sphere.radius;
+	b = -2.0 * dotv(ray, subv(origin, sphere.pos));
+	c = dotv(subv(origin, sphere.pos), subv(origin, sphere.pos)) - sphere.radius * sphere.radius;
 	discriminant = (b*b - 4*a*c);
 	if (discriminant < 0)
 		return (-1.0);
@@ -26,22 +26,22 @@ double	hitSp(vector cam_pos, vector ray, t_item ball)
 	}
 }
 
-double	hitPl(vector cam_pos, vector ray, t_item plane)
+double	hitPl(vector origin, vector ray, t_plane plane)
 {
 	double	dist;
 	double	denom;
 
-	denom = dotv(plane.plane.orientation, ray);
+	denom = dotv(plane.orientation, ray);
 	if (denom > EPSILON || denom < (-1 * EPSILON))
 	{
-		dist = dotv(subv(plane.plane.point, cam_pos)  , plane.plane.orientation) / denom;
+		dist = dotv(subv(plane.point, origin)  , plane.orientation) / denom;
 		if (dist > 0 && dist < 2500)
 			return dist;
 	}
 	return (-1.0);
 }
 
-void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays	*rays)
+void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays *rays)
 {
 	int	j;
 	double	dist;
@@ -50,9 +50,9 @@ void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays	*rays
 	while(++j < screendim)
 	{
 		if (obj->t_type == SHPERE)
-			dist = hitSp(vars->cam->pos, vars->cam->dirvectors[i][j], *obj);
+			dist = hitSp(vars->cam->pos, vars->cam->dirvectors[i][j], obj->sphere);
 		else if (obj->t_type == PLANE)
-			dist = hitPl(vars->cam->pos, vars->cam->dirvectors[i][j], *obj);
+			dist = hitPl(vars->cam->pos, vars->cam->dirvectors[i][j], obj->plane);
 		if (dist > 0 && ((rays + j)->dist == -1.0 || dist < (rays + j)->dist))
 		{
 			(rays + j)->dist = dist;

@@ -119,7 +119,6 @@ int main()
 	vars.cam = cam_init(campos, camdir, fov, screendim);
 	dirVector_init(vars.cam);
 	vars.colors = init_data(&vars, screendim);
-	double dist;
 	t_rays	*rays;
 	rays = malloc(sizeof(t_rays) * screendim[0]);
 	int	i = -1;
@@ -139,7 +138,14 @@ int main()
 		while(++j < screendim[0])
 		{
 			if (rays[j].closestitem)
+			{
+				// get point from dist
+				// get surface normal
+				// get angle --> exit if on dark side
+				// check line of sight
+				// compute color
 				vars.colors->addr[i*screendim[0]+j] = rays[j].closestitem->color;
+			}
 		}
 	}
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.colors->img, 0, 0);
