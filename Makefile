@@ -239,7 +239,27 @@ clean-docs:  ## Remove generated doc files in docs/
 # ============================================================================ #
 
 
+# ============================================================================ #
+#                              STATIC ANALYSIS                                 #
+# ============================================================================ #
+# CPPCHECK_MSG  = @echo "$(YELLOW)[$(WARN_ICON)] Running static analysis with cppcheck...$(RESET)"
+# CPPCHECK_FLAGS :=	--enable=all --inconclusive --quiet $(INCLUDES) \
+# 					-I/usr/include/criterion --suppress=unusedFunction
+# CPPCHECK_FLAGS += 	--suppress=missingIncludeSystem
 
+# static_analysis: ## Run cppcheck on sources
+# 	@command -v cppcheck >/dev/null 2>&1 || { \
+# 		echo "$(RED)cppcheck not found. Install it or disable static_analysis.$(RESET)"; \
+# 		exit 1; }
+# 	$(CPPCHECK_MSG)
+# 	@cppcheck $(CPPCHECK_FLAGS) $(SRCS)
+
+# ============================================================================ #
+#                                NORMINETTE                                    #
+# ============================================================================ #
+# norm: ## Run norminette on src/ and inc/
+# 	@echo "$(YELLOW)Running norminette on src/ and inc/...$(RESET)"
+# 	@norminette $(SRC_DIR) $(INC_DIR) | sed 's/^/  /'
 
 # ============================================================================ #
 #                                                                              #
