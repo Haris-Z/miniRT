@@ -102,7 +102,7 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 # ============================================================================ #
 
 SRCS		= \
-			main.c \
+			src/main.c \
 			src/error/rt_error.c
 
 # 			src/app/rt_app.c \.
