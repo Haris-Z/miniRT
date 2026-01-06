@@ -1,11 +1,43 @@
+# **************************************************************************** #
+#                                   miniRT                                     #
+# **************************************************************************** #
+
 NAME = miniRT
+
+# ============================================================================ #
+#                               COLOR SETTINGS                                 #
+# ============================================================================ #
+
+# Colors
+GREEN		:= \033[0;32m
+BLUE		:= \033[0;34m
+YELLOW		:= \033[1;33m
+RED			:= \033[0;31m
+MAGENTA		:= \033[0;35m
+CYAN		:= \033[0;36m
+GRAY		:= \033[0;90m
+
+# Style/Reset
+BOLD		:= \033[1m
+DIM			:= \033[2m
+ULINE		:= \033[4m
+RESET		:= \033[0m
+
+# Icons / Emojis for fun
+OK_ICON		:= ✔
+WARN_ICON	:= ●
+ERR_ICON	:= ✗
+BUILD_ICON	:= 🔧
+DOC_ICON	:= 📚
+
+
 
 all: $(NAME)
 
 # CC = cc -Wall -Wextra -Werror 
 CC = cc -g
 
-SRC = src/main.c src/camera.c src/rays.c src/vector.c
+SRC = src/main.c src/camera.c src/rays.c src/vector.c src/error/rt_error.c
 
 OBJ = $(patsubst src/%.c, src/%.o,$(SRC))
 RM = rm -rf
@@ -20,7 +52,7 @@ RESET = \033[0m
 
 $(NAME): $(OBJ)
 # 	make -C includes
-	$(CC) $(OBJ) -lmlx -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(OBJ) libs/libft/libft.a -lmlx -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
 
 obj/%.o: src/%.c
 	@mkdir -p obj

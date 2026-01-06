@@ -43,13 +43,14 @@ obj/*
 #.gdb_history
 
 # minilibx
-libs/minilibx-linux/*
+libs/minilibx-linux/
 
 # source dirs/files
 
 
 # tests dirs/files
 # libs/libft/tests/*
+tests/tst_libft_integration.c
 
 # format
 .clang-format
