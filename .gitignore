@@ -1,14 +1,18 @@
+# Executable
+miniRT
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
 # build artifacts
 *.o
 *.out
-*.obj
-*.dll
-*.pdb
-#*.a
-#*.so
-#*.dylib
-#*.exe
-#*.dSYM/
+*.a
 
 # build dirs
 build/*
@@ -26,26 +30,8 @@ obj/*
 # Prerequisites
 *.d
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-#*.ilk
-#*.map
-#*.exp
-
-# Precompiled Headers
-#*.gch
-#*.pch
-
 # Libraries
-*.lib
 *.a
-*.la
-*.lo
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -53,44 +39,24 @@ obj/*
 *.so.*
 *.dylib
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
 # debug information files
 #.gdb_history
-#.gdbinit
+
+# minilibx
+libs/minilibx-linux/*
 
 # source dirs/files
-libs/libft/*
-libs/libft/src/ft_error/*
-libs/libft/src/ft_utils/*
-libs/libft/src/ft_utils/*.c
-libs/libft/src/ft_string/*.c
-libs/libft/src/ft_slist/*.c
-libs/libft/src/ft_mem/*.c
-libs/libft/src/ft_io/*.c
-libs/libft/src/ft_getline/*.c
-libs/libft/src/ft_ctype/*.c
+
+
 # tests dirs/files
-libs/libft/tests/*
+# libs/libft/tests/*
 
 # format
 .clang-format
 .editorconfig
+.clang-tidy
 
 # misc
-.clang-format
 misc/*
 todo.txt
 #snippets.c
