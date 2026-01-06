@@ -158,7 +158,7 @@ all: $(NAME)
 #	$(CC) $(CFLAGS) $(OBJS) $(MLX_LIB) $(LIBFT) $(MLX_LDFLAGS) -o $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX_LIB) $(LIBFT) -L/usr/lib $(MLX_LDFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -L/usr/lib $(MLX_LDFLAGS) -o $(NAME)
 
 # if mlx sources in libs/
 # $(MLX_LIB):
@@ -167,6 +167,7 @@ $(NAME): $(LIBFT) $(OBJS)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
+# NOTE: check if headers needed here
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I/usr/include $(INCLUDES) -c $< -o $@
@@ -183,4 +184,81 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+# delete all generated files
+aclean: fclean clean-docs
+#test-clean
+# ============================================================================ #
+
+
+# ============================================================================ #
+#                           DOCUMENTATION (Doxygen)                            #
+# ============================================================================ #
+
+# Docs-related messages
+DOCS_GEN_MSG  = @echo "$(MAGENTA)[$(DOC_ICON)] Generating Doxygen docs...$(RESET)"
+DOCS_AT_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] Docs at $(DOCS_OUT)$(RESET)"
+DOCS_OPEN_MSG = @echo "$(MAGENTA)[$(DOC_ICON)] Opening docs...$(RESET)"
+DOCS_RM_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] Removing generated docs...$(RESET)"
+
+DOXYGEN		?= doxygen
+DOCS_OUT	:= docs/html/index.html
+DOCS_ROOT	:= index.html
+
+docs: ## Generate Doxygen documentation
+	$(DOCS_GEN_MSG)
+	@$(DOXYGEN) Doxyfile
+	$(DOCS_AT_MSG)
+	@# Create a root-level index.html pointing to docs/html/index.html
+	@if command -v ln >/dev/null 2>&1; then \
+		ln -sf "$(DOCS_OUT)" "$(DOCS_ROOT)"; \
+	else \
+		cp "$(DOCS_OUT)" "$(DOCS_ROOT)"; \
+	fi
+
+# docs:
+# 	@echo "==> Generating Doxygen docs..."
+# 	$(DOXYGEN) Doxyfile
+# 	@echo "==> Docs at $(DOCS_OUT)"
+
+open-docs: docs
+	$(DOCS_OPEN_MSG)
+	@if command -v xdg-open >/dev/null 2>&1; then \
+		xdg-open "$(DOCS_OUT)"; \
+	elif command -v open >/dev/null 2>&1; then \
+		open "$(DOCS_OUT)"; \
+	elif command -v start >/dev/null 2>&1; then \
+		start "$(DOCS_OUT)"; \
+	else \
+		echo "Please open $(DOCS_OUT) in your browser."; \
+	fi
+
+clean-docs:  ## Remove generated doc files in docs/
+	$(DOCS_RM_MSG)
+	@rm -rf docs
+	@rm -f $(DOCS_ROOT)
+# ============================================================================ #
+
+
+
+
+# ============================================================================ #
+#                                                                              #
+# ============================================================================ #
+config: ## Show current build configuration
+	@echo "NAME      = $(NAME)"
+	@echo "CC        = $(CC)"
+	@echo "CFLAGS    = $(CFLAGS)"
+	@echo "LDFLAGS   = $(LDFLAGS)"
+	@echo "DEBUG     = $(DEBUG)"
+	@echo "SAN       = $(SAN)"
+	@echo "COVERAGE  = $(COVERAGE)"
+
+help: ## Show this help
+	@echo "$(BOLD)Available targets:$(RESET)"
+	@grep -E '^[a-zA-Z0-9_-]+:.*##' $(MAKEFILE_LIST) | \
+		sed -e 's/:.*##/: /' | \
+		awk 'BEGIN {FS = ":[ ]"} {printf "  $(CYAN)%-18s$(RESET) %s\n", $$1, $$2}'
+
+.PHONY: all clean fclean re aclean \
+		docs open-docs clean-docs \
+		config help
