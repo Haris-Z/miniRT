@@ -57,7 +57,7 @@ libs/minilibx-linux/*
 .clang-tidy
 
 # misc
-misc/*
+00_misc/*
 todo.txt
 #snippets.c
 
