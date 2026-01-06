@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/06 17:33:28 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/06 20:07:41 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,16 @@
 // 	return (rt_app_run(&app));
 // }
 
+#include <stdio.h>
 int	main(int ac, char **av)
 {
+	(void)av;
 	//t_app	app;
 
 	/* check cmd line input mandatory */
 	if (ac != 2)
-		return (rt_error(E_USAGE, "also add something, 123"));
+		return (rt_error(E_USAGE, "test"));
+	printf("hello\n");
 
 	/* initalize scene configs for parsing */
 	// scene_init(&app.scene);
