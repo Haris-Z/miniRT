@@ -241,6 +241,7 @@ SRCS_REL := \
 
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS_REL))
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
 #DEP         := $(OBJ:.o=.d)
 
 # ============================================================================ #
