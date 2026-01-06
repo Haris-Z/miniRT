@@ -1,0 +1,20 @@
+TAP version 13
+1..13
+# Criterion v2.4.0
+#
+# Running 7 tests from ft_memory
+ok - ft_memory::null_ptr_with_n_zero_is_ok  (0.00s)
+ok - ft_memory::memset_zero_on_int_array_is_safe  (0.00s)
+ok - ft_memory::memset_no_over_or_underrun  (0.01s)
+ok - ft_memory::memset_fuzz_1000_randomized  (0.06s)
+ok - ft_memory::memset_basic_matrix  (0.00s)
+ok - ft_memory::bzero_no_over_or_underrun  (0.00s)
+ok - ft_memory::bzero_equivalent_to_memset_zero  (0.00s)
+#
+# Running 6 tests from Character_class_tests
+ok - Character_class_tests::out_of_range_integers  (0.00s)
+ok - Character_class_tests::isprint_boundaries  (0.00s)
+ok - Character_class_tests::isdigit_boundaries  (0.00s)
+ok - Character_class_tests::isascii_boundaries  (0.00s)
+ok - Character_class_tests::isalpha_boundaries  (0.00s)
+ok - Character_class_tests::invariants_relationships  (0.00s)

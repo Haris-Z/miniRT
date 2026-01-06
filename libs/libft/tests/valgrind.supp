@@ -1,0 +1,31 @@
+{
+   libgit2_reachable_init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libgit2.so*
+}
+
+{
+   mbedtls_x509_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libmbedx509.so*
+}
+
+{
+   mbedcrypto_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libmbedcrypto.so*
+}
+
+{
+   criterion_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libcriterion.so*
+}

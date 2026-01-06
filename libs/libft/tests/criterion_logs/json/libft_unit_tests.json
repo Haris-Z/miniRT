@@ -1,0 +1,93 @@
+
+{
+  "id": "Criterion v2.4.0",
+  "passed": 13,
+  "failed": 0,
+  "errored": 0,
+  "skipped": 0,
+  "test_suites": [
+    {
+      "name": "ft_memory",
+      "passed": 7,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "null_ptr_with_n_zero_is_ok",
+          "assertions": 2,
+          "status": "PASSED"
+        },
+        {
+          "name": "memset_zero_on_int_array_is_safe",
+          "assertions": 1,
+          "status": "PASSED"
+        },
+        {
+          "name": "memset_no_over_or_underrun",
+          "assertions": 67,
+          "status": "PASSED"
+        },
+        {
+          "name": "memset_basic_matrix",
+          "assertions": 110,
+          "status": "PASSED"
+        },
+        {
+          "name": "memset_fuzz_1000_randomized",
+          "assertions": 3000,
+          "status": "PASSED"
+        },
+        {
+          "name": "bzero_no_over_or_underrun",
+          "assertions": 35,
+          "status": "PASSED"
+        },
+        {
+          "name": "bzero_equivalent_to_memset_zero",
+          "assertions": 27,
+          "status": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "Character_class_tests",
+      "passed": 6,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "out_of_range_integers",
+          "assertions": 10,
+          "status": "PASSED"
+        },
+        {
+          "name": "isprint_boundaries",
+          "assertions": 4,
+          "status": "PASSED"
+        },
+        {
+          "name": "isdigit_boundaries",
+          "assertions": 4,
+          "status": "PASSED"
+        },
+        {
+          "name": "isalpha_boundaries",
+          "assertions": 8,
+          "status": "PASSED"
+        },
+        {
+          "name": "invariants_relationships",
+          "assertions": 397,
+          "status": "PASSED"
+        },
+        {
+          "name": "isascii_boundaries",
+          "assertions": 4,
+          "status": "PASSED"
+        }
+      ]
+    }
+  ]
+}

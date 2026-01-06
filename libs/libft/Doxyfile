@@ -1,0 +1,105 @@
+# ---------------------------------------------------------------------------
+# Project
+# ---------------------------------------------------------------------------
+PROJECT_NUMBER         = "v1.0.0"
+PROJECT_NAME           = "Libft - General Purpose libraray"
+PROJECT_BRIEF          = "Re-implementation of some glibc utilities."
+OUTPUT_DIRECTORY       = docs
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = .
+# If you have a PNG/SVG logo:
+# PROJECT_LOGO           = docs/logo.png
+OUTPUT_LANGUAGE        = English
+
+
+# ---------------------------------------------------------------------------
+# Build
+# ---------------------------------------------------------------------------
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = NO
+
+HIDE_UNDOC_MEMBERS     = YES
+HIDE_UNDOC_CLASSES     = YES
+
+JAVADOC_AUTOBRIEF      = YES
+
+OPTIMIZE_OUTPUT_FOR_C  = YES
+
+WARN_IF_UNDOCUMENTED   = YES
+WARN_AS_ERROR          = NO
+
+HAVE_DOT               = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+
+SORT_BRIEF_DOCS        = YES
+SORT_MEMBER_DOCS       = YES
+SORT_GROUP_NAMES       = YES
+SORT_BY_SCOPE_NAME     = YES
+
+# ---------------------------------------------------------------------------
+# Input
+# ---------------------------------------------------------------------------
+# Adjust INPUT as needed. This assumes your public header + src live here:
+# ./README.md
+# *.md
+# If you later add extra docs like docs/*.md:
+INPUT                  = ./inc ./src ./README.md ./docs
+USE_MDFILE_AS_MAINPAGE = README.md
+FILE_PATTERNS          = *.h *.c
+MARKDOWN_SUPPORT       = YES
+RECURSIVE              = YES
+MARKDOWN_SUPPORT       = YES
+
+# ---------------------------------------------------------------------------
+# Example code
+# ---------------------------------------------------------------------------
+EXAMPLE_PATH           = examples
+EXAMPLE_RECURSIVE      = YES
+
+# ---------------------------------------------------------------------------
+# Groups / Pages
+# ---------------------------------------------------------------------------
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+
+ALPHABETICAL_INDEX     = YES
+GENERATE_TREEVIEW      = YES
+
+HTML_DYNAMIC_SECTIONS  = YES
+
+DISABLE_INDEX          = NO
+
+SEARCHENGINE           = YES
+
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+
+# Source browsing
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+
+# docs show which headers get included and which files participate where.
+VERBATIM_HEADERS       = YES
+SHOW_INCLUDE_FILES     = YES
+SHOW_USED_FILES        = YES
+
+# ---------------------------------------------------------------------------
+# Output formats
+# ---------------------------------------------------------------------------
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_LATEX         = NO
+GENERATE_XML           = NO
+GENERATE_MAN           = NO
+
+
+
+#---------------------------------------------------------------------------
+# Misc
+#---------------------------------------------------------------------------
+QUIET                  = NO
