@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/07 10:38:12 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/07 17:11:47 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 // }
 
 #include <stdio.h>
+#include <stdlib.h>
 int	main(int ac, char **av)
 {
 	(void)av;
@@ -33,8 +34,9 @@ int	main(int ac, char **av)
 
 	/* check cmd line input mandatory */
 	if (ac != 2)
-		return (rt_error(E_USAGE, "test"));
+		return (rt_log_error(E_USAGE, ERR_USAGE, 0));
 	printf("hello\n");
+
 
 	/* initalize scene configs for parsing */
 	// scene_init(&app.scene);

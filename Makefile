@@ -52,28 +52,37 @@ LDLIBS			:=
 #   make DEBUG=1        → adds -g3 -O0
 #   make SAN=1          → adds -fsanitize=address (compile + link)
 #   make DEBUG=1 SAN=1  → both
-DEBUG	?= 0
-SAN		?= 0
+V 			?= 1
+DEBUG		?= 0
+SAN			?= 1
+DEBUG_STR 	?= 
+SAN_STR 	?= 
+
 ifeq ($(DEBUG),1)
-	CFLAGS += -g3 -O0
+	CFLAGS += -ggdb3 -O0
 	DEBUG_STR := ON
 else
 	DEBUG_STR := OFF
 endif
 
 ifeq ($(SAN),1)
-	CFLAGS  += -fsanitize=address,undefined -fno-omit-frame-pointer
+	CFLAGS  += -g3 -fsanitize=address,undefined -fno-omit-frame-pointer
 	LDFLAGS += -fsanitize=address,undefined -fno-omit-frame-pointer
 	SAN_STR := ON
 else
 	SAN_STR := OFF
 endif
-MODE_MSG = @echo "$(GRAY)[mode] DEBUG=$(DEBUG_STR) SAN=$(SAN_STR) CFLAGS='$(CFLAGS)'$(RESET)"
+
+MODE_MSG = @echo "$(GRAY)[miniRT mode:] \
+					DEBUG='$(DEBUG_STR)' \
+					SAN='$(SAN_STR)' \
+					CFLAGS='$(CFLAGS)'$(RESET)"
 
 # ============================================================================ #
 #                             PROJECT LAYOUT                                   #
 # ============================================================================ #
 
+# ============================================================================ #
 # Location of sources files
 SRC_DIR     := src
 OBJ_DIR     := obj
@@ -81,87 +90,50 @@ INC_DIR    	:= inc
 LIBS_DIR	:= libs
 # Location of test files
 TEST_DIR    := tests
-
 # ============================================================================ #
-
 LIBFT_DIR	:= $(LIBS_DIR)/libft
 #MLX_DIR		:= $(LIBS_DIR)/minilibx-linux
-
 LIBFT		= $(LIBFT_DIR)/libft.a
 #MLX			= $(MLX_DIR)/libmlx.a
-
 # ============================================================================ #
 
 # if mlx in libs/
 # INC_DIRS  := $(INC_DIR) $(LIBFT_DIR)/inc $(MLX_DIR)
-
+# ============================================================================ #
 # include dirs -> CPPFLAGS (-I...)
-INC_DIRS  := $(INC_DIR) $(LIBFT_DIR)/inc $(MLX_DIR)
+INC_DIRS  := $(INC_DIR) $(LIBFT_DIR)/inc
 CPPFLAGS  += $(addprefix -I,$(INC_DIRS))
-
+# ============================================================================ #
 # library dirs -> LDFLAGS (-L...)
 # LIB_DIRS  := $(LIBFT_DIR) $(MLX_DIR)
-LIB_DIRS  := $(LIBFT_DIR) $(MLX_DIR)
+LIB_DIRS  := $(LIBFT_DIR)
 LDFLAGS   += $(addprefix -L,$(LIB_DIRS))
-
+# ============================================================================ #
 # libraries -> LDLIBS (-l...)
 LDLIBS    += -lft -lmlx -lXext -lX11 -lm -lz
+# ============================================================================ #
 
 # ============================================================================ #
 #  SOURCE LIST (norm compliant)                                                #
 # ============================================================================ #
 
+# ============================================================================ #
 SRCS		:= \
 			main.c \
-			error/rt_error.c
-# 			src/app/rt_app.c \.
-# 			src/app/rt_events.c \.
-
-# 			src/mlx/rt_img.c \.
-
-# 			src/math/vec3_make.c \.
-# 			src/math/vec3_ops.c \.
-# 			src/math/vec3_norm.c \.
-# 			src/math/ray.c \.
-# 			src/math/color.c \.
-
-# 			src/scene/world.c \.
-# 			src/scene/world_set.c \.
-# 			src/scene/world_add.c \.
-
-# 			src/parser/rt_readline.c \.
-# 			src/parser/rt_pstr.c \.
-# 			src/parser/rt_parse_utils.c \.
-# 			src/parser/rt_parse_elems.c \.
-# 			src/parser/rt_parse_objs.c \.
-# 			src/parser/rt_parser.c \.
-# 			src/parser/rt_split_ws.c \.
-# 			src/parser/rt_num.c \.
-
-# 			src/camera/cam_build.c \.
-# 			src/camera/cam_ray.c \.
-
-# 			src/render/render_smoke.c \.
-# 			src/render/hit_utils.c \.
-# 			src/render/hit_sphere.c \.
-# 			src/render/hit_plane.c \.
-# 			src/render/hit_cylinder.c \.
-# 			src/render/world_hit.c
-
-#			src/parser/rt_pstr.c \/
-#			src/parser/rt_vec_color.c \/
-#			src/parser/rt_parse_elems.c \/
-#			src/parser/rt_parse_objs.c \/
-#			src/parser/rt_parser.c
-
+			error/rt_error.c \
+			log/rt_log.c
+# ============================================================================ #
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# ============================================================================ #
 
 # ============================================================================ #
 #                                  RULES                                       #
 # ============================================================================ #
-all: $(NAME)
 
+# ============================================================================ #
+all: $(NAME)
+# ============================================================================ #
 # if mlx sources in libs/
 # $(NAME): $(OBJS) $(LIBFT) $(MLX)
 # 	$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $@
@@ -169,54 +141,72 @@ all: $(NAME)
 # if mlx installed on system
 # Link: .o -> + libs -> executable
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $@
-
-# if mlx sources in libs/
+	@$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
+	@echo "$(GREEN)[$(OK_ICON) ] [miniRT] Build succeeded $(RESET) → $(BOLD)$(NAME)$(RESET)"
+	$(MODE_MSG)
+# ============================================================================ #
+# if mlx sources in libs - has to compile per subject
 # $(MLX_LIB):
 # 	$(MAKE) -C $(MLX_DIR)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
-
+	@echo "$(GREEN)[$(OK_ICON) ] [miniRT] Compiling libft .. $(RESET)$(BOLD)$(RESET)"
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) SAN=$(SAN) DEBUG=$(DEBUG) V=$(V)
+# ============================================================================ #
 # compile .c -> .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	@echo "$(CYAN)[$(BUILD_ICON)] [miniRT] Compiled →$(RESET) $<"
+# ============================================================================ #
 
 clean:
-	rm -rf $(OBJDIR)
-	$(MAKE) -C $(LIBFT_DIR) clean
+	@echo "$(RED)[$(WARN_ICON)] [miniRT] Deleting object files ...$(RESET)"
+	@rm -rf $(OBJ_DIR)
+	@echo "$(GREEN)[$(ERR_ICON)] [miniRT] Object files removed .$(RESET)"
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
 # $(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	@echo "$(RED)[$(WARN_ICON)] [miniRT] Deleting exectuable ...$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(GREEN)[$(ERR_ICON)] [miniRT] Executable removed → $(NAME).$(RESET)"
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
 
 re: fclean all
+	@echo "$(BLUE)[$(WARN_ICON)] [miniRT] Rebuilt..  → $(RESET) $(NAME) "
 
 # delete all generated files
 aclean: fclean clean-docs
 
 # ============================================================================ #
 
+# run: $(NAME)
+# 	$(SRCS) += main.c
+# 	@echo "$(YELLOW)Running quick test ... $(RESET)"
+# 	./$(NAME) main.c $(TEST_DIR)/test_scenes/scenes/mini.rt
+
 test: $(NAME)
-	@echo "$(YELLOW)Running quick test ... $(RESET)"
+	@echo "$(YELLOW) Runnning test ... $(RESET)"
 	./$(NAME) $(TEST_DIR)/test_scenes/scenes/mini.rt
+
+fsan:
 
 # ============================================================================ #
 #                           DOCUMENTATION (Doxygen)                            #
 # ============================================================================ #
 
+# ============================================================================ #
 # Docs-related messages
 DOCS_GEN_MSG  = @echo "$(MAGENTA)[$(DOC_ICON)] Generating Doxygen docs...$(RESET)"
 DOCS_AT_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] Docs at $(DOCS_OUT)$(RESET)"
 DOCS_OPEN_MSG = @echo "$(MAGENTA)[$(DOC_ICON)] Opening docs...$(RESET)"
 DOCS_RM_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] Removing generated docs...$(RESET)"
-
+# ============================================================================ #
 DOXYGEN		?= doxygen
 DOCS_OUT	:= docs/html/index.html
 DOCS_ROOT	:= index.html
-
+# ============================================================================ #
 docs: ## Generate Doxygen documentation
 	$(DOCS_GEN_MSG)
 	@$(DOXYGEN) Doxyfile
@@ -227,12 +217,12 @@ docs: ## Generate Doxygen documentation
 	else \
 		cp "$(DOCS_OUT)" "$(DOCS_ROOT)"; \
 	fi
-
+# ============================================================================ #
 # docs:
 # 	@echo "==> Generating Doxygen docs..."
 # 	$(DOXYGEN) Doxyfile
 # 	@echo "==> Docs at $(DOCS_OUT)"
-
+# ============================================================================ #
 open-docs: docs
 	$(DOCS_OPEN_MSG)
 	@if command -v xdg-open >/dev/null 2>&1; then \
@@ -244,7 +234,7 @@ open-docs: docs
 	else \
 		echo "Please open $(DOCS_OUT) in your browser."; \
 	fi
-
+# ============================================================================ #
 clean-docs:  ## Remove generated doc files in docs/
 	$(DOCS_RM_MSG)
 	@rm -rf docs
@@ -258,14 +248,14 @@ clean-docs:  ## Remove generated doc files in docs/
 # cppcheck
 CPPCHECK          ?= cppcheck
 CPPCHECK_REPORT   ?= cppcheck_report.txt
-
+# ============================================================================ #
 CPPCHECK_MSG      = @echo "$(YELLOW)[$(WARN_ICON)] Running static analysis with cppcheck...$(RESET)"
 # pptional
 #   make static_analysis CPPCHECK_STRICT=1   -> treat warnings as errors (non-zero exit)
 #   make static_analysis CPPCHECK_JOBS=8     -> parallel analysis
 CPPCHECK_STRICT   ?= 0
 CPPCHECK_JOBS     ?= 0
-
+# ============================================================================ #
 # include dirs from the build
 CPPCHECK_INCLUDES := $(CPPFLAGS)
 
@@ -278,7 +268,7 @@ CPPCHECK_FLAGS := \
 	--quiet \
 	--suppress=missingIncludeSystem \
 	--suppress=unusedFunction
-
+# ============================================================================ #
 # all checks --enable=all
 # CPPCHECK_FLAGS := $(filter-out --enable=%,$(CPPCHECK_FLAGS)) --enable=all
 ifneq ($(CPPCHECK_JOBS),0)
@@ -289,7 +279,7 @@ endif
 ifeq ($(CPPCHECK_STRICT),1)
 	CPPCHECK_FLAGS += --error-exitcode=1
 endif
-
+# ============================================================================ #
 static_analysis: ## Run cppcheck on sources
 	@command -v $(CPPCHECK) >/dev/null 2>&1 || { \
 		echo "$(RED)cppcheck not found. Install it (or disable static_analysis).$(RESET)"; \
@@ -300,7 +290,7 @@ static_analysis: ## Run cppcheck on sources
 
 # 	@$(CPPCHECK) $(CPPCHECK_FLAGS) $(CPPCHECK_INCLUDES) $(SRCS) 2> $(CPPCHECK_REPORT) || true
 # 	@echo "$(GRAY)[report] $(CPPCHECK_REPORT)$(RESET)"
-
+# ============================================================================ #
 
 # ============================================================================ #
 #                                NORMINETTE                                    #
@@ -312,6 +302,7 @@ static_analysis: ## Run cppcheck on sources
 # ============================================================================ #
 #                                                                              #
 # ============================================================================ #
+
 config: ## Show current build configuration
 	@echo "NAME      = $(NAME)"
 	@echo "CC        = $(CC)"
@@ -319,15 +310,16 @@ config: ## Show current build configuration
 	@echo "CFLAGS    = $(CFLAGS)"
 	@echo "LDFLAGS   = $(LDFLAGS)"
 	@echo "LDLIBS    = $(LDLIBS)"
-	@echo "DEBUG     = $(DEBUG)"
-	@echo "SAN       = $(SAN)"
-
+	@echo "DEBUG     := $(DEBUG_STR) | $(DEBUG)"
+	@echo "SAN       := $(SAN_STR)	 | $(SAN)"
+# ============================================================================ #
 help: ## Show this help
 	@echo "$(BOLD)Available targets:$(RESET)"
 	@grep -E '^[a-zA-Z0-9_-]+:.*##' $(MAKEFILE_LIST) | \
 		sed -e 's/:.*##/: /' | \
 		awk 'BEGIN {FS = ":[ ]"} {printf "  $(CYAN)%-18s$(RESET) %s\n", $$1, $$2}'
-
+# ============================================================================ #
 .PHONY: all clean fclean re aclean \
 		docs open-docs clean-docs \
-		config help test
+		config help \
+		test run

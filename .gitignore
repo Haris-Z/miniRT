@@ -46,10 +46,10 @@ obj/*
 libs/minilibx-linux/
 
 # source dirs/files
-
+src/log/rt_log.c
 
 # tests dirs/files
-# libs/libft/tests/*
+libs/libft/src/ft_log/*
 tests/tst_libft_integration.c
 
 # format

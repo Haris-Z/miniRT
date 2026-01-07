@@ -6,102 +6,59 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:09:01 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/07 10:43:12 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/07 18:40:10 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "rt_error.h"
 #include <stdio.h>
-#include "libft.h"
 #include <errno.h>
 #include <string.h>
 
-static const char	*error_messages(int code);
-static const char	*error_code_str(int code);
+static const char	*rt_strerror(t_eflag e);
 
-//extern void	ft_putstr_fd(char *s, int fd);
-
-int	rt_error(int code, const char *msg)
+int	rt_log_error(int code, const char *msg, int i)
 {
-	if (code == E_SYS)
-		fprintf(stderr, "Error: %s\n", strerror(errno));
+	ft_putendl_fd(E_MSG, 2);
+	if (code > E_PARSE_BASE && code < E_PARSE_END)
+	{
+		ft_putstr_fd("[PARSE] ", 2);
+		ft_putstr_fd("Line: : ", 2);
+		ft_putnbr_fd(i, 2);
+		ft_putendl_fd((char *)rt_strerror(code), 2);
+	}
+	else if (code > E_RT_BASE && code < E_RT_END)
+	{
+		ft_putstr_fd("[RT]", 2);
+		ft_putstr_fd((char *)rt_strerror(code), 2);
+		ft_putchar_fd('\n', 2);
+	}
+	else if (code == E_SYS)
+	{
+		ft_putstr_fd("[SYS]", 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putchar_fd('\n', 2);
+	}
 	else
-		fprintf(stderr, rt_strerror(code), msg);
+		ft_putendl_fd((char *)msg, 2);
 	return (1);
 }
 
 /**
- * @brief initialize context for error with default values
+ * @brief Get error message string
  */
-void	error_ctx_init(t_err_ctx *ctx)
+static const char	*rt_strerror(t_eflag e)
 {
-	if (!ctx)
-		return ;
-	ft_bzero(ctx, sizeof(t_err_ctx));
-}
-
-/**
- * @brief Set error context values
- * @todo add return FATAL for E_MALLOC/E_VALID and exit the program?
- * 		- or just set an error_list and print at the end?
- * @usage - if (error_count > 0)
- * 				print_error()
- * 			return (false) return (), exit etc.
- * for fata- like E_MALLC - E_INVALID -> return FATAL and leave.
- */
-void	error_ctx_set(t_err_ctx *ctx, int code, int pos, char *arg)
-{
-	const char	*empty = "";
-	
-	if (!ctx)
-		return ;
-	if (!arg)
-		ctx->errarg = (char *)empty;
-	else
-		ctx->errarg = arg;
-	ctx->code = code;
-	ctx->pos = pos;
-	ctx->errinfo = error_messages(code);
-}
-
-/**
- * @brief Get error message string with bounds checking
- */
-const char	*rt_strerror(int code)
-{
-	const char	*msgs[ERR_COUNT];
-
-	*msgs = error_messages(code);
-	if (code >= ERR_COUNT || msgs[code] == NULL)
-		return ("Invalid error code");
-	return (msgs[code]);
-}
-
-static const char *error_messages(int code)
-{
-	const char *msgs[ERR_COUNT] = {
-		[E_USAGE] = USAGE,
+	const char	*msgs[E_COUNT] = {
+	[E_OK] = "Success",
+	[E_USAGE] = ERR_USAGE
 	};
 
-	if ((int)code < 0 || code >= ERR_COUNT)
-		return ("Invalid error code");
-	return (msgs[code]);
+	if ((int)e < 0 || e >= E_COUNT)
+		return ("Invalid/Unknown error");
+	if (msgs[e] == 0)
+		return ("Invalid/Unknown error");
+	return (msgs[e]);
 }
-
-// static const char *error_code_str(t_error code)
-// {
-// 	const char *msgs[ERROR_COUNT] = {
-// 		[SUCCESS] = "SUCCESS",
-// 		[FAILURE] = "FAILURE",
-// 		[E_MALLOC] = "E_MALLOC",
-// 		[E_SYNTAX] = "E_SYNTAX",
-// 		[E_INVALID] = "E_INVALID",
-// 		[E_MISSING_QUOTE] = "E_MISSING_QUOTE",
-// 		[E_EOF] = "E_EOF",
-// 		[E_HERE_CTRLD] = "E_HERE_CTRLD",
-// 	};
-
-// 	if ((int)code < 0 || code >= ERROR_COUNT)
-// 		return ("Invalid error code");
-// 	return (msgs[code]);
-// }

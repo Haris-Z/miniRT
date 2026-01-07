@@ -32,28 +32,28 @@ DOC_ICON	:= 📚
 #                                  MESSAGES                                    #
 # ============================================================================ #
 
-LIB_MSG       = @echo "$(GREEN)[$(OK_ICON)] Build succeeded $(RESET) → $(BOLD)$(NAME)$(RESET)"
-EXEC_MSG      = @echo "$(GREEN)$(OK_ICON) Executable built → $(NAME)$(RESET)"
-RE_MSG        = @echo "$(BLUE)[$(WARN_ICON)] Rebuilt..  → $(RESET) $(NAME) "
+LIB_MSG       = @echo "$(GREEN)[$(OK_ICON) ] [libft] Build succeeded $(RESET) → $(BOLD)$(NAME)$(RESET)"
+EXEC_MSG      = @echo "$(GREEN)$(OK_ICON) [libft] Executable built → $(NAME)$(RESET)"
+RE_MSG        = @echo "$(BLUE)[$(WARN_ICON)] [libft] Rebuilt..  → $(RESET) $(NAME) "
 
 # Compile messages
-COMPILE_MSG   = @echo "$(CYAN)[$(BUILD_ICON)] Compiled →$(RESET) $<"
+COMPILE_MSG   = @echo "$(CYAN)[$(BUILD_ICON)] [libft] Compiled →$(RESET) $<"
 
 # Cleanup messages
-CLEAN_OBJ_MSG = @echo "$(RED)[$(WARN_ICON)] Deleting object files ...$(RESET)"
-CLEAN_OK_OBJ  = @echo "$(GREEN)[$(ERR_ICON)]$(RESET) Object files removed."
+CLEAN_OBJ_MSG = @echo "$(RED)[$(WARN_ICON)] [libft] Deleting object files ...$(RESET)"
+CLEAN_OK_OBJ  = @echo "$(GREEN)[$(ERR_ICON)]$(RESET) [libft] Object files removed."
 
-CLEAN_BIN_MSG = @echo "$(RED)[$(WARN_ICON)] Deleting archive ... $(RESET)"
-CLEAN_OK_BIN  = @echo "$(GREEN)[$(ERR_ICON)]$(RESET) Archive removed → $(NAME)."
+CLEAN_BIN_MSG = @echo "$(RED)[$(WARN_ICON)] [libft] Deleting archive ... $(RESET)"
+CLEAN_OK_BIN  = @echo "$(GREEN)[$(ERR_ICON)]$(RESET) [libft] Archive removed → $(NAME)."
 
 # Static Analysis messages
-CPPCHECK_MSG  = @echo "$(YELLOW)[$(WARN_ICON)] Running static analysis with cppcheck...$(RESET)"
+CPPCHECK_MSG  = @echo "$(YELLOW)[$(WARN_ICON)] [libft] Running static analysis with cppcheck...$(RESET)"
 
 # Docs-related messages
-DOCS_GEN_MSG  = @echo "$(MAGENTA)[$(DOC_ICON)] Generating Doxygen docs...$(RESET)"
-DOCS_AT_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] Docs at $(DOCS_OUT)$(RESET)"
-DOCS_OPEN_MSG = @echo "$(MAGENTA)[$(DOC_ICON)] Opening docs...$(RESET)"
-DOCS_RM_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] Removing generated docs...$(RESET)"
+DOCS_GEN_MSG  = @echo "$(MAGENTA)[$(DOC_ICON)] [libft] Generating Doxygen docs...$(RESET)"
+DOCS_AT_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] [libft] Docs at $(DOCS_OUT)$(RESET)"
+DOCS_OPEN_MSG = @echo "$(MAGENTA)[$(DOC_ICON)] [libft] Opening docs...$(RESET)"
+DOCS_RM_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] [libft] Removing generated docs...$(RESET)"
 
 # ============================================================================ #
 #   LIBRARY NAME / PRIMARY TARGET                                              #
@@ -65,8 +65,9 @@ NAME        := libft.a
 # ============================================================================ #
 CC          := cc
 CFLAGS      := -Wall -Wextra -Werror
+CPPFLAGS    :=
 LDFLAGS     :=
-
+LDLIBS      :=
 # ============================================================================ #
 #   DEBUG FLAGS                                                                #
 # ============================================================================ #
@@ -89,6 +90,7 @@ LDFLAGS     :=
 #   make DEBUG=1 SAN=1  → both
 DEBUG	?= 0
 SAN		?= 0
+V		?= 0
 
 ifeq ($(DEBUG),1)
 	CFLAGS += -g3 -O0
@@ -112,7 +114,37 @@ else
 	SAN_STR := OFF
 endif
 
-MODE_MSG = @echo "$(GRAY)[mode] DEBUG=$(DEBUG_STR) SAN=$(SAN_STR) CFLAGS='$(CFLAGS)'$(RESET)"
+ifeq ($(V),1)
+	LIB_MSG       = @echo "$(GREEN)[$(OK_ICON) ] [libft] Build succeeded $(RESET) → $(BOLD)$(NAME)$(RESET)"
+	EXEC_MSG      =
+	RE_MSG        =
+	COMPILE_MSG   =
+	CLEAN_OBJ_MSG = 
+	CLEAN_OK_OBJ  = @echo "$(GREEN)[$(ERR_ICON)]$(RESET) $(BLUE)[libft] Object files removed... $(RESET)"
+	CLEAN_BIN_MSG = 
+	CLEAN_OK_BIN  = @echo "$(GREEN)[$(ERR_ICON)]$(RESET) $(BLUE)[libft] Archive removed → $(NAME).$(RESET)"
+	CPPCHECK_MSG  =
+	DOCS_GEN_MSG  =
+	DOCS_AT_MSG   =
+	DOCS_OPEN_MSG =
+	DOCS_RM_MSG   =
+else
+	LIB_MSG       = @echo "$(GREEN)[$(OK_ICON) ] [libft] Build succeeded $(RESET) → $(BOLD)$(NAME)$(RESET)"
+	EXEC_MSG      = @echo "$(GREEN)$(OK_ICON) [libft] Executable built → $(NAME)$(RESET)"
+	RE_MSG        = @echo "$(BLUE)[$(WARN_ICON)] [libft] Rebuilt..  → $(RESET) $(NAME) "
+	COMPILE_MSG   = @echo "$(CYAN)[$(BUILD_ICON)] [libft] Compiled →$(RESET) $<"
+	CLEAN_OBJ_MSG = @echo "$(RED)[$(WARN_ICON)] [libft] Deleting object files ...$(RESET)"
+	CLEAN_OK_OBJ  = @echo "$(GREEN)[$(ERR_ICON)]$(RESET) [libft] Object files removed."
+	CLEAN_BIN_MSG = @echo "$(RED)[$(WARN_ICON)] [libft] Deleting archive ... $(RESET)"
+	CLEAN_OK_BIN  = @echo "$(GREEN)[$(ERR_ICON)]$(RESET) [libft] Archive removed → $(NAME)."
+	CPPCHECK_MSG  = @echo "$(YELLOW)[$(WARN_ICON)] [libft] Running static analysis with cppcheck...$(RESET)"
+	DOCS_GEN_MSG  = @echo "$(MAGENTA)[$(DOC_ICON)] [libft] Generating Doxygen docs...$(RESET)"
+	DOCS_AT_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] [libft] Docs at $(DOCS_OUT)$(RESET)"
+	DOCS_OPEN_MSG = @echo "$(MAGENTA)[$(DOC_ICON)] [libft] Opening docs...$(RESET)"
+	DOCS_RM_MSG   = @echo "$(MAGENTA)[$(DOC_ICON)] [libft] Removing generated docs...$(RESET)"
+endif
+
+MODE_MSG = @echo "$(GRAY)[libft mode] DEBUG=$(DEBUG_STR) SAN=$(SAN_STR) CFLAGS='$(CFLAGS)'$(RESET)"
 
 # ============================================================================ #
 #   ARCHIVER / INDEXER (for .a files)                                          #
@@ -139,6 +171,14 @@ OBJ_DIR     := obj
 INC_DIR     := inc
 # Location of test files
 TEST_DIR    := tests
+
+# LIBFT_H     := $(INC_DIR)/libft.h
+# CPPFLAGS    += -I$(INC_DIR)
+
+# Auto header dependency generation:
+# -MMD: write .d files for user headers
+# -MP : add phony targets to avoid errors on deleted headers
+# CFLAGS      += -MMD -MP
 
 # Public Headers / Include flages
 #LIBFT_H      := $(INC_DIR)/
@@ -229,6 +269,9 @@ FT_GNL_SRC := \
 FT_ERROR_SRC := \
 	ft_error/errors.c
 
+FT_LOG_SRC := \
+	ft_log/ft_log.c
+
 SRCS_REL := \
 	$(FT_CTYPE_SRC) \
 	$(FT_MEM_SRC) \
@@ -237,13 +280,15 @@ SRCS_REL := \
 	$(FT_IO_SRC) \
 	$(FT_SLIST_SRC) \
 	$(FT_GNL_SRC) \
-	$(FT_ERROR_SRC)
+	$(FT_ERROR_SRC) \
+	$(FT_LOG_SRC)
 
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS_REL))
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-
+#DEPS := $(OBJS:.o=.d)
 #DEP         := $(OBJ:.o=.d)
-
+# Include generated dependency files if they exist
+# -include $(DEPS)
 # ============================================================================ #
 #                                  RULES                                       #
 # ============================================================================ #
@@ -261,7 +306,7 @@ $(NAME): $(OBJS)
 # ============================================================================ #
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/libft.h
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	$(COMPILE_MSG)
 
 # ============================================================================ #
