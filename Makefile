@@ -255,17 +255,52 @@ clean-docs:  ## Remove generated doc files in docs/
 # ============================================================================ #
 #                              STATIC ANALYSIS                                 #
 # ============================================================================ #
-# CPPCHECK_MSG  = @echo "$(YELLOW)[$(WARN_ICON)] Running static analysis with cppcheck...$(RESET)"
-# CPPCHECK_FLAGS :=	--enable=all --inconclusive --quiet $(INCLUDES) \
-# 					-I/usr/include/criterion --suppress=unusedFunction
-# CPPCHECK_FLAGS += 	--suppress=missingIncludeSystem
+# cppcheck
+CPPCHECK          ?= cppcheck
+CPPCHECK_REPORT   ?= cppcheck_report.txt
 
-# static_analysis: ## Run cppcheck on sources
-# 	@command -v cppcheck >/dev/null 2>&1 || { \
-# 		echo "$(RED)cppcheck not found. Install it or disable static_analysis.$(RESET)"; \
-# 		exit 1; }
-# 	$(CPPCHECK_MSG)
-# 	@cppcheck $(CPPCHECK_FLAGS) $(SRCS)
+CPPCHECK_MSG      = @echo "$(YELLOW)[$(WARN_ICON)] Running static analysis with cppcheck...$(RESET)"
+# pptional
+#   make static_analysis CPPCHECK_STRICT=1   -> treat warnings as errors (non-zero exit)
+#   make static_analysis CPPCHECK_JOBS=8     -> parallel analysis
+CPPCHECK_STRICT   ?= 0
+CPPCHECK_JOBS     ?= 0
+
+# include dirs from the build
+CPPCHECK_INCLUDES := $(CPPFLAGS)
+
+# basic flags
+CPPCHECK_FLAGS := \
+	--enable=warning,style,performance,portability \
+	--inconclusive \
+	--force \
+	--inline-suppr \
+	--quiet \
+	--suppress=missingIncludeSystem \
+	--suppress=unusedFunction
+
+# all checks --enable=all
+# CPPCHECK_FLAGS := $(filter-out --enable=%,$(CPPCHECK_FLAGS)) --enable=all
+ifneq ($(CPPCHECK_JOBS),0)
+	CPPCHECK_FLAGS += -j $(CPPCHECK_JOBS)
+endif
+
+# fail on issue
+ifeq ($(CPPCHECK_STRICT),1)
+	CPPCHECK_FLAGS += --error-exitcode=1
+endif
+
+static_analysis: ## Run cppcheck on sources
+	@command -v $(CPPCHECK) >/dev/null 2>&1 || { \
+		echo "$(RED)cppcheck not found. Install it (or disable static_analysis).$(RESET)"; \
+		exit 1; \
+	}
+	$(CPPCHECK_MSG)
+	@$(CPPCHECK) $(CPPCHECK_FLAGS) $(CPPCHECK_INCLUDES) $(SRCS)
+
+# 	@$(CPPCHECK) $(CPPCHECK_FLAGS) $(CPPCHECK_INCLUDES) $(SRCS) 2> $(CPPCHECK_REPORT) || true
+# 	@echo "$(GRAY)[report] $(CPPCHECK_REPORT)$(RESET)"
+
 
 # ============================================================================ #
 #                                NORMINETTE                                    #
