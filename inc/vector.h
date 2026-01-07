@@ -9,7 +9,6 @@ typedef struct vector
 	double	z;
 }				 vector;
 
-
 vector addv(vector a, vector b);
 vector multiv(vector a, double num);
 double dotv(vector a, vector b);

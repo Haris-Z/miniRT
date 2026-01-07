@@ -7,7 +7,7 @@
 # include <X11/X.h>
 # include <stdio.h>
 # include <math.h>
-# include "../includes/vector.h"
+# include "vector.h"
 
 typedef struct s_item
 {

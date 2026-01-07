@@ -6,12 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/06 20:07:41 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/07 10:38:12 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include "rt.h"
-#include "../includes/rt_error.h"
+#include "rt_error.h"
 //#include "libft.h"
 
 // int	main(int ac, char **av)

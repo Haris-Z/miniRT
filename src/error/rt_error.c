@@ -6,13 +6,13 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:09:01 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/06 16:16:04 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/07 10:43:12 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/rt_error.h"
+#include "rt_error.h"
 #include <stdio.h>
-#include "../../libs/libft/inc/libft.h"
+#include "libft.h"
 #include <errno.h>
 #include <string.h>
 
