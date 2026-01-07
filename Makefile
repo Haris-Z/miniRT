@@ -28,27 +28,24 @@ NAME 		= miniRT
 # ============================================================================ #
 #   COMPILE FLAGS                                                              #
 # ============================================================================ #
+
 CC          	:= cc
+# CFLAGS → compile flags (-Wall ..., -Iinclude, -g, etc.)
 CFLAGS      	:= -Wall -Wextra -Werror -Wno-unused-function
+# CPPFLAGS  -> preprocessor flags ( -I..., -D... )
 CPPFLAGS		:=
-CPPCHECK_FLAGS	:=
-
-# LDFLAGS for options passed to the linker step
-# (when object files are turned into an executable or shared library).
+# LDFLAGS → link flags for paths/options (-L..., -Wl,...)
 LDFLAGS     	:=
-
-INCLUDES		=	-Iinc \
-					-Ilibs/libft/inc \
-					-Ilibs/minilibx-linux
+# LDLIBS (or LIBS) → the libraries (-lft -lm ...)
+LDLIBS			:=
 
 # ============================================================================ #
 #   COMPILER PRE-PROCESSOR OPTIONS                                             #
 # ============================================================================ #
 # Example
 # CPPFLAGS    :=
-# $(CPPFLAGS)
 # ifeq ($(LEAK_TEST),1) - for testing
-# CPPFLAGS += -DLEAK_TEST
+# 	CPPFLAGS += -DLEAK_TEST
 # endif
 # Debug & sanitizer toggles
 # Usage:
@@ -78,33 +75,45 @@ MODE_MSG = @echo "$(GRAY)[mode] DEBUG=$(DEBUG_STR) SAN=$(SAN_STR) CFLAGS='$(CFLA
 # ============================================================================ #
 
 # Location of sources files
-SRC_DIR     	:= src
-OBJ_DIR     	:= obj
-INC_DIR    		:= inc
+SRC_DIR     := src
+OBJ_DIR     := obj
+INC_DIR    	:= inc
+LIBS_DIR	:= libs
 # Location of test files
-TEST_DIR    	:= tests
-LIBS_INC_DIR	:= libs
+TEST_DIR    := tests
 
-# Includes
-# -L. -lft
+# ============================================================================ #
 
-MLX_DIR		= #libs/minilibx-linux
-MLX_LIB		= #$(MLX_DIR)/libmlx.a
-MLX_LDFLAGS	= -lmlx -lXext -lX11 -lm
+LIBFT_DIR	:= $(LIBS_DIR)/libft
+#MLX_DIR		:= $(LIBS_DIR)/minilibx-linux
 
-LIBFT_DIR	= $(LIBS_INC_DIR)/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
+#MLX			= $(MLX_DIR)/libmlx.a
 
+# ============================================================================ #
 
+# if mlx in libs/
+# INC_DIRS  := $(INC_DIR) $(LIBFT_DIR)/inc $(MLX_DIR)
+
+# include dirs -> CPPFLAGS (-I...)
+INC_DIRS  := $(INC_DIR) $(LIBFT_DIR)/inc $(MLX_DIR)
+CPPFLAGS  += $(addprefix -I,$(INC_DIRS))
+
+# library dirs -> LDFLAGS (-L...)
+# LIB_DIRS  := $(LIBFT_DIR) $(MLX_DIR)
+LIB_DIRS  := $(LIBFT_DIR) $(MLX_DIR)
+LDFLAGS   += $(addprefix -L,$(LIB_DIRS))
+
+# libraries -> LDLIBS (-l...)
+LDLIBS    += -lft -lmlx -lXext -lX11 -lm -lz
 
 # ============================================================================ #
 #  SOURCE LIST (norm compliant)                                                #
 # ============================================================================ #
 
-SRCS		= \
-			src/main.c \
-			src/error/rt_error.c
-
+SRCS		:= \
+			main.c \
+			error/rt_error.c
 # 			src/app/rt_app.c \.
 # 			src/app/rt_events.c \.
 
@@ -145,8 +154,8 @@ SRCS		= \
 #			src/parser/rt_parse_objs.c \/
 #			src/parser/rt_parser.c
 
-OBJDIR		= obj
-OBJS		= $(SRCS:%.c=$(OBJDIR)/%.o)
+SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
+OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # ============================================================================ #
 #                                  RULES                                       #
@@ -154,11 +163,13 @@ OBJS		= $(SRCS:%.c=$(OBJDIR)/%.o)
 all: $(NAME)
 
 # if mlx sources in libs/
-# $(NAME): $(MLX_LIB) $(LIBFT) $(OBJS)
-#	$(CC) $(CFLAGS) $(OBJS) $(MLX_LIB) $(LIBFT) $(MLX_LDFLAGS) -o $(NAME)
+# $(NAME): $(OBJS) $(LIBFT) $(MLX)
+# 	$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $@
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -L/usr/lib $(MLX_LDFLAGS) -o $(NAME)
+# if mlx installed on system
+# Link: .o -> + libs -> executable
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $@
 
 # if mlx sources in libs/
 # $(MLX_LIB):
@@ -167,11 +178,10 @@ $(NAME): $(LIBFT) $(OBJS)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-# NOTE: check if headers needed here
-$(OBJDIR)/%.o: %.c
+# compile .c -> .o
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I/usr/include $(INCLUDES) -c $< -o $@
-# $(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJDIR)
@@ -186,9 +196,12 @@ re: fclean all
 
 # delete all generated files
 aclean: fclean clean-docs
-#test-clean
+
 # ============================================================================ #
 
+test: $(NAME)
+	@echo "$(YELLOW)Running quick test ... $(RESET)"
+	./$(NAME) $(TEST_DIR)/test_scenes/scenes/mini.rt
 
 # ============================================================================ #
 #                           DOCUMENTATION (Doxygen)                            #
@@ -267,11 +280,12 @@ clean-docs:  ## Remove generated doc files in docs/
 config: ## Show current build configuration
 	@echo "NAME      = $(NAME)"
 	@echo "CC        = $(CC)"
+	@echo "CPPFLAGS  = $(CPPFLAGS)"
 	@echo "CFLAGS    = $(CFLAGS)"
 	@echo "LDFLAGS   = $(LDFLAGS)"
+	@echo "LDLIBS    = $(LDLIBS)"
 	@echo "DEBUG     = $(DEBUG)"
 	@echo "SAN       = $(SAN)"
-	@echo "COVERAGE  = $(COVERAGE)"
 
 help: ## Show this help
 	@echo "$(BOLD)Available targets:$(RESET)"
@@ -281,4 +295,4 @@ help: ## Show this help
 
 .PHONY: all clean fclean re aclean \
 		docs open-docs clean-docs \
-		config help
+		config help test
