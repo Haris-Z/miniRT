@@ -46,7 +46,26 @@ obj/*
 libs/minilibx-linux/
 
 # source dirs/files
-src/log/rt_log.c
+# Makefile
+# inc/dbg_log.h
+# inc/trace_log.h
+# inc/color.h
+
+# src/error/
+src/parse/
+src/ray/
+src/scene/
+src/vec/
+
+# src/rt/rt_run.c
+# src/rt/rt_events.c
+
+# src/log/rt_log.c
+# src/log/trace_log.c
+# src/log/dbg_log.c
+
+src/color/color.c
+
 
 # tests dirs/files
 libs/libft/src/ft_log/*
