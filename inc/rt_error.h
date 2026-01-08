@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 16:23:13 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/08 16:31:48 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@
  * 	- [ ] add tests
  * 	- [x] add error message list
  * 	- [x] add functions for internal messages and for system errors messages
- *  - [ ] no defines just use messages directly?
  */
 
 #ifndef RT_ERROR_H
 # define RT_ERROR_H
 
+// all messages in one place - easier to change later
+
 // Mandatory for Subject
 # define E_MSG "Error"
-# define ERR_USAGE "./miniRT /path/to/file.rt"
+# define ERR_USAGE "./miniRT /path/to/file.rt" // -> 
 
 // Parsing Errors
 # define ERR_PARSE_A_MSG " add message here ... "
@@ -41,10 +42,15 @@
 # define ERR_RTFILE_L " add message "
 
 // MLX errors
-# define E_MLX_INIT "Failed to Initialize mlx."
+# define MSG_RT_MLX_INIT "Failed to Initialize mlx."
+# define MSG_RT_MLX_INIT "Failed to Initialize mlx."
+# define MSG_RT_WIN_CREATE "Errror\n Failed to initialize mlx_window ... "
+# define MSG_RT_IMG_CREATE "Failed to initialize mlx_image ... "
+
 
 /**
- * @brief struct containing error codes for miniRT
+ * @brief	struct containing error codes for miniRT
+ * 			corresponding error message defined with prefix MSG 
  */
 typedef enum e_eflag
 {
@@ -85,6 +91,16 @@ typedef enum e_eflag
 	E_COUNT
 }	t_eflag;
 
-int		rt_log_error(int code, const char *msg, int i, char *arg);
+
+/**
+ * @brief 
+ * 
+ * @param code 
+ * @param msg 
+ * @param i 
+ * @param arg 
+ * @return int 
+ */
+int	rt_log_error(int code, const char *msg, int i, char *arg);
 
 #endif // RT_ERROR_H
