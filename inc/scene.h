@@ -6,15 +6,15 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:52:45 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 16:41:29 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/08 22:22:02 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
 
-// # include "vec3.h"
-// # include "color.h"
+# include "vec.h"
+# include "color.h"
 
 /**
  * @brief configs for the ambient light  from .rt file
@@ -150,7 +150,7 @@ typedef struct s_obj
 		t_cylinder	cy;
 	}	u;
 	struct s_obj	*next;
-	sizet_t			obj_count; // for struct array for now using linked list
+	int				obj_count; // for struct array for now using linked list
 }	t_obj;
 
 /**
@@ -160,11 +160,11 @@ typedef struct s_obj
  * 
  * @todo add stuff
  */
-typedef struct s_scene /* info - sort fields by size for alignment */
+typedef struct s_scene
 {
-	int			has_ambient;	// change to bool?
-	int			has_camera;		// change to bool?
-	int			has_light;		// change to bool? or return error code ?
+	int			has_ambient;
+	int			has_camera;
+	int			has_light;
 	t_ambient	amb;
 	t_camera	cam;
 	t_light		light;
