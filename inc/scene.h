@@ -6,15 +6,15 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:52:45 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/06 20:58:26 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/08 16:41:29 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
 
-# include "vec3.h"
-# include "color.h"
+// # include "vec3.h"
+// # include "color.h"
 
 /**
  * @brief configs for the ambient light  from .rt file
@@ -22,7 +22,7 @@
  * add Description
  * 
  * @note
- *		file: minimal.rt
+ *		file: minimal.rt example
  *
  *		|ID	|Ratio	|Color
  *		|A	|0.9 	|255,255,255
@@ -42,7 +42,7 @@ typedef struct s_ambient
  * add Description
  *
  * @note
- *		minimal.rt
+ *		file: minimal.rt example
  *		|ID	|Position	|Direction	|FOV(in deg)
  *		|C	|0,-1,3		|0,0,-1		|70
  *
@@ -65,7 +65,7 @@ typedef struct s_camera
  * add Description
  * 
  * @note
- * 		minimal.rt
+ * 		file: minimal.rt example
  *		|ID	|Position	|Brightness	|Colors
  *		|L	|5,5,5		|0.8		|0,255,255
  *
@@ -140,7 +140,7 @@ typedef enum e_obj_type
  * 
  * @todo add stuff
  */
-typedef struct s_obj		/* struct array ? */
+typedef struct s_obj
 {
 	t_obj_type		type;
 	union u_shape
@@ -150,7 +150,7 @@ typedef struct s_obj		/* struct array ? */
 		t_cylinder	cy;
 	}	u;
 	struct s_obj	*next;
-	sizet_t	obj_count;
+	sizet_t			obj_count; // for struct array for now using linked list
 }	t_obj;
 
 /**
@@ -160,11 +160,11 @@ typedef struct s_obj		/* struct array ? */
  * 
  * @todo add stuff
  */
-typedef struct s_scene			/* info - fields by size for alignment */
+typedef struct s_scene /* info - sort fields by size for alignment */
 {
-	int			has_ambient;	// change to bool
-	int			has_camera;		// change to bool
-	int			has_light;		// change to bool
+	int			has_ambient;	// change to bool?
+	int			has_camera;		// change to bool?
+	int			has_light;		// change to bool? or return error code ?
 	t_ambient	amb;
 	t_camera	cam;
 	t_light		light;
@@ -173,17 +173,77 @@ typedef struct s_scene			/* info - fields by size for alignment */
 }	t_scene;
 
 /* initialize and clear */
+
+/**
+ * @brief 
+ * 
+ * @param s 
+ */
 void	scene_init(t_scene *s);
+
+/**
+ * @brief 
+ * 
+ * @param s 
+ */
 void	scene_clear(t_scene *s);
 
-/* initalize settings */
+/* initalize settings from parsing */
+
+/**
+ * @brief 
+ * 
+ * @param s 
+ * @param a 
+ * @return int 
+ */
 int		scene_set_ambient(t_scene *s, t_ambient a);
+
+/**
+ * @brief 
+ * 
+ * @param s 
+ * @param c 
+ * @return int 
+ */
 int		scene_set_camera(t_scene *s, t_camera c);
+
+/**
+ * @brief 
+ * 
+ * @param s 
+ * @param l 
+ * @return int 
+ */
 int		scene_set_light(t_scene *s, t_light l);
 
-/* initialize objects for the scene */
+/* initialize objects for the scene fromg parsing*/
+
+/**
+ * @brief 
+ * 
+ * @param s 
+ * @param sp 
+ * @return int 
+ */
 int		scene_add_sphere(t_scene *s, t_sphere sp);
+
+/**
+ * @brief 
+ * 
+ * @param s 
+ * @param pl 
+ * @return int 
+ */
 int		scene_add_plane(t_scene *s, t_plane pl);
+
+/**
+ * @brief 
+ * 
+ * @param s 
+ * @param cy 
+ * @return int 
+ */
 int		scene_add_cylinder(t_scene *s, t_cylinder cy);
 
-#endif
+#endif // SCENE_H
