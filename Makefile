@@ -54,6 +54,7 @@ LDLIBS			:=
 #   make DEBUG=1 SAN=1  → both
 V 			?= 1
 DEBUG		?= 0
+RT_DEBUG	?= 1
 SAN			?= 1
 DEBUG_STR 	?= 
 SAN_STR 	?= 
@@ -71,6 +72,10 @@ ifeq ($(SAN),1)
 	SAN_STR := ON
 else
 	SAN_STR := OFF
+endif
+
+ifeq ($(RT_DEBUG),1)
+	CPPFLAGS += -DRT_DEBUG
 endif
 
 MODE_MSG = @echo "$(GRAY)[miniRT mode:] \
@@ -121,7 +126,9 @@ LDLIBS    += -lft -lmlx -lXext -lX11 -lm -lz
 SRCS		:= \
 			main.c \
 			error/rt_error.c \
-			log/rt_log.c
+			log/rt_log.c \
+			log/dbg_log.c \
+			log/trace_log.c
 # ============================================================================ #
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
