@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:13:51 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 16:33:24 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/08 18:01:50 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,16 +135,16 @@ void	rt_img_put_pixel(t_img *img, int x, int y, int color);
 /* events/hooks */
 
 /**
- * @brief 
+ * @brief Press ESC Key to close window
  * 
  * @param keycode 
- * @param param 
+ * @param param ptr to the main mlx context struct. (t_rt_mlx)
  * @return int 
  */
 int		rt_on_keypress(int keycode, void *param);
 
 /**
- * @brief 
+ * @brief Click X Button on window to close window 
  * 
  * @param param 
  * @return int 
@@ -163,7 +163,7 @@ int		rt_on_expose(void *param);
  * @brief 
  * 
  * @param param 
- * @return int 
+ * @return int
  */
 int		rt_on_loop(void *param);
 
