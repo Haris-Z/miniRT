@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:13:51 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 18:01:50 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/08 22:21:01 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,24 @@
 # define RT_WINDOW_NAME	"miniRT"
 # define SCREEN_WIDTH	800
 # define SCREEN_HEIGHT	600
+# define EPSILON 0.0000001
+# define RADIAN 57.2958
 
 # include <limits.h>
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
+
 # include <X11/X.h>			// contatins keycodes
 # include <X11/keysymdef.h>
 # include <X11/keysym.h>
+
 # include "mlx.h"
 # include "rt_error.h"
 
-// # include "vec3.h"
-// # include "ray.h"
-// # include "color.h"
+# include "vec.h"
+# include "ray.h"
+# include "color.h"
 // # include "scene.h"
 // # include "parser.h"
 
@@ -47,9 +51,9 @@ typedef struct s_img
 {
 	void	*ptr;
 	char	*addr;
-	int		bpp;		// set ?
-	int		line_len;	// set ?
-	int		endian;		// set ?
+	int		bpp;
+	int		line_len;
+	int		endian;
 	int		img_w;
 	int		img_h;
 }	t_img;
