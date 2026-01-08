@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 16:31:48 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/08 17:03:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef enum e_eflag
 	E_RT_MLX_INIT,				// "Failed to Initialize mlx."
 	E_RT_WIN_CREATE,			// "Errror\n Failed to initialize mlx_window ... "
 	E_RT_IMG_CREATE,			// "Failed to initialize mlx_image ... "
+	E_RT_GET_ADDRESS,			// "Failed to initalize .. "  -- ?
 	E_RT_BAD_SCENE_STATE,
 	E_RT_NO_CAMERA,
 	E_RT_END,
