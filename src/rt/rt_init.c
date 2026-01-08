@@ -6,13 +6,16 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 16:56:31 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/08 17:05:17 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
 // return bool or error for rt_log_error?
+/* 
+** Description 
+*/
 int	rt_init(t_rt_mlx *rt, int w, int h, const char *title)
 {
 	rt->mlx = NULL;
@@ -42,6 +45,9 @@ int	rt_init(t_rt_mlx *rt, int w, int h, const char *title)
 
 // check if all alloacted is here
 // [ ] add scene_clear( ) later ;
+/* 
+** Description 
+*/
 void	rt_destroy(t_rt_mlx *rt)
 {
 	if (rt->img.ptr)
