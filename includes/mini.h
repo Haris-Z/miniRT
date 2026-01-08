@@ -59,6 +59,7 @@ typedef struct s_camera
 
 typedef struct s_rays
 {
+	vector	direction;
 	double	dist;
 	t_item	*closestitem;
 } t_rays;
@@ -78,11 +79,18 @@ typedef struct s_vars
 	void		*win;
 	t_camera	*cam;
 	t_data		*colors;
+	double		ambient;
 }	t_vars;
 
 t_camera	*cam_init(vector pos, vector orientation, int fov, int screendi[2]);
 void	kill_cam(t_camera	*cam);
 double	hitSp(vector origin ,vector ray, t_sphere sphere);
+double	hitPl(vector origin ,vector ray, t_plane plane);
 void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays	*rays);
 int	dirVector_init(t_camera *cam);
+
+int	computeColor(t_vars vars, t_rays ray);
+double	getLightAngle(vector oPoint, vector dir, t_rays ray, vector light, t_item *items);
+int	scaleColor(int min, int max, double amount);
+
 #endif

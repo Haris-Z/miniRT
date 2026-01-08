@@ -25,6 +25,118 @@ double	hitSp(vector origin, vector ray, t_sphere sphere)
 		return distnear;
 	}
 }
+// ambient : 0			-> itemColor	| userInput
+// diffuse : ambient	-> itemColor	| lightAngle
+// specular: diffuse	-> 255			| viewAngle
+
+int	scaleColor(int min, int max, double amount)
+{
+	int	red;
+	int	green;
+	int	blue;
+
+	red = ((max & 0x00FF0000) - (min & 0x00FF0000)) >> 16;
+	red = lround(red * amount) + ((min & 0x00FF0000) >> 16) << 16;
+	green = (max & 0x0000FF00) - (min & 0x0000FF00) >> 8 ;
+	green = lround(green * amount) + ((min & 0x0000FF00) >> 8) << 8;
+	blue = (max & 0x000000FF) - (min & 0x000000FF);
+	blue = lround(blue * amount) + (min & 0x000000FF);
+
+	return(red + green + blue);
+}
+
+double	getDistBetweenPoints(vector pointA, vector pointB)
+{
+	double	res;
+
+	res = pow(pointA.x - pointB.x, 2) +
+		pow(pointA.y - pointB.y, 2) +
+		pow(pointA.z - pointB.z, 2);
+	return (sqrt(res));
+}
+
+int	checkSameSide(t_plane plane, vector cam, vector light)
+{
+	double	planeD;
+	double	camD;
+	double	lightD;
+	
+	planeD = plane.orientation.x * plane.point.x + plane.orientation.y * plane.point.y +plane.orientation.z * plane.point.z;
+	camD = plane.orientation.x * cam.x + plane.orientation.y * cam.y +plane.orientation.z * cam.z;
+	lightD = plane.orientation.x * light.x + plane.orientation.y * light.y +plane.orientation.z * light.z;
+	if (camD > planeD)
+	{
+		if (lightD > planeD)
+			return (1);
+		else
+			return (0);
+	}
+	else if (lightD < planeD)
+		return (1);
+	return (0);
+}
+
+vector	getReflectionV(vector surfaceToLight, vector surfaceNormal)
+{
+	vector	reflectionV;
+
+	reflectionV = multiv(surfaceNormal, dotv(surfaceNormal, surfaceToLight) * 2);
+	return (subv(reflectionV, surfaceToLight));
+}
+
+vector	getSurfaceNormal(vector point, t_item *item)
+{
+	vector	surfaceNormal;
+
+	if (item->t_type == SHPERE)
+		surfaceNormal = subv(point, item->sphere.pos);
+	else if (item->t_type == PLANE)
+		surfaceNormal = item->plane.orientation;
+	surfaceNormal = normalizev(surfaceNormal);
+	return (surfaceNormal);
+}
+
+double	getLightAngle(vector oPoint, vector dir, t_rays ray, vector light, t_item *items)
+{
+	vector	point;
+	vector	surfaceNormal;
+	vector	surfaceToLight;
+	t_item	*item = items;
+	double	dist;
+	double	distToLight;
+	double	res;
+
+
+	point = addv(oPoint, multiv(dir, ray.dist));
+	surfaceToLight = normalizev(subv(light, point));
+	if (ray.closestitem->t_type == PLANE && !checkSameSide(ray.closestitem->plane, oPoint, light))
+		return (-1.0);	
+	surfaceNormal = getSurfaceNormal(point, ray.closestitem);
+	res = dotv(surfaceNormal, surfaceToLight);
+	if (res > 0)
+	{
+		distToLight = getDistBetweenPoints(point, light);
+		while (item)
+		{
+			if (item == ray.closestitem)
+			{
+				item = item->next;
+				continue;
+			}
+			if (item->t_type == SHPERE)
+				dist = hitSp(point, surfaceToLight, item->sphere);
+			if (item->t_type == PLANE)
+				dist = hitPl(point, surfaceToLight, item->plane);
+			if (dist > 0 && dist < distToLight)
+				return (-1.0);
+			item = item->next;
+		}
+	}
+	return (res);
+}
+
+int	computeColor(t_vars vars, t_rays ray)
+{}
 
 double	hitPl(vector origin, vector ray, t_plane plane)
 {

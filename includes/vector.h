@@ -17,5 +17,6 @@ vector	multiv(vector a, double num);
 double	dotv(vector a, vector b);
 vector	crossv(vector a, vector b);
 vector	normalizev(vector a);
+void	printV(vector v);
 
 #endif

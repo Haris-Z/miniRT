@@ -61,3 +61,9 @@ vector crossv(vector a, vector b)
 	res.z = a.x * b.y - a.y * b.x;
 	return (res);
 }
+
+#include <stdio.h>
+void	printV(vector v)
+{
+	printf("x:%f y:%f z:%f\n", v.x, v.y, v.z);
+}
