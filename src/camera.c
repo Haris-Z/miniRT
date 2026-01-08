@@ -6,15 +6,16 @@ t_camera	*cam_init(vector pos, vector orientation, int fov, int screendim[2])
 
 	cam = malloc(sizeof(t_camera));
 	cam->orientation = orientation;
+	cam->pos = pos;
 	cam->pixels[0] = screendim[0];
 	cam->pixels[1] = screendim[1];
-	cam->pos = pos;
+	cam->ambient = 0.1;
 	cam->fov = fov;
 	return (cam);
 }
 
 
-void	addDirVectorRow(vector row[], t_camera *cam, double rangeA, double horOffset, double deltaA, double verOffset)
+void	addDirVectorRow(t_ray row[], t_camera *cam, double rangeA, double horOffset, double deltaA, double verOffset)
 {
 	int	i;
 
@@ -34,10 +35,12 @@ void	addDirVectorRow(vector row[], t_camera *cam, double rangeA, double horOffse
 		// rangeA -= deltaA;
 
 		//plain viewport
-		row[i].x = 1;
-		row[i].y = -1 * (rangeA + horOffset);
-		row[i].z = verOffset;
-		normalizev(row[i]);
+		row[i].direction.x = 1;
+		row[i].direction.y = -1 * (rangeA + horOffset);
+		row[i].direction.z = verOffset;
+		row[i].direction = normalizev(row[i].direction);
+		row[i].dist = -1.0;
+		row[i].closestitem = NULL;
 		rangeA -= deltaA;
 	}
 }
@@ -51,29 +54,29 @@ int	dirVector_init(t_camera *cam)
 	double	horOffset;
 	double	verOffset;
 
-	deltaA = cam->fov / 57.2958;
+	deltaA = cam->fov / RADIAN;
 	double	rangeA = deltaA / 2;
 	printf("range %f\n",rangeA);
 	deltaA /= cam->pixels[0];
 	printf("delta A %f\n",deltaA);
 
 	horOffset = atan(cam->orientation.y / cam->orientation.x);
-	printf("hoffset %f\n", (horOffset * 57.2958));
+	printf("hoffset %f\n", (horOffset * RADIAN));
 
-	deltaB = 90 / 57.2958;
+	deltaB = 90 / RADIAN;
 	double	rangeB = deltaB / 2;
 	deltaB /= cam->pixels[1];
 
 	verOffset = sqrt(cam->orientation.x * cam->orientation.x + cam->orientation.y * cam->orientation.y);
 	verOffset = atan(cam->orientation.z / verOffset);
-	printf("verOffset %f\n", (verOffset * 57.2958));
+	printf("verOffset %f\n", (verOffset * RADIAN));
 
-	cam->dirvectors = malloc(sizeof(vector*) * cam->pixels[1]);
+	cam->rays = malloc(sizeof(t_ray*) * cam->pixels[1]);
 	i = -1;
 	while (++i < cam->pixels[1])
 	{
-		cam->dirvectors[i] = malloc(sizeof(vector) * cam->pixels[0]);
-		addDirVectorRow(cam->dirvectors[i], cam, rangeA, horOffset, deltaA, verOffset + rangeB);
+		cam->rays[i] = malloc(sizeof(t_ray) * cam->pixels[0]);
+		addDirVectorRow(cam->rays[i], cam, rangeA, horOffset, deltaA, verOffset + rangeB);
 		rangeB -= deltaB;
 	}
 	return 1;
@@ -86,8 +89,8 @@ void	kill_cam(t_camera	*cam)
 	i = -1;
 	while (++i < cam->pixels[1])
 	{
-		free(cam->dirvectors[i]);
+		free(cam->rays[i]);
 	}
-	free(cam->dirvectors);
+	free(cam->rays);
 	free(cam);
 }

@@ -96,7 +96,7 @@ vector	getSurfaceNormal(vector point, t_item *item)
 	return (surfaceNormal);
 }
 
-double	getLightAngle(vector oPoint, vector dir, t_rays ray, vector light, t_item *items)
+double	getLightAngle(vector oPoint, vector dir, t_ray ray, vector light, t_item *items)
 {
 	vector	point;
 	vector	surfaceNormal;
@@ -135,8 +135,30 @@ double	getLightAngle(vector oPoint, vector dir, t_rays ray, vector light, t_item
 	return (res);
 }
 
-int	computeColor(t_vars vars, t_rays ray)
-{}
+int	computeColor(t_vars vars, t_ray ray, t_item **items)
+{
+	int 	ambientColor;
+	int		diffuseColor;
+	double	lightAngle;
+	vector	point;
+	vector	surfaceNormal;
+	vector	reflectionV;
+	double	shining;
+
+	ambientColor = scaleColor(0, ray.closestitem->color, vars.cam->ambient);
+	lightAngle = getLightAngle(vars.cam->pos, ray.direction, ray, vars.cam->light, *items);
+	if (lightAngle < 0)
+		return (ambientColor);
+	point = addv(vars.cam->pos, multiv(ray.direction, ray.dist));
+	surfaceNormal = getSurfaceNormal(point, ray.closestitem);
+	reflectionV = getReflectionV(normalizev(subv(vars.cam->light, point)), surfaceNormal);
+	diffuseColor = scaleColor(ambientColor, ray.closestitem->color, lightAngle);
+	shining = dotv(reflectionV, ray.direction);
+	if (shining < 0)
+		return (scaleColor(diffuseColor,0x00FFFFFF, pow(shining,32)));
+	else
+		return diffuseColor;
+}
 
 double	hitPl(vector origin, vector ray, t_plane plane)
 {
@@ -147,28 +169,28 @@ double	hitPl(vector origin, vector ray, t_plane plane)
 	if (denom > EPSILON || denom < (-1 * EPSILON))
 	{
 		dist = dotv(subv(plane.point, origin)  , plane.orientation) / denom;
-		if (dist > 0 && dist < 2500)
+		if (dist > 0)
 			return dist;
 	}
 	return (-1.0);
 }
 
-void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays *rays)
+void	updateRayDist(int i, t_vars *vars, t_item *obj)
 {
 	int	j;
 	double	dist;
 
 	j = -1;
-	while(++j < screendim)
+	while(++j < vars->cam->pixels[0])
 	{
 		if (obj->t_type == SHPERE)
-			dist = hitSp(vars->cam->pos, vars->cam->dirvectors[i][j], obj->sphere);
+			dist = hitSp(vars->cam->pos, vars->cam->rays[i][j].direction, obj->sphere);
 		else if (obj->t_type == PLANE)
-			dist = hitPl(vars->cam->pos, vars->cam->dirvectors[i][j], obj->plane);
-		if (dist > 0 && ((rays + j)->dist == -1.0 || dist < (rays + j)->dist))
+			dist = hitPl(vars->cam->pos, vars->cam->rays[i][j].direction, obj->plane);
+		if (dist > 0 && (vars->cam->rays[i][j].dist == -1.0 || dist < vars->cam->rays[i][j].dist))
 		{
-			(rays + j)->dist = dist;
-			(rays + j)->closestitem = obj;
+			vars->cam->rays[i][j].dist = dist;
+			vars->cam->rays[i][j].closestitem = obj;
 		}
 	}
 }

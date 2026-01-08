@@ -42,7 +42,6 @@ int	init_vars(t_vars *vars, int screendim[2])
 {
 	vars->mlx = NULL;
 	vars->mlx = mlx_init();
-	vars->ambient = 0.1;
 	if (!(vars->mlx))
 		return (0);
 	vars->win = mlx_new_window(vars->mlx, screendim[0], screendim[1], "Trace my rays!");
@@ -61,19 +60,19 @@ int main()
 	int			fov = 120;
 	vector		campos;
 	vector		camdir;
-	campos.x = -5;
+	campos.x = 0;
 	campos.y = 0;
-	campos.z = 8;
+	campos.z = 5;
 	camdir.x = 1;
 	camdir.y = 0;
-	camdir.z = -0.1;
+	camdir.z = 0;
 	camdir = normalizev(camdir);
 
 	int	screendim[2] = {1400,800};
 
 	t_item	*items;
+	
 	t_item	plane;
-
 	plane.t_type = PLANE;
 	plane.plane.point.x = 0;
 	plane.plane.point.y = 0;
@@ -82,22 +81,31 @@ int main()
 	plane.plane.orientation.y = 0;
 	plane.plane.orientation.z = 1;
 	plane.plane.orientation = normalizev(plane.plane.orientation);
-	plane.color = 0x003030A0;
+	plane.color = 0x000000FF;
 
 	t_item	plane2;
-
 	plane2.t_type = PLANE;
 	plane2.plane.point.x = 0;
-	plane2.plane.point.y = 1;
+	plane2.plane.point.y = 10;
 	plane2.plane.point.z = 0;
 	plane2.plane.orientation.x = 0;
 	plane2.plane.orientation.y = 1;
-	plane2.plane.orientation.z = 1;
+	plane2.plane.orientation.z = 0;
 	plane2.plane.orientation = normalizev(plane2.plane.orientation);
-	plane2.color = 0x00A0AAAA;
+	plane2.color = 0x0000FFFF;
 	
-	t_item	ball;
+	t_item	plane3;
+	plane3.t_type = PLANE;
+	plane3.plane.point.x = 30;
+	plane3.plane.point.y = 0;
+	plane3.plane.point.z = 0;
+	plane3.plane.orientation.x = -1;
+	plane3.plane.orientation.y = 0;
+	plane3.plane.orientation.z = 0;
+	plane3.plane.orientation = normalizev(plane3.plane.orientation);
+	plane3.color = 0x00C000FF;
 
+	t_item	ball;
 	ball.t_type = SHPERE;
 	ball.sphere.pos.x = 9;
 	ball.sphere.pos.y = 1;
@@ -106,61 +114,57 @@ int main()
 	ball.color = 0x0072903F;
 
 	t_item	ball2;
-
 	ball2.t_type = SHPERE;
 	ball2.sphere.pos.x = 8;
 	ball2.sphere.pos.y = 1;
 	ball2.sphere.pos.z = 6.5;
 	ball2.sphere.radius = 1;
 	ball2.color = 0x0020A020;
+	
+	t_item	ball3;
+	ball3.t_type = SHPERE;
+	ball3.sphere.pos.x = 5;
+	ball3.sphere.pos.y = 3.5;
+	ball3.sphere.pos.z = 4;
+	ball3.sphere.radius = 0.5;
+	ball3.color = 0x00F0B0A0;
 
 	items = &plane;
-	// plane.next = &plane2;
-	plane.next = &ball;
-	// plane2.next = &ball;
+	plane.next = &plane2;
+	plane2.next = &plane3;
+	plane3.next = &ball;
 	ball.next = &ball2;
-	ball2.next = NULL;
+	ball2.next = &ball3;
+	ball3.next = NULL;
 
-	vector light;
-	light.x = 9;
-	light.y = 1;
-	light.z = 100;
 	
 	t_vars	vars;
 	init_vars(&vars, screendim);
 	vars.cam = cam_init(campos, camdir, fov, screendim);
 	dirVector_init(vars.cam);
 	vars.colors = init_data(&vars, screendim);
-	t_rays	*rays;
-	rays = malloc(sizeof(t_rays) * screendim[0]);
+
+	vars.cam->light.x = 1;
+	vars.cam->light.y  = 5;
+	vars.cam->light.z  = 5;
+
 	int	i = -1;
-	while(++i < screendim[1])
+	vars.cam->items = &items;
+	t_item	*item;
+	while(++i < vars.cam->pixels[1])
 	{
-		int j = -1;
-		while(++j < screendim[0])
+		item = *(vars.cam->items);
+		int j;
+		while(item)
 		{
-			(rays+j)->dist = -1.0;
-			(rays+j)->closestitem = NULL;
+			updateRayDist(i, &vars, item);
+			item = item->next;
 		}
-		updateRayDist(screendim[0], i, &vars, &ball, rays);
-		updateRayDist(screendim[0], i, &vars, &ball2, rays);
-		updateRayDist(screendim[0], i, &vars, &plane, rays);
-		// updateRayDist(screendim[0], i, &vars, &plane2, rays);
 		j = -1;
 		while(++j < screendim[0])
 		{
-			if (rays[j].closestitem)
-			{
-				int ambientColor = scaleColor(0, rays[j].closestitem->color, vars.ambient);
-				double lightAngle = getLightAngle(campos, vars.cam->dirvectors[i][j] ,rays[j], light, items);
-				// vars.colors->addr[i*screendim[0]+j] = computeColor(vars, rays[j], items);
-				if (lightAngle > 0)
-				{
-					vars.colors->addr[i*screendim[0]+j] = scaleColor(ambientColor, rays[j].closestitem->color, lightAngle);
-				}
-				else
-					vars.colors->addr[i*screendim[0]+j] = ambientColor;
-			}
+			if (vars.cam->rays[i][j].closestitem)
+				vars.colors->addr[i*screendim[0]+j] = computeColor(vars, vars.cam->rays[i][j], vars.cam->items);
 		}
 	}
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.colors->img, 0, 0);

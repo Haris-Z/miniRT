@@ -2,6 +2,7 @@
 # define MINI_RT_H
 
 # define EPSILON 0.0000001
+# define RADIAN 57.2958
 
 # include <mlx.h>
 # include <stdlib.h>
@@ -48,22 +49,28 @@ typedef struct s_item
 	struct s_item	*next;
 } t_item;
 
-typedef struct s_camera
-{
-	vector	orientation;
-	vector	pos;
-	vector	**dirvectors;
-	int		pixels[2];
-	double		fov;
-} t_camera;
-
-typedef struct s_rays
+typedef struct s_ray
 {
 	vector	direction;
 	double	dist;
 	t_item	*closestitem;
-} t_rays;
+} t_ray;
 
+//stuff for the simulation
+typedef struct s_camera
+{
+	vector	orientation;
+	vector	pos;
+	t_item	**items;
+	vector	light;
+	t_ray	**rays;
+	int		pixels[2];
+	double		fov;
+	double		ambient;
+} t_camera;
+
+
+//struct to feed minilibX
 typedef struct	s_data
 {
 	void	*img;
@@ -73,24 +80,24 @@ typedef struct	s_data
 	int		endian;
 }				t_data;
 
+//root struct
 typedef struct s_vars
 {
 	void		*mlx;
 	void		*win;
 	t_camera	*cam;
 	t_data		*colors;
-	double		ambient;
 }	t_vars;
 
 t_camera	*cam_init(vector pos, vector orientation, int fov, int screendi[2]);
 void	kill_cam(t_camera	*cam);
 double	hitSp(vector origin ,vector ray, t_sphere sphere);
 double	hitPl(vector origin ,vector ray, t_plane plane);
-void	updateRayDist(int screendim, int i, t_vars *vars, t_item *obj, t_rays	*rays);
+void	updateRayDist(int i, t_vars *vars, t_item *obj);
 int	dirVector_init(t_camera *cam);
 
-int	computeColor(t_vars vars, t_rays ray);
-double	getLightAngle(vector oPoint, vector dir, t_rays ray, vector light, t_item *items);
+int	computeColor(t_vars vars, t_ray ray, t_item **items);
+double	getLightAngle(vector oPoint, vector dir, t_ray ray, vector light, t_item *items);
 int	scaleColor(int min, int max, double amount);
 
 #endif
