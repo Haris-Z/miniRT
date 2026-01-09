@@ -84,16 +84,10 @@ define infofds
 end
 
 # set all the interesting breakpoints for program
-define bprogramname
+define bminirt
   printf "Setting programname-related breakpoints...\n"
   break main
-  break somefunc1
-  break somefunc2
-  break somefunc3
-  break somefunc4
-  break somefunc5
-  break somefunc6
-  break somefunc7
+  break parse_file
 end
 
 

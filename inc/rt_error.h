@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 09:30:44 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 20:33:06 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@
 # define ERR_USAGE "./miniRT /path/to/file.rt" // -> 
 
 // Parsing Errors
+# define MSG_PARSE_EMPTY_FILE "File empty .. "
+# define MSG_TRAILING_GARBAGE "Invalid line contains trailing garbage"
+# define MSG_PARSE_DUPLICATE_AMBIENT "Duplicate ambient lighting (A)"
+# define MSG_PARSE_UNKNONW_ID "Unknown ID"
 # define ERR_PARSE_A_MSG " add message here ... "
 # define ERR_UNEXPECTED_TOKEN "%s: unexpected token \"%s\""
 # define ERR_RTFILE_L " add message "
@@ -47,6 +51,8 @@
 # define MSG_RT_WIN_CREATE "Errror\n Failed to initialize mlx_window ... "
 # define MSG_RT_IMG_CREATE "Failed to initialize mlx_image ... "
 
+# include <string.h>
+# include <errno.h>
 
 /**
  * @brief	struct containing error codes for miniRT
@@ -57,8 +63,8 @@ typedef enum e_eflag
 	E_OK = 0,					// Success
 	E_USAGE,					// "./miniRT /path/to/file.rt"
 	E_PARSE_BASE,
-	E_PARSE_EMPTY_FILE,
-	E_PARSE_UNKNOWN_ID,
+	E_PARSE_EMPTY_FILE,			// "File empty .."
+	E_PARSE_UNKNOWN_ID,			// 
 	E_PARSE_BAD_FLOAT,
 	E_PARSE_BAD_INT,
 	E_PARSE_BAD_COLOR,			// "Invalid RGB color for "
@@ -77,7 +83,7 @@ typedef enum e_eflag
 	E_PARSE_MISSING_CAMERA,
 	E_PARSE_MISSING_LIGHT,
 	E_PARSE_MISSING_TOKEN,
-	E_PARSE_TRAILING_GARBAGE,
+	E_PARSE_TRAILING_GARBAGE,	// "Invalid line contains trailing garbage"
 	E_PARSE_END,
 	E_RT_BASE,					// "[PARSE] | "
 	E_RT_MLX_INIT,				// "Failed to Initialize mlx."

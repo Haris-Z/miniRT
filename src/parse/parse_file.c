@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 19:58:41 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 20:29:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ static int	parse_lines(t_scene *s, char **t)
 	// 	return (parse_plane(s, t));
 	// if (t[0][0] == 'c' && t[0][1] == 'y' && t[0][2] == '\0')
 	// 	return (parse_cylinder(s, t));
-	TRACELOG(LOG_WARNING, "t[0]=%s", t[0]);
-	return (1);
+	TRACELOG(LOG_WARNING, "parse_lines() -> t[0]=%s", t[0]);
+	return (E_PARSE_UNKNOWN_ID);
 }
 
 static int	validate_scene(t_scene *s)
@@ -111,7 +111,7 @@ int	parse_file(const char *path, t_scene *s)
 		{
 			close(fd);
 			scene_clear(s);
-			return(rt_error_msg(sterror(errno)));
+			return(rt_error_msg(strerror(errno)));
 		}
 		if (toks[0])
 			any_tokens = 1;
@@ -121,7 +121,7 @@ int	parse_file(const char *path, t_scene *s)
 		{
 			close(fd);
 			scene_clear(s);
-			return (rt_log_error(e, "a", ln, "a"));
+			return (rt_log_error(e, NULL, ln, NULL));
 		}
 		line = get_next_line(fd);
 	}

@@ -1,1 +1,0 @@
-https://github.com/Xperaz/minirt/tree/master/maps

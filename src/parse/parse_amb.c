@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:02:44 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 14:53:42 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 20:29:55 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parse_ambient(t_scene *s, char **t)
 	if (!t[1] || !t[2] || t[3])
 	{
 		rt_error_msg("Ambient (A): expected 'A ratio R,G,B'");
-		return (1);
+		return (E_PARSE_TRAILING_GARBAGE);
 	}
 	if (parse_ratio(t[1], &a.ratio) != 0)
 		return (rt_error_msg("Invalid ratio (range/bad double) for Ambient (A)"));
@@ -50,7 +50,7 @@ int	parse_ambient(t_scene *s, char **t)
 	if (scene_set_ambient(s, a) != 0)
 	{
 		rt_error_msg("Duplicate ambient lighting (A)");
-		return (1);
+		return (E_PARSE_DUPLICATE_AMBIENT);
 	}
 	return (0);
 }

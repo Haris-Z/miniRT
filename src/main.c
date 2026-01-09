@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 15:11:12 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 19:48:36 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	rt_draw_test_pattern(t_rt_mlx *rt);
 int	main(int argc, char **argv)
 {
 	t_rt_mlx	app;
+	//int			err;
 
 	rt_log_set_level(LOG_ALL);
 	if (argc != 2)
@@ -37,9 +38,26 @@ int	main(int argc, char **argv)
 	ft_bzero(&app, sizeof(app));
 	TRACELOG(LOG_INFO, "Parsing file %s", argv[1]);
 	if(parse_file(argv[1], &app.scene) != 0)
-		printf("parsed:\n");
-	TRACELOG(LOG_DEBUG, "app.scene.amb.color=%.2f | ratio=%.2f\n", app.scene.amb.color, app.scene.amb.ratio);
+		return (1);
+	TRACELOG(LOG_INFO, "\n(A) color=%.2f | ratio=%.2f\n", app.scene.amb.color, app.scene.amb.ratio);
+	TRACELOG(LOG_INFO, "\n(C) (vp direction ) pos.x=%.2f | pos.y=%.2f | pos.z=%.2f \n\
+(C) (orientation  ) dir.x=%.2f | dir.y=%.2f | dir.z=%.2f\n\
+(C) (fov in deg)   fov_deg = %.2f\n",
+	app.scene.cam.pos.x, app.scene.cam.pos.y, app.scene.cam.pos.z,
+	app.scene.cam.dir.x, app.scene.cam.dir.z, app.scene.cam.dir.z,
+	app.scene.cam.fov_deg );
+	TRACELOG(LOG_INFO, "\n(L)  pos.x=%.2f | pos.y=%.2f | pos.z=%.2f\n\
+(L) (brightness ) %.2f\n\
+(L) (color )   pos.x=%.2f | pos.y=%.2f | pos.z=%.2f\n",
+	app.scene.light.pos.x, app.scene.light.pos.y, app.scene.light.pos.z,
+	app.scene.light.bright,
+	app.scene.light.color.x, app.scene.light.color.y, app.scene.light.color.z);
 
+	TRACELOG(LOG_INFO, "\n(sp)  pos.x=%.2f | pos.y=%.2f | pos.z=%.2f\n", app.scene.objs->u.sp.center.x, app.scene.objs->u.sp.center.y, app.scene.objs->u.sp.center.z);
+
+	scene_clear(&app.scene);
+	// id	center	diameter/radius		color
+	// sp	0,0,20				20		255,0,0
 	return (0);
 }
 

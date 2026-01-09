@@ -32,6 +32,7 @@ NAME 		= miniRT
 CC          	:= cc
 # CFLAGS → compile flags (-Wall ..., -Iinclude, -g, etc.)
 CFLAGS      	:= -Wall -Wextra -Werror -Wno-unused-function
+# -Wdouble-promotion
 # CPPFLAGS  -> preprocessor flags ( -I..., -D... )
 CPPFLAGS		:=
 # LDFLAGS → link flags for paths/options (-L..., -Wl,...)
@@ -220,7 +221,7 @@ aclean: fclean clean-docs
 
 test: $(NAME)
 	@echo "$(YELLOW) Runnning test ... $(RESET)"
-	./$(NAME) $(TEST_DIR)/test_scenes/scenes/mini.rt
+	./$(NAME) $(TEST_DIR)/test_files/mini.rt
 
 # fsan:
 
