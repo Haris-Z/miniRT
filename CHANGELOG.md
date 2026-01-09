@@ -35,7 +35,7 @@ RT_DEBUG=0 make re
 RT_DEBUG=0 make
 ```
 
-- the SAN flag is always on as a baseline 
+- the SAN flag is always on as a baseline, also program might take a second to run
 
 ```bash
 # to run a the program 
