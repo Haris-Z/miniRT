@@ -56,7 +56,7 @@ libs/minilibx-linux/
 
 # src/error/
 # src/parse/
-src/ray/
+# src/ray/
 # src/scene/
 # src/vec/
 
