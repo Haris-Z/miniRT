@@ -119,16 +119,41 @@ LDLIBS    += -lft -lmlx -lXext -lX11 -lm -lz
 # ============================================================================ #
 
 # ============================================================================ #
-#  SOURCE LIST (norm compliant)                                                #
+#  SOURCE LIST                                                                 #
 # ============================================================================ #
 
 # ============================================================================ #
 SRCS		:= \
 			main.c \
 			error/rt_error.c \
+			rt/rt_run.c \
+			rt/rt_init.c \
+			rt/rt_img.c \
+			rt/rt_events.c \
+			color/color.c \
+			parse/parse_amb.c \
+			parse/parse_cam.c \
+			parse/parse_elems.c \
+			parse/parse_light.c \
+			parse/parse_num.c \
+			parse/parse_obj.c \
+			parse/parse_file.c \
+			parse/parse_utils.c \
+			parse/parse_vec.c \
+			scene/scene_add_obj.c \
+			scene/scene_init.c \
+			scene/scene_set_elem.c \
+			vec/vec_len.c \
+			vec/vec_norm.c \
+			vec/vec_ops.c \
+			vec/vec_ops1.c \
+			vec/vec.c \
 			log/rt_log.c \
 			log/dbg_log.c \
 			log/trace_log.c
+			
+#			ray/ray.c
+
 # ============================================================================ #
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -197,7 +222,9 @@ test: $(NAME)
 	@echo "$(YELLOW) Runnning test ... $(RESET)"
 	./$(NAME) $(TEST_DIR)/test_scenes/scenes/mini.rt
 
-fsan:
+# fsan:
+
+# vlg:
 
 # ============================================================================ #
 #                           DOCUMENTATION (Doxygen)                            #
@@ -328,5 +355,6 @@ help: ## Show this help
 # ============================================================================ #
 .PHONY: all clean fclean re aclean \
 		docs open-docs clean-docs \
+		static_analysis \
 		config help \
 		test run

@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 01:19:56 by hazunic           #+#    #+#             */
-/*   Updated: 2025/11/21 19:49:46 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 14:37:01 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ static char	*extract_from_buffer(char **stat_buf)
 	if (extracted_line == NULL)
 		return (free_and_null(stat_buf));
 	ft_strlcpy(extracted_line, *stat_buf, line_len + 1);
-	*stat_buf = update_buffer_for_next_line(*stat_buf, line_end + line_len);
+	*stat_buf = update_buffer_for_next_line(*stat_buf, line_end + line_len - 1);
 	return (extracted_line);
 }
 

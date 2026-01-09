@@ -6,13 +6,13 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 22:00:55 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 22:00:56 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 11:51:32 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/mini.h"
+#include "mini.h"
 
-double	hitSp(vector ray, t_item ball)
+double	hit_sphere(vector ray, t_item ball)
 {
 
 	double	a;

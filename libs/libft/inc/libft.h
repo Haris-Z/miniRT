@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:38:10 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/07 18:44:42 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 12:26:16 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -838,6 +838,15 @@ void	*free_and_null(char **ptr_to_free);
 /// @param new_size 
 /// @return 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+
+
+/**
+ * @brief 
+ * 
+ * @param arr 
+ */
+void	free_array(char **arr);
+
 /** @} */
 
 /*────────────────────────────────────────────────────────────────────────────*/

@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 19:52:41 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 15:11:12 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,36 @@
 #include "rt_error.h"
 #include "trace_log.h"
 #include "dbg_log.h"
+#include "parser.h"
+#include "scene.h"
 #include <stdio.h>
 //#include <stdbool.h>
 
-static int	test_rt_init(int ac, char **av);
+static int	test_all_rt(int argc, char **argv);
+static int	test_rt_init(int argc, char **av);
 static int	test_rt_simple_draw(int ac, char **av);
 static void	rt_draw_test_pattern(t_rt_mlx *rt);
 
 // printf("x:%f y:%f z:%f\n", v.x, v.y, v.z);
 
 int	main(int argc, char **argv)
+{
+	t_rt_mlx	app;
+
+	rt_log_set_level(LOG_ALL);
+	if (argc != 2)
+		rt_log_error(E_USAGE, NULL, -1, NULL);
+	ft_bzero(&app, sizeof(app));
+	TRACELOG(LOG_INFO, "Parsing file %s", argv[1]);
+	if(parse_file(argv[1], &app.scene) != 0)
+		printf("parsed:\n");
+	TRACELOG(LOG_DEBUG, "app.scene.amb.color=%.2f | ratio=%.2f\n", app.scene.amb.color, app.scene.amb.ratio);
+
+	return (0);
+}
+
+
+static int	test_all_rt(int argc, char **argv)
 {
 	test_rt_simple_draw(argc, argv);
 	return (0);
@@ -112,12 +132,12 @@ static void	rt_draw_test_pattern(t_rt_mlx *rt)
 	mlx_put_image_to_window(rt->mlx, rt->win, rt->img.ptr, 0, 0);
 }
 
-// int	main(int ac, char **av)
+// int	main(int argc, char **argv)
 // {
 // 	t_rt_mlx	app;
 
-// 	(void)ac;
-// 	(void)av;
+// 	(void)argc;
+// 	(void)argv;
 // 	ft_bzero(&app, sizeof(app));
 // 	TRACELOG(LOG_INFO, "Initializing rt ...");
 // 	if (rt_init(&app, 900, 600, RT_WINDOW_NAME) != 0)

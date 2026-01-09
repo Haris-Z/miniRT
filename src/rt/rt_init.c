@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 17:05:17 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 16:00:55 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	rt_init(t_rt_mlx *rt, int w, int h, const char *title)
 */
 void	rt_destroy(t_rt_mlx *rt)
 {
+	scene_clear(&rt->scene);
 	if (rt->img.ptr)
 		rt_img_destroy(rt, &rt->img);
 	if (rt->win)

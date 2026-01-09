@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:09:01 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 16:45:52 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 12:24:43 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 #include <string.h>
 
 static const char	*rt_strerror(t_eflag e);
+
+int	rt_error_msg(const char *msg)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd((char *)msg, 2);
+	ft_putstr_fd("\n", 2);
+	return (1);
+}
 
 /**
  * @brief 

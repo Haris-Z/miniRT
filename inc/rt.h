@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:13:51 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 22:21:01 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 12:50:10 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 # include "vec.h"
 # include "ray.h"
 # include "color.h"
-// # include "scene.h"
-// # include "parser.h"
+# include "scene.h"
+# include "parser.h"
 
 /**
  * @brief 
@@ -71,7 +71,7 @@ typedef struct s_rt_mlx
 	int		h;
 	// int screendim[2]
 	int		should_quit;
-	//t_scene	scene;
+	t_scene	scene;
 	// err_context
 	// state
 	// flag

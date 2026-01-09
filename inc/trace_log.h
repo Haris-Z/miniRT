@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 09:30:51 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 22:23:40 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 15:49:58 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef enum e_log_level
 }	t_log_level;
 
 /* configure */
+
+// set rt_log_set_level() to the loglevel at the beginning of main or wherever you want to use it
 void		rt_log_set_level(t_log_level lvl);
 t_log_level	rt_log_get_level(void);
 void		rt_log_cycle_level(void);

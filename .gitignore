@@ -42,6 +42,9 @@ obj/*
 # debug information files
 #.gdb_history
 
+# PROJECT
+Makefile
+
 # minilibx
 libs/minilibx-linux/
 
@@ -52,10 +55,10 @@ libs/minilibx-linux/
 # inc/color.h
 
 # src/error/
-src/parse/
+# src/parse/
 src/ray/
-src/scene/
-src/vec/
+# src/scene/
+# src/vec/
 
 # src/rt/rt_run.c
 # src/rt/rt_events.c
@@ -64,7 +67,7 @@ src/vec/
 # src/log/trace_log.c
 # src/log/dbg_log.c
 
-src/color/color.c
+# src/color/color.c
 
 
 # tests dirs/files

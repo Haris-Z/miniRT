@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 17:03:14 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 09:30:44 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,7 @@ typedef enum e_eflag
  * @return int 
  */
 int	rt_log_error(int code, const char *msg, int i, char *arg);
+
+int	rt_error_msg(const char *msg);
 
 #endif // RT_ERROR_H
