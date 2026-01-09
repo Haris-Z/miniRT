@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:49:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 12:45:36 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 18:15:04 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,9 @@ int	parse_fov(const char *tok, double *out);
 // L	-40,0,30	0.7 		255,255,255
 int	parse_light(t_scene *s, char **t);
 
+// SPHERE
+// id	center	diameter/radius		color
+// sp	0,0,20				20		255,0,0
+int	parse_sphere(t_scene *s, char **t);
 
-#endif
+#endif // PARSER_H

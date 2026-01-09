@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 15:57:51 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/09 19:58:41 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,21 @@ static int	parse_lines(t_scene *s, char **t)
 {
 	if (!t[0])
 		return (0);
+	if (t[0][0] == '\n')
+		return (0);
 	if (t[0][0] == 'A' && t[0][1] == '\0')
 		return (parse_ambient(s, t));
 	if (t[0][0] == 'C' && t[0][1] == '\0')
 		return (parse_camera(s, t));
 	if (t[0][0] == 'L' && t[0][1] == '\0')
 		return (parse_light(s, t));
-	// if (t[0][0] == 's' && t[0][1] == 'p' && t[0][2] == '\0')
-	// 	return (parse_sphere(s, t));
+	if (t[0][0] == 's' && t[0][1] == 'p' && t[0][2] == '\0')
+		return (parse_sphere(s, t));
 	// if (t[0][0] == 'p' && t[0][1] == 'l' && t[0][2] == '\0')
 	// 	return (parse_plane(s, t));
 	// if (t[0][0] == 'c' && t[0][1] == 'y' && t[0][2] == '\0')
 	// 	return (parse_cylinder(s, t));
-	TRACELOG(LOG_TRACE, "t[0]:%s t[0][0]:%c", t[0], t[0][0]);
-	rt_error_msg("Unknown Identifier");
+	TRACELOG(LOG_WARNING, "t[0]=%s", t[0]);
 	return (1);
 }
 
@@ -99,18 +100,18 @@ int	parse_file(const char *path, t_scene *s)
 	{
 		ln++;
 		toks = ft_split(line, ' ');
-		int i = 0;
-		while (toks[i])
-		{
-			TRACELOG(LOG_INFO, "line=%s", toks[i]);
-			i++;
-		}
+		// int i = 0;
+		// while (toks[i])
+		// {
+		// 	TRACELOG(LOG_INFO, "line=%s", toks[i]);
+		// 	i++;
+		// }
 		free(line);
 		if (!toks)
 		{
 			close(fd);
 			scene_clear(s);
-			return(rt_log_error(E_SYS, NULL, -1, NULL));
+			return(rt_error_msg(sterror(errno)));
 		}
 		if (toks[0])
 			any_tokens = 1;
@@ -128,13 +129,13 @@ int	parse_file(const char *path, t_scene *s)
 	if (!any_tokens)
 	{
 		scene_clear(s);
-		return (rt_log_error(E_PARSE_EMPTY_FILE, NULL, 0, NULL));
+		return (rt_error_msg("parse_file(): any tokens=0"));
 	}
 	e = validate_scene(s);
 	if (e != E_OK)
 	{
 		scene_clear(s);
-		rt_log_error(e, NULL, 0, NULL);
+		return(rt_log_error(e, NULL, ln, NULL));
 	}
 	return (0);
 }
