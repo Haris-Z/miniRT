@@ -96,6 +96,7 @@ LIBS_DIR	:= libs
 # Location of test files
 TEST_DIR    := tests
 TEST_FILES	:= tests/test_files
+DEFAULT_TEST:= $(TEST_FILES)/mini.rt
 # ============================================================================ #
 LIBFT_DIR	:= $(LIBS_DIR)/libft
 #MLX_DIR		:= $(LIBS_DIR)/minilibx-linux
@@ -210,16 +211,18 @@ re: fclean all
 	@echo "$(BLUE)[$(WARN_ICON)] [miniRT] Rebuilt..  → $(RESET) $(NAME) "
 
 # turns off fsanitize and debug prints from TRACELOG/debuglog
+# runs with tui
+# bminirt are breakpoints set in gdbinit
 debug: fclean
-	@$(MAKE) --no-print-directory DEBUG=1 SAN=0 RT_DEBUG=0
-	@echo "Starting GDB with miniRT..."
+	@$(MAKE) --no-print-directory DEBUG=1 SAN=0 RT_DEBUG=1
+	@echo "Starting GDB with $(NAME) $(DEFAULT_TEST)"
 	@gdb -tui -q \
 	-ex "bminirt" \
 	-ex "layout src" \
 	-ex "focus cmd" \
 	-ex "refresh" \
-	-ex "run tests/test_files/mini.rt" \
-	./miniRT
+	-ex "run $(DEFAULT_TEST)" \
+	./$(NAME)
 
 
 #@gdb -q -ex "source .gdbinit" -ex "bminirt" -ex "run $(TEST_DIR)/test_files/mini.rt" miniRT

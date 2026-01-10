@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:50:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 16:00:07 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 12:28:47 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ static void	obj_free_list(t_obj *o)
 /**
  * @brief	initialze scene struct for parsing
  * 
+ * 
+ * @note defaults can be set without parsing a file
+ * 
  * @param s
  */
 void	scene_init(t_scene *s)
@@ -36,14 +39,14 @@ void	scene_init(t_scene *s)
 	s->has_camera = 0;
 	s->has_light = 0;
 	s->amb.ratio = 0.0;
-	s->amb.color = vec3(0.0, 0.0, 0.0); // Default fov - add macro
-	s->cam.pos = vec3(0.0, 0.0, 0.0);	// Default fov - add macro
-	s->cam.dir = vec3(0.0, 0.0, 1.0);	// Default fov - add macro
-	s->cam.fov_deg = 60.0;						// Default fov - add macro
-	s->light.pos = vec3(0.0, 0.0, 0.0);	// Default fov - add macro
+	s->amb.color = vec3(0.0, 0.0, 0.0); // Default
+	s->cam.pos = vec3(0.0, 0.0, 0.0);	// Default
+	s->cam.dir = vec3(0.0, 0.0, 1.0);	// Default
+	s->cam.fov_deg = 60.0;						// Default
+	s->light.pos = vec3(0.0, 0.0, 0.0);	// Default
 	s->light.bright = 0.0;
-	s->light.color = vec3(1.0, 1.0, 1.0);	// Default fov - add macro
-	s->objs = NULL;
+	s->light.color = vec3(1.0, 1.0, 1.0);	// Default
+	s->objs = NULL; // Set default if needed
 	s->obj_count = 0;
 }
 
