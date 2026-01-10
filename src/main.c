@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 11:55:14 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 12:02:50 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv)
 	// A 0.2 255,255,255
 	// C -50,1,20 0,0,1 70
 	// L -40,0,30 0.7 255,255,255
+	rt_log_set_level(LOG_ALL);
 
 	// sp 0,0,20.6 12.6 10,0,255
 	//test_file_parsing(argc, argv);
@@ -52,17 +53,18 @@ int	main(int argc, char **argv)
 
 	sp.center = vec3(0, 0, 20);
 	sp.radius = 12.6;
-	//sp.color = color_rgb(10, 0, 255);  // White sphere
 	sp.color = color_rgb(10, 0, 255);
+
+	t_sphere sphere[] = {sp};
+	int sp_count = 1;
 	
 	debug_log("Settings from mini.rt file:\n");
 	debug_log("cam.pos.x=%f cam.pos.y=%f cam.pos.z=%f\n", cam.pos.x, cam.pos.y, cam.pos.z);
 	debug_log("cam.dir.x=%f cam.dir.y=%f cam.dir.z=%f\n", cam.dir.x, cam.dir.y, cam.dir.z);
 
-	t_sphere sphere[] = {sp};
-	int sp_count = 1;
+
 	debug_log("amb.ratio: %f\n", amb.ratio);
-	debug_log("amb.color.x=%f amb.color.y=%f amb.color.z=%f\n", amb.color.x, amb.color.y, amb.color.z);
+	TRACELOG(LOG_INFO,"amb.color.x=%f amb.color.y=%f amb.color.z=%f\n", amb.color.x, amb.color.y, amb.color.z);
 	
 	debug_log("sp.center: (%.1f, %.1f, %.1f), sp.radius: %.1f\n", sp.center.x, sp.center.y, sp.center.z, sp.radius);
 	debug_log("sp->center: (%.1f, %.1f, %.1f), sphere->radius: %.1f\n , count: %d", sphere->center.x, sphere->center.y, sphere->center.z, sphere->radius, sp_count);

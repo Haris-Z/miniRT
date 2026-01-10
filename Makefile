@@ -211,7 +211,7 @@ re: fclean all
 
 # turns off fsanitize and debug prints from TRACELOG/debuglog
 debug: fclean
-	@$(MAKE) --no-print-directory DEBUG=1 SAN=0 RT_DEBUG=1
+	@$(MAKE) --no-print-directory DEBUG=1 SAN=0 RT_DEBUG=0
 	@echo "Starting GDB with miniRT..."
 	@gdb -tui -q \
 	-ex "bminirt" \
