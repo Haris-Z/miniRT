@@ -173,7 +173,7 @@ all: $(NAME)
 
 # if mlx installed on system
 # Link: .o -> + libs -> executable
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 	@echo "$(GREEN)[$(OK_ICON) ] [miniRT] Build succeeded $(RESET) → $(BOLD)$(NAME)$(RESET)"
 	$(MODE_MSG)
