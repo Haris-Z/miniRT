@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 10:05:01 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 10:18:43 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "dbg_log.h"
 #include "parser.h"
 #include "scene.h"
+#include "vec.h"
 #include <stdio.h>
 //#include <stdbool.h>
 
@@ -33,11 +34,20 @@ int	main(int argc, char **argv)
 	// A 0.2 255,255,255
 	// C -50,1,20 0,0,1 70
 	// L -40,0,30 0.7 255,255,255
-	test_file_parsing(argc, argv);
-	// t_camera cam = {0};
-	// cam.pos = vec3()
+	//test_file_parsing(argc, argv);
+	(void)argc;
+	(void)argv;
+	t_camera cam = {0};
+	// t_ambient amb = {0};
+	// t_sphere sp = {0};
+	
+	cam.pos = vec3(-50, 1, 20);
+	cam.dir = vec_norm(vec3(0.0,0.0,1.0));
+	cam.fov_deg = 70.0;
+	debug_log("Settings from mini.rt file:\n");
+	debug_log("cam.pos.x=%f cam.pos.y=%f cam.pos.z=%f\n", cam.pos.x, cam.pos.y, cam.pos.z);
+	debug_log("cam.dir.x=%f cam.dir.y=%f cam.dir.z=%f\n", cam.dir.x, cam.dir.y, cam.dir.z);
 
-	// cam.pos = 
 	return (0);
 }
 static int	test_file_parsing(int argc, char **argv)
