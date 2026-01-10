@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 09:51:14 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 10:05:01 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,23 @@ static int	test_all_rt(int argc, char **argv);
 static int	test_rt_init(int argc, char **av);
 static int	test_rt_simple_draw(int ac, char **av);
 static void	rt_draw_test_pattern(t_rt_mlx *rt);
+static int	test_file_parsing(int argc, char **argv);
 
 // printf("x:%f y:%f z:%f\n", v.x, v.y, v.z);
-
 int	main(int argc, char **argv)
+{
+	
+	// A 0.2 255,255,255
+	// C -50,1,20 0,0,1 70
+	// L -40,0,30 0.7 255,255,255
+	test_file_parsing(argc, argv);
+	// t_camera cam = {0};
+	// cam.pos = vec3()
+
+	// cam.pos = 
+	return (0);
+}
+static int	test_file_parsing(int argc, char **argv)
 {
 	t_rt_mlx	app;
 	//int			err;
