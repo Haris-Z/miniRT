@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 19:48:36 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 09:51:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		rt_log_error(E_USAGE, NULL, -1, NULL);
 	ft_bzero(&app, sizeof(app));
-	TRACELOG(LOG_INFO, "Parsing file %s", argv[1]);
+	TRACELOG(LOG_INFO, "\nParsing file %s ", argv[1]);
 	if(parse_file(argv[1], &app.scene) != 0)
 		return (1);
 	TRACELOG(LOG_INFO, "\n(A) color=%.2f | ratio=%.2f\n", app.scene.amb.color, app.scene.amb.ratio);

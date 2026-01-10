@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 01:19:56 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 14:37:01 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 09:54:36 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,17 +143,39 @@ static char	*extract_from_buffer(char **stat_buf)
 		return (free_and_null(stat_buf));
 	line_end = *stat_buf;
 	line_len = 0;
-	while (line_end[line_len] != '\0' && line_end[line_len] != '\n')
-		line_len++;
-	if (line_end[line_len] == '\n')
-		line_len++;
+	while (*line_end != '\0' && *line_end != '\n')
+		line_end++;
+	if (*line_end == '\n')
+		line_len = line_end - *stat_buf + 1;
+	else
+		line_len = line_end - *stat_buf;
 	extracted_line = (char *)malloc(line_len + 1);
 	if (extracted_line == NULL)
 		return (free_and_null(stat_buf));
-	ft_strlcpy(extracted_line, *stat_buf, line_len + 1);
-	*stat_buf = update_buffer_for_next_line(*stat_buf, line_end + line_len - 1);
+	ft_memcpy(extracted_line, *stat_buf, line_len);
+	extracted_line[line_len] = '\0';
+	*stat_buf = update_buffer_for_next_line(*stat_buf, line_end);
 	return (extracted_line);
 }
+
+// static char	*expand_buffer(char *stat_buf, char *read_buf)
+// {
+// 	size_t	stat_buf_len;
+// 	size_t	read_buf_len;
+// 	char	*combined_buf;
+
+// 	if (stat_buf == NULL || read_buf == NULL)
+// 		return (NULL);
+// 	stat_buf_len = ft_strlen(stat_buf);
+// 	read_buf_len = ft_strlen(read_buf);
+// 	combined_buf = (char *)malloc(stat_buf_len + read_buf_len + 1);
+// 	if (combined_buf == NULL)
+// 		return (free_and_null(&stat_buf));
+// 	ft_memcpy(combined_buf, stat_buf, stat_buf_len);
+// 	ft_memcpy(combined_buf + stat_buf_len, read_buf, read_buf_len + 1);
+// 	free_and_null(&stat_buf);
+// 	return (combined_buf);
+// }
 
 static char	*expand_buffer(char *stat_buf, char *read_buf)
 {
@@ -210,3 +232,30 @@ static int	read_from_fd_into_buffer(int fd, char **stat_buffer)
 	}
 	return (0);
 }
+
+// static int	read_from_fd_into_buffer(int fd, char **stat_buffer)
+// {
+// 	char	*read_buffer;
+// 	ssize_t	read_size;
+
+// 	read_buffer = (char *)malloc(BUFFER_SIZE + 1);
+// 	if (read_buffer == NULL)
+// 		return (READ_ERROR);
+// 	while (ft_strchr(*stat_buffer, '\n') == NULL)
+// 	{
+// 		read_size = read(fd, read_buffer, BUFFER_SIZE);
+// 		if (read_size == READ_ERROR)
+// 		{
+// 			free_and_null(&read_buffer);
+// 			return (READ_ERROR);
+// 		}
+// 		if (read_size == EOF_REACHED)
+// 			break ;
+// 		read_buffer[read_size] = '\0';
+// 		*stat_buffer = expand_buffer(*stat_buffer, read_buffer);
+// 		if (*stat_buffer == NULL)
+// 			return (free_and_null(&read_buffer), READ_ERROR);
+// 	}
+// 	free_and_null(&read_buffer);
+// 	return (0);
+// }
