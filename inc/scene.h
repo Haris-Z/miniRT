@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:52:45 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 13:58:03 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 13:59:41 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,9 @@ int		scene_add_plane(t_scene *s, t_plane pl);
 int		scene_add_cylinder(t_scene *s, t_cylinder cy);
 
 
-// default for testing
+// default for testing - so no based on mini.rt - so no .rt file
+// parsing needed
+// - not tested yet.
 int		set_default_scene_sphere(t_scene *s);
 
 #endif // SCENE_H
