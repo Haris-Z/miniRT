@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:52:45 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 17:43:11 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 13:58:03 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ typedef struct s_obj
 		t_cylinder	cy;
 	}	u;
 	struct s_obj	*next;
-	int				obj_count; // for struct array for now using linked list
+	//int				obj_count; // for struct array for now using linked list
 }	t_obj;
 
 /**
@@ -245,5 +245,9 @@ int		scene_add_plane(t_scene *s, t_plane pl);
  * @return int 
  */
 int		scene_add_cylinder(t_scene *s, t_cylinder cy);
+
+
+// default for testing
+int		set_default_scene_sphere(t_scene *s);
 
 #endif // SCENE_H

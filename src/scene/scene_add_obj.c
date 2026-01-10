@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 16:47:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 19:45:29 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 13:56:36 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static t_obj	*obj_new(t_obj_type type)
 		rt_error_msg(strerror(errno));
 		return (NULL);
 	}
+	// just in case - test
+	ft_bzero(o, sizeof(*o));
 	o->type = type;
 	o->next = NULL;
 	return (o);
