@@ -95,6 +95,7 @@ INC_DIR    	:= inc
 LIBS_DIR	:= libs
 # Location of test files
 TEST_DIR    := tests
+TEST_FILES	:= tests/test_files
 # ============================================================================ #
 LIBFT_DIR	:= $(LIBS_DIR)/libft
 #MLX_DIR		:= $(LIBS_DIR)/minilibx-linux
@@ -210,9 +211,15 @@ re: fclean all
 
 # turns off fsanitize and debug prints from TRACELOG/debuglog
 debug: fclean
-	@$(MAKE) --no-print-directory DEBUG=1 SAN=0 RT_DEBUG=0
+	@$(MAKE) --no-print-directory DEBUG=1 SAN=0 RT_DEBUG=1
 	@echo "Starting GDB with miniRT..."
-	@gdb -tui -q -ex "bminirt" -ex "run $(TEST_DIR)/test_files/mini.rt" miniRT
+	@gdb -tui -q \
+	-ex "bminirt" \
+	-ex "layout src" \
+	-ex "focus cmd" \
+	-ex "refresh" \
+	-ex "run tests/test_files/mini.rt" \
+	./miniRT
 
 
 #@gdb -q -ex "source .gdbinit" -ex "bminirt" -ex "run $(TEST_DIR)/test_files/mini.rt" miniRT
@@ -228,7 +235,7 @@ aclean: fclean clean-docs
 
 test: $(NAME)
 	@echo "$(YELLOW) Runnning test ... $(RESET)"
-	./$(NAME) $(TEST_DIR)/test_files/mini.rt
+	./$(NAME) $(TEST_FILES)/mini.rt
 
 # fsan:
 

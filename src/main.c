@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 10:30:58 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 11:55:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	main(int argc, char **argv)
 	amb.ratio = 0.2;
     amb.color = color_rgb(255, 255, 255);
 
-    sp.center = vec3(0, 0, 20);
-    sp.radius = 12.6;  // Diameter is 20, so radius is 10
-    //sp. = color_create(10, 0, 255);  // White sphere
+	sp.center = vec3(0, 0, 20);
+	sp.radius = 12.6;
+	//sp.color = color_rgb(10, 0, 255);  // White sphere
 	sp.color = color_rgb(10, 0, 255);
 	
 	debug_log("Settings from mini.rt file:\n");
