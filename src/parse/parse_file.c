@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 20:29:14 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 13:02:05 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static int	validate_scene(t_scene *s)
 	return (0);
 }
 
+// add simpler file reading - remove gnl
 int	parse_file(const char *path, t_scene *s)
 {
 	int			fd;
