@@ -209,13 +209,20 @@ fclean: clean
 re: fclean all
 	@echo "$(BLUE)[$(WARN_ICON)] [miniRT] Rebuilt..  → $(RESET) $(NAME) "
 
+debug: fclean
+	@$(MAKE) --no-print-directory DEBUG=1 SAN=0 RT_DEBUG=0
+	@echo "Starting GDB with miniRT..."
+	@gdb -tui -q -ex "bminirt" -ex "run $(TEST_DIR)/test_files/mini.rt" miniRT
+
+
+#@gdb -q -ex "source .gdbinit" -ex "bminirt" -ex "run $(TEST_DIR)/test_files/mini.rt" miniRT
+
 # delete all generated files
 aclean: fclean clean-docs
 
 # ============================================================================ #
 
 # run: $(NAME)
-# 	$(SRCS) += main.c
 # 	@echo "$(YELLOW)Running quick test ... $(RESET)"
 # 	./$(NAME) main.c $(TEST_DIR)/test_scenes/scenes/mini.rt
 
@@ -354,7 +361,7 @@ help: ## Show this help
 		sed -e 's/:.*##/: /' | \
 		awk 'BEGIN {FS = ":[ ]"} {printf "  $(CYAN)%-18s$(RESET) %s\n", $$1, $$2}'
 # ============================================================================ #
-.PHONY: all clean fclean re aclean \
+.PHONY: all clean fclean re debug aclean \
 		docs open-docs clean-docs \
 		static_analysis \
 		config help \
