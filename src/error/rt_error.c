@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:09:01 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 12:50:42 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/10 12:53:33 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	rt_log_error(int code, const char *msg, int i, char *arg)
 {
 	(void)arg;
 	(void)msg;
-	ft_putendl_fd(E_MSG, 2);
 	if (code > E_PARSE_BASE && code < E_PARSE_END)
 	{
 		rt_parse_err(i, (char *)rt_strerror(code), arg);
@@ -48,11 +47,13 @@ int	rt_log_error(int code, const char *msg, int i, char *arg)
 	}
 	else if (code > E_RT_BASE && code < E_RT_END)
 	{
+		ft_putendl_fd(E_MSG, 2);
 		ft_putstr_fd("[RT]", 2);
 		ft_putendl_fd((char *)rt_strerror(code), 2);
 	}
 	else if (code == E_SYS)
 	{
+		ft_putendl_fd(E_MSG, 2);
 		ft_putstr_fd("[SYS]: ", 2);
 		ft_putendl_fd(strerror(errno), 2);
 		// ft_putstr_fd(strerror(errno), 2);
@@ -61,8 +62,11 @@ int	rt_log_error(int code, const char *msg, int i, char *arg)
 		// ft_putendl_fd("", 2);
 	}
 	else
+	{
+		ft_putendl_fd(E_MSG, 2);
 		ft_putendl_fd((char *)msg, 2);
-	return (1);
+	}
+	return (code);
 }
 // int	rt_log_error(int code, const char *msg, int i, char *arg)
 // {
