@@ -12,7 +12,7 @@
 # set confirm off
 
 # full output shown no paging
-set pagination on
+set pagination off
 
 # pretty printing
 set print pretty on
