@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:52:45 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 13:59:41 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 09:46:38 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_sphere
 {
 	t_vec3	center;
 	double	radius;
+	double	diameter;
 	t_color	color;
 }	t_sphere;
 
