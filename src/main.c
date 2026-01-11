@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 08:57:31 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 10:10:44 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	test_default_scene();
+	//test_default_scene();
+	test_file_parsing(argc, argv);
 
 	return (0);
 }
@@ -61,7 +62,8 @@ static int	test_default_scene(void)
 		app.scene.objs->u.sp.center.x, \
 		app.scene.objs->u.sp.center.y, \
 		app.scene.objs->u.sp.center.z, \
-	app.scene.objs->u.sp.radius);
+		app.scene.objs->u.sp.radius, \
+		app.scene.objs->u.sp.diameter);
 
 	
 	
@@ -93,7 +95,8 @@ static int	test_scene_initializaton(int argc, char **argv)
     amb.color = color_rgb(255, 255, 255);
 
 	sp.center = vec3(0, 0, 20);
-	sp.radius = 12.6 * 0.5;
+	sp.diameter = 12.6;
+	sp.radius = sp.diameter * 0.5;
 	sp.color = color_rgb(10, 0, 255);
 
 	t_sphere sphere[] = {sp};
@@ -106,7 +109,7 @@ static int	test_scene_initializaton(int argc, char **argv)
 	TRACELOG(LOG_INFO,"amb.ratio: %f\n", amb.ratio);
 	TRACELOG(LOG_INFO,"amb.color.x=%f amb.color.y=%f amb.color.z=%f\n", amb.color.x, amb.color.y, amb.color.z);
 	TRACELOG(LOG_INFO,"sp.center: (%.1f, %.1f, %.1f), sp.radius: %.1f\n", sp.center.x, sp.center.y, sp.center.z, sp.radius);
-	TRACELOG(LOG_INFO,"sp->center: (%.1f, %.1f, %.1f), sphere->radius: %.1f\n , count: %d", sphere->center.x, sphere->center.y, sphere->center.z, sphere->radius, sp_count);
+	TRACELOG(LOG_INFO,"sp->center: (%.1f, %.1f, %.1f), sphere->radius: %.1f sphere->radius: %.1f\n , count: %d", sphere->center.x, sphere->center.y, sphere->center.z, sphere->radius, sphere->diameter, sp_count);
 	
 	scene_init(&app.scene);
 	return (0);
@@ -117,11 +120,12 @@ static int	test_file_parsing(int argc, char **argv)
 	//int			err;
 
 	rt_log_set_level(LOG_ALL);
+	TRACELOG(LOG_INFO, "\n----------------\nFILE PARSER TEST\n----------------");
 	if (argc != 2)
-		rt_log_error(E_USAGE, NULL, -1, NULL);
+		rt_error_msg(ERR_USAGE);//rt_log_error(E_USAGE, NULL, -1, NULL);
 	ft_bzero(&app, sizeof(app));
 	//scene_init(&app.scene);
-	TRACELOG(LOG_TRACE, "\nParsing file %s ", argv[1]);
+	TRACELOG(LOG_TRACE, "\nParsing file ->-> | %s |", argv[1]);
 	if(parse_file(argv[1], &app.scene) != 0)
 		return (1);
 	TRACELOG(LOG_INFO, "\n(A) color=%.2f | ratio=%.2f\n", app.scene.amb.color, app.scene.amb.ratio);
@@ -129,11 +133,11 @@ static int	test_file_parsing(int argc, char **argv)
 (C) (orientation  ) dir.x=%.2f | dir.y=%.2f | dir.z=%.2f\n\
 (C) (fov in deg)   fov_deg = %.2f\n",
 	app.scene.cam.pos.x, app.scene.cam.pos.y, app.scene.cam.pos.z,
-	app.scene.cam.dir.x, app.scene.cam.dir.z, app.scene.cam.dir.z,
+	app.scene.cam.dir.x, app.scene.cam.dir.y, app.scene.cam.dir.z,
 	app.scene.cam.fov_deg );
-	TRACELOG(LOG_INFO, "\n(L)  pos.x=%.2f | pos.y=%.2f | pos.z=%.2f\n\
-(L) (brightness ) %.2f\n\
-(L) (color )   pos.x=%.2f | pos.y=%.2f | pos.z=%.2f\n",
+	TRACELOG(LOG_INFO, "\n(L) (position)     pos.x=%.2f | pos.y=%.2f | pos.z=%.2f\n\
+(L) (brightness )  %.2f\n\
+(L) (color )       pos.x=%.2f | pos.y=%.2f | pos.z=%.2f\n",
 	app.scene.light.pos.x, app.scene.light.pos.y, app.scene.light.pos.z,
 	app.scene.light.bright,
 	app.scene.light.color.x, app.scene.light.color.y, app.scene.light.color.z);
@@ -141,7 +145,7 @@ static int	test_file_parsing(int argc, char **argv)
 	TRACELOG(LOG_INFO, "\n(sp)  pos.x=%.2f | pos.y=%.2f | pos.z=%.2f\n", app.scene.objs->u.sp.center.x, app.scene.objs->u.sp.center.y, app.scene.objs->u.sp.center.z);
 
 	scene_clear(&app.scene);
-	// id	center	diameter/radius		color
+	// id	center	diameter		color
 	// sp	0,0,20				20		255,0,0
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 14:58:56 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 09:08:06 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	split3(const char *s, int *a, int *b)
 	return (1);
 }
 
+// re-implement - make more tests
 int	parse_vec3(const char *tok, t_vec3 *out)
 {
 	int		c1;
