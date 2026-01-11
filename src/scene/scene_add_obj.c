@@ -6,13 +6,14 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 16:47:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 13:56:36 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 08:29:51 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "scene.h"
 #include <rt_error.h>
+#include "libft.h"
 
 static t_obj	*obj_new(t_obj_type type)
 {
