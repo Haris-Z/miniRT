@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_len.c                                          :+:      :+:    :+:   */
+/*   vec3_make.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/08 21:27:34 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 12:33:32 by hazunic          ###   ########.fr       */
+/*   Created: 2026/01/08 19:43:29 by hazunic           #+#    #+#             */
+/*   Updated: 2026/01/08 20:25:43 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include "vec.h"
 
-double	vec_len2(t_vec3 v)
+t_vec3	vec_neg(t_vec3 v)
 {
-	return (vec_dot(v, v));
+	return (vec3(-v.x, -v.y, -v.z));
 }
 
-double	vec_len(t_vec3 v)
+t_vec3	vec_add(t_vec3 a, t_vec3 b)
 {
-	return (sqrt(vec_len2(v)));
+	return (vec3(a.x + b.x, a.y + b.y, a.z + b.z));
+}
+
+t_vec3	vec_sub(t_vec3 a, t_vec3 b)
+{
+	return (vec3(a.x - b.x, a.y - b.y, a.z - b.z));
+}
+
+t_vec3	vec_mul(t_vec3 a, t_vec3 b)
+{
+	return (vec3(a.x * b.x, a.y * b.y, a.z * b.z));
 }

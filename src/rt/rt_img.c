@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:39:31 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 17:05:29 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 11:23:23 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	rt_img_destroy(t_rt_mlx *rt, t_img *img)
 {
 	if (img->ptr)
 		mlx_destroy_image(rt->mlx, img->ptr);
+	//ft_memset/ft_bzero
 	img->ptr = NULL;
 	img->addr = NULL;
 }

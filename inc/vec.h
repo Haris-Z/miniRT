@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:33:29 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 21:25:21 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 11:06:42 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,6 @@ double	vec_dot(t_vec3 a, t_vec3 b);
  */
 t_vec3	vec_cross(t_vec3 a, t_vec3 b);
 
-// get len - normalize vector
-
-/**
- * @brief 
- * 
- * @param v 
- * @return double 
- */
-double	vec_len2(t_vec3 v);
 
 /**
  * @brief 

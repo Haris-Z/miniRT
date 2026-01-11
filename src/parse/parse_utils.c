@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 09:08:06 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 11:35:29 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "parser.h"
 #include "rt_error.h"
 #include "libft.h"
+
+// simplify whole file
 
 static int	parse_next_token(char *dst, int dstsize, const char *src, int start, int end)
 {

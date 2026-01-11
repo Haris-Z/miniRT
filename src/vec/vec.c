@@ -6,18 +6,18 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 20:25:32 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 20:25:53 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 11:10:53 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec.h"
 
-t_vec3	vec3(double x, double y, double z)
-{
-	t_vec3	v;
+// t_vec3	vec3(double x, double y, double z)
+// {
+// 	t_vec3	v;
 
-	v.x = x;
-	v.y = y;
-	v.z = z;
-	return (v);
-}
+// 	v.x = x;
+// 	v.y = y;
+// 	v.z = z;
+// 	return (v);
+// }

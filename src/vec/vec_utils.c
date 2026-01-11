@@ -1,33 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_ops1.c                                         :+:      :+:    :+:   */
+/*   vec_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/08 19:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 21:27:50 by hazunic          ###   ########.fr       */
+/*   Created: 2026/01/08 21:27:34 by hazunic           #+#    #+#             */
+/*   Updated: 2026/01/11 11:11:53 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "vec.h"
 
-t_vec3	vec_scale(t_vec3 v, double s)
+// create a vec
+t_vec3	vec3(double x, double y, double z)
 {
-	return (vec3(v.x * s, v.y * s, v.z * s));
+	t_vec3	v;
+
+	v.x = x;
+	v.y = y;
+	v.z = z;
+	return (v);
 }
 
-double	vec_dot(t_vec3 a, t_vec3 b)
+// get len of vec
+double	vec_len(t_vec3 v)
 {
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
+	return (sqrt(vec_dot(v, v)));
 }
 
-t_vec3	vec_cross(t_vec3 a, t_vec3 b)
+int	vec_near_zero(t_vec3 v)
 {
-	return (vec3(
-			a.y * b.z - a.z * b.y,
-			a.z * b.x - a.x * b.z,
-			a.x * b.y - a.y * b.x));
+	double	e;
+
+	e = 1e-9;
+	if (fabs(v.x) < e && fabs(v.y) < e && fabs(v.z) < e)
+		return (1);
+	return (0);
 }
 
+t_vec3	vec_reflect(t_vec3 v, t_vec3 norm)
+{
+	return (vec_sub(v, vec_scale(norm, 2.0 * vec_dot(v, norm))));
+}

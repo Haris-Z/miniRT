@@ -6,7 +6,11 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 10:26:38 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 10:26:39 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 10:27:19 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CAM_H
+# define CAM_H
+
+#endif

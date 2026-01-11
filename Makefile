@@ -145,10 +145,10 @@ SRCS		:= \
 			scene/scene_add_obj.c \
 			scene/scene_init.c \
 			scene/scene_set_elem.c \
-			vec/vec_len.c \
+			vec/vec_basic_ops.c \
 			vec/vec_norm.c \
 			vec/vec_ops.c \
-			vec/vec_ops1.c \
+			vec/vec_utils.c \
 			vec/vec.c \
 			log/rt_log.c \
 			log/dbg_log.c \

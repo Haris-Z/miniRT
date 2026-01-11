@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 09:00:01 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 11:21:34 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 */
 int	rt_init(t_rt_mlx *rt, int w, int h, const char *title)
 {
-	//ft_bzero()
+	//move ft_memset/ft_bzero here for cleaner main
 	rt->mlx = NULL;
 	rt->win = NULL;
 	rt->img.ptr = NULL;
