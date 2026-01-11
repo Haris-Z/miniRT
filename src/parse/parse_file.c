@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 13:02:05 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 10:15:55 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	parse_lines(t_scene *s, char **t)
 	// 	return (parse_plane(s, t));
 	// if (t[0][0] == 'c' && t[0][1] == 'y' && t[0][2] == '\0')
 	// 	return (parse_cylinder(s, t));
-	TRACELOG(LOG_WARNING, "parse_lines() -> t[0]=%s", t[0]);
+	TRACELOG(LOG_WARNING, "parse_lines() -> t[0]=(%s)", t[0]);
 	return (E_PARSE_UNKNOWN_ID);
 }
 
@@ -79,6 +79,25 @@ static int	validate_scene(t_scene *s)
 }
 
 // add simpler file reading - remove gnl
+/*
+	-[x] multiple spaces/tabs between fields
+	-[x] blank lines
+	-[x] any element order
+	-[x] A	| ratio				| rgb
+	-[x] C	| pos	| dir		| fov
+	-[x] L	| pos	| bright	| rgb
+	-[x] sp	| pos	| diameter	| rgb
+	-[ ] pl	| pos	| normal	| rgb
+	-[ ] cy	| pos	| axis		| diameter	| height	| rgb
+
+	- validate
+	-[ ] ratios [0..1]
+	-[ ] FOV [0..180]
+	-[ ] colors [0..255]
+	-[ ] normals/orientation components in [-1..1] + unit-length (±1e-3)
+	-[ ] positive diameter/height
+	-[ ] only once of A/C/L
+*/
 int	parse_file(const char *path, t_scene *s)
 {
 	int			fd;
@@ -96,11 +115,11 @@ int	parse_file(const char *path, t_scene *s)
 	ln = 0;
 	any_tokens = 0;
 	line = get_next_line(fd);
-	TRACELOG(LOG_TRACE, "line=%s", line);
+	TRACELOG(LOG_TRACE, "line=(%s)", line);
 	while (line)
 	{
 		ln++;
-		toks = ft_split(line, ' ');
+		toks = ft_split(line, ' '); // check subject again if tabs or any whitespace mentioned
 		// int i = 0;
 		// while (toks[i])
 		// {
