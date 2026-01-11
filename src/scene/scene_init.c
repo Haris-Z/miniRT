@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:50:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 08:47:59 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 10:06:44 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	obj_free_list(t_obj *o)
  * @brief	initialze scene struct for parsing
  * 
  * 
- * @note defaults can be set without parsing a file
+ * @note remove defaults
  * 
  * @param s
  */
@@ -39,6 +39,7 @@ void	scene_init(t_scene *s)
 {
 	if (!s)
 		return ;
+	// ft_bzero()
 	s->has_ambient = 0;
 	s->has_camera = 0;
 	s->has_light = 0;
@@ -80,14 +81,15 @@ int	set_default_scene_sphere(t_scene *s)
 	
 	s->cam.pos = vec3(-50, 1, 20);				// Default
 	s->cam.dir = vec_norm(vec3(0.0,0.0,1.0));	// Default
-	s->cam.fov_deg = 70.0;							   // Default
+	s->cam.fov_deg = 70.0;							   // Default ->int
 	
 	s->light.pos = vec3(-40, 0, 50);	// Default
 	s->light.bright = 0.6;
 	s->light.color = color_rgb(10, 0, 255);	// Default
 
 	sp.center = vec3(0.0, 0.0, 20.6);
-	sp.radius = 12.6 * 0.5;
+	sp.diameter = 12.6;
+	sp.radius = sp.diameter * 0.5;
 	sp.color = color_rgb(10,0,255);
 
 	s->cam.dir = vec_norm(vec_sub(sp.center, s->cam.pos));
