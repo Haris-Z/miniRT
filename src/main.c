@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 13:04:32 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 08:57:31 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,46 +27,45 @@ static int	test_rt_simple_draw(int ac, char **av);
 static void	rt_draw_test_pattern(t_rt_mlx *rt);
 static int	test_file_parsing(int argc, char **argv);
 static int	test_scene_initializaton(int argc, char **argv);
+static int	test_default_scene(void);
 
 int	main(int argc, char **argv)
 {
-	
-	// A 0.2 255,255,255
-	// C -50,1,20 0,0,1 70
-	// L -40,0,30 0.7 255,255,255
-	// sp 0,0,20.6 12.6 10,0,255
-	//test_file_parsing(argc, argv);
 	(void)argc;
 	(void)argv;
-	t_rt_mlx	app = {0};
-	t_camera	cam = {0};
-	t_ambient	amb = {0};
-	t_sphere	sp = {0};
-	
-	cam.pos = vec3(-50, 1, 20);
-	cam.dir = vec_norm(vec3(0.0,0.0,1.0));
-	cam.fov_deg = 70.0;
+	test_default_scene();
 
-	amb.ratio = 0.2;
-    amb.color = color_rgb(255, 255, 255);
+	return (0);
+}
 
-	sp.center = vec3(0, 0, 20);
-	sp.radius = 12.6;
-	sp.color = color_rgb(10, 0, 255);
+static int	test_default_scene(void)
+{
+	t_rt_mlx	app;
 
-	t_sphere sphere[] = {sp};
-	int sp_count = 1;
+	// (void)argc;
+	// (void)argv;
 	
-	rt_log_set_level(LOG_NONE);
-	TRACELOG(LOG_INFO,"Settings from mini.rt file:\n");
-	TRACELOG(LOG_INFO,"cam.pos.x=%f cam.pos.y=%f cam.pos.z=%f\n", cam.pos.x, cam.pos.y, cam.pos.z);
-	TRACELOG(LOG_INFO,"cam.dir.x=%f cam.dir.y=%f cam.dir.z=%f\n", cam.dir.x, cam.dir.y, cam.dir.z);
-	TRACELOG(LOG_INFO,"amb.ratio: %f\n", amb.ratio);
-	TRACELOG(LOG_INFO,"amb.color.x=%f amb.color.y=%f amb.color.z=%f\n", amb.color.x, amb.color.y, amb.color.z);
-	TRACELOG(LOG_INFO,"sp.center: (%.1f, %.1f, %.1f), sp.radius: %.1f\n", sp.center.x, sp.center.y, sp.center.z, sp.radius);
-	TRACELOG(LOG_INFO,"sp->center: (%.1f, %.1f, %.1f), sphere->radius: %.1f\n , count: %d", sphere->center.x, sphere->center.y, sphere->center.z, sphere->radius, sp_count);
+	ft_bzero(&app, sizeof(app));
+	set_default_scene_sphere(&app.scene);
 	
-	scene_init(&app.scene);
+	rt_log_set_level(LOG_TRACE);
+	TRACELOG(LOG_TRACE,"\n\nSettings from default scene:\n");
+	TRACELOG(LOG_INFO,"cam.pos.x=%.2f cam.pos.y=%.2f cam.pos.z=%.2f\n", app.scene.cam.pos.x, app.scene.cam.pos.y, app.scene.cam.pos.z);
+	TRACELOG(LOG_INFO,"cam.dir.x=%f cam.dir.y=%f cam.dir.z=%f\n", app.scene.cam.dir.x, app.scene.cam.dir.y, app.scene.cam.dir.z);
+	TRACELOG(LOG_INFO,"amb.ratio: %.2f\n", app.scene.amb.ratio);
+	TRACELOG(LOG_INFO,"amb.color.x=%f amb.color.y=%f amb.color.z=%f\n", \
+		app.scene.amb.color.x, \
+		app.scene.amb.color.y, \
+		app.scene.amb.color.z);
+	TRACELOG(LOG_INFO,"sp.center: (%.2f, %.2f, %.1f), sp.radius: %.2f\n", \
+		app.scene.objs->u.sp.center.x, \
+		app.scene.objs->u.sp.center.y, \
+		app.scene.objs->u.sp.center.z, \
+	app.scene.objs->u.sp.radius);
+
+	
+	
+	scene_clear(&app.scene);
 	return (0);
 }
 
@@ -94,14 +93,14 @@ static int	test_scene_initializaton(int argc, char **argv)
     amb.color = color_rgb(255, 255, 255);
 
 	sp.center = vec3(0, 0, 20);
-	sp.radius = 12.6;
+	sp.radius = 12.6 * 0.5;
 	sp.color = color_rgb(10, 0, 255);
 
 	t_sphere sphere[] = {sp};
 	int sp_count = 1;
 	
 	rt_log_set_level(LOG_NONE);
-	TRACELOG(LOG_INFO,"Settings from mini.rt file:\n");
+	TRACELOG(LOG_TRACE,"Settings from mini.rt file:\n");
 	TRACELOG(LOG_INFO,"cam.pos.x=%f cam.pos.y=%f cam.pos.z=%f\n", cam.pos.x, cam.pos.y, cam.pos.z);
 	TRACELOG(LOG_INFO,"cam.dir.x=%f cam.dir.y=%f cam.dir.z=%f\n", cam.dir.x, cam.dir.y, cam.dir.z);
 	TRACELOG(LOG_INFO,"amb.ratio: %f\n", amb.ratio);
@@ -122,7 +121,7 @@ static int	test_file_parsing(int argc, char **argv)
 		rt_log_error(E_USAGE, NULL, -1, NULL);
 	ft_bzero(&app, sizeof(app));
 	//scene_init(&app.scene);
-	TRACELOG(LOG_INFO, "\nParsing file %s ", argv[1]);
+	TRACELOG(LOG_TRACE, "\nParsing file %s ", argv[1]);
 	if(parse_file(argv[1], &app.scene) != 0)
 		return (1);
 	TRACELOG(LOG_INFO, "\n(A) color=%.2f | ratio=%.2f\n", app.scene.amb.color, app.scene.amb.ratio);
