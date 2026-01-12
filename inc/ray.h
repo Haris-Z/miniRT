@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:17:27 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 12:24:25 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 08:38:11 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,17 @@
 # include "vec.h"
 
 /**
- * @brief 
+ * @brief
+ * 
+ * @note P(t) = O + t·D, where t ≥ 0
  * 
  */
 typedef struct s_ray
 {
-	t_vec3	origin;		//
-	t_vec3	direction;	//
+	t_vec3	origin;		// origin-point O = (ox,oy,oz)
+	t_vec3	direction;	// dir-vector   D = vec_norm(dx, dy, dz);
+	double	t;			// distance along the ray
 }	t_ray;
-
-// albedo 
-// a measure of reflectivity
-// include reflectivity,
-// reflection coefficient, 
-// reflectance,
-// reflective power,
-// and in digital art/rendering,
-/// diffuse map or base color,
-// all describing how much light a surface bounces back,
-// with higher values meaning more reflection
-// and lower values meaning more absorption.
-typedef struct s_hit
-{
-	double	t;
-	t_vec3	p;
-	t_vec3	n;
-	t_color	albedo; 
-}	t_hit;
 
 /**
  * @brief 
