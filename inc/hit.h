@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 12:57:29 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 13:51:22 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 13:54:06 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	hit_scene_objs(t_scene *s, t_ray r, double tmin, double tmax, t_hit *h);
 
 // not in use currently - refactoring
 // utils
-// t_vec3	hit_get_sphere_normal(t_vec3 center, double radius, t_vec3 h_point);
+t_vec3	hit_get_sphere_normal(t_vec3 center, double radius, t_vec3 h_point);
 // t_color	hit_get_shade(t_scene *s, t_hit hit, t_color albedo);
 
 #endif //HIT_H
