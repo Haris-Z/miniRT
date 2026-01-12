@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:02:44 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 10:17:36 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 15:52:08 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	parse_camera(t_scene *s, char **t)
 		return (1);
 	if (parse_fov(t[3], &cam.fov_deg) != 0)
 		return (E_PARSE_BAD_FOV);
-	if (scene_set_camera(s, cam) != 0)
+	if (scene_set_camera(s, cam) != 0) //E_PARSE_DUPLICATE_CAMERA
 		return(rt_error_msg("Duplicate camera (C)"));
 	return (0);
 }
