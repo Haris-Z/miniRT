@@ -84,6 +84,7 @@ define infofds
 end
 
 # set all the interesting breakpoints for program
+# and then just type bminirt when starting gdb
 define bminirt
   printf "Setting programname-related breakpoints...\n"
   break main

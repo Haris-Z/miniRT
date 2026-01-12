@@ -217,6 +217,7 @@ re: fclean all
 # turns off fsanitize and debug prints from TRACELOG/debuglog
 # runs with tui
 # bminirt are breakpoints set in gdbinit
+# to load gdbinit  - ex " source .gdbinit"
 debug: fclean
 	@$(MAKE) --no-print-directory DEBUG=1 SAN=0 RT_DEBUG=1
 	@echo "Starting GDB with $(NAME) $(DEFAULT_TEST)"
