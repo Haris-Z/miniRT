@@ -58,7 +58,13 @@ libs/minilibx-linux/
 # inc/intersect.h
 
 # src/cam/
-# src/hit/
+src/hit/hit_scene.c
+# src/hit/hit_utils.c
+src/hit/hit_cylinder.c
+src/hit/hit_plane.c
+# src/hit/hit_scene.c
+
+
 src/render/render.c
 src/render/render_default_sphere.c
 src/intersect/hit_scene.c
