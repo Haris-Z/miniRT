@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 12:57:29 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 08:34:54 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 13:51:22 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include "color.h"
 # include "ray.h"
+# include "scene.h"
+
+# define TMIN 1e-4
+# define TMAX 1e30
 
 typedef struct s_hit
 {
@@ -40,10 +44,19 @@ typedef struct s_hit
 // with higher values meaning more reflection
 // and lower values meaning more absorption.
 
-int	hit_sphere(t_sphere *sp, t_ray ray,
-						double tmin, double tmax, t_hit *hit);
 // int hit_plane();
 // int hit_cylinder();
 // int hit_scene_objects();
+int	hit_sphere(t_sphere *sp, t_ray ray, double tmin, double tmax, t_hit *hit);
+int	hit_scene_objs(t_scene *s, t_ray r, double tmin, double tmax, t_hit *h);
+
+// not in use currently - refctoring
+// int	hit_get_sphere_intersection(t_sphere *sp, t_ray ray, t_hit *hit, double tmax);
+// int	hit_get_scene_objs_intersection(t_scene *s, t_ray r, t_hit *h, double tmax);
+
+// not in use currently - refactoring
+// utils
+// t_vec3	hit_get_sphere_normal(t_vec3 center, double radius, t_vec3 h_point);
+// t_color	hit_get_shade(t_scene *s, t_hit hit, t_color albedo);
 
 #endif //HIT_H
