@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:50:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 10:06:44 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 09:22:48 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,20 @@ void	scene_init(t_scene *s)
 {
 	if (!s)
 		return ;
-	// ft_bzero()
+	// ft_bzero() return ;
 	s->has_ambient = 0;
 	s->has_camera = 0;
 	s->has_light = 0;
 	s->amb.ratio = 0.0;
-	s->amb.color = color_rgb(0.0, 0.0, 0.0); // Default
+	s->amb.color = color_rgb(255, 255, 255); // Default white
+	//s->amb.color = color_rgb(0,0,0); // Default black
 	s->cam.pos = vec3(0.0, 0.0, 0.0);	// Default
-	s->cam.dir = vec3(0.0, 0.0, 1.0);	// Default
-	s->cam.fov_deg = 60.0;						// Default
+	s->cam.dir = vec3(0.0, 0.0, 0.0);	// Default
+	s->cam.fov_deg = 0.0;						// Default
 	s->light.pos = vec3(0.0, 0.0, 0.0);	// Default
 	s->light.bright = 0.0;
-	s->light.color = color_rgb(1.0, 1.0, 1.0);	// Default
+	s->light.color = color_rgb(255, 255, 255);	// Default white
+	s->light.color = color_rgb(0, 0, 0);	// Default black
 	s->objs = NULL; // Set default if needed
 	s->obj_count = 0;
 }
@@ -63,6 +65,7 @@ sp	0,0,20.6 12.6 10,0,255
 
 	not tested yet.
 */
+// remove before submissoin
 int	set_default_scene_sphere(t_scene *s)
 {
 	t_sphere	sp;
@@ -70,30 +73,39 @@ int	set_default_scene_sphere(t_scene *s)
 	if (!s)
 		return (1);
 	ft_bzero(&sp, sizeof(sp));
-	scene_clear(s);
 	
 	s->has_ambient = 1;
 	s->has_camera = 1;
 	s->has_light = 1;
 	
 	s->amb.ratio = 0.2;
-	s->amb.color = color_rgb(255, 255, 255);	// Default
-	
-	s->cam.pos = vec3(-50, 1, 20);				// Default
-	s->cam.dir = vec_norm(vec3(0.0,0.0,1.0));	// Default
-	s->cam.fov_deg = 70.0;							   // Default ->int
-	
-	s->light.pos = vec3(-40, 0, 50);	// Default
-	s->light.bright = 0.6;
-	s->light.color = color_rgb(10, 0, 255);	// Default
+	s->amb.color = color_rgb(255, 255, 255);			// Default
+	// s->amb.color = color_rgb(10, 0, 255);				  // Default
 
-	sp.center = vec3(0.0, 0.0, 20.6);
-	sp.diameter = 12.6;
+	s->cam.pos = vec3(0, 0, -5);			       // Default
+	s->cam.dir = vec3(0,0,1);		       // Default
+	//s->cam.dir = vec_norm(vec3(0,0,1));		       // Default
+	s->cam.fov_deg = 70;									 // Default ->int
+	
+	//s->light.pos = vec3(5, 5, -2);	// Default
+	s->light.pos = vec3(-10, 10, 10);	// Default
+	// s->light.pos = vec3(-40.0, 50.0, 0.0);	// Default
+	s->light.bright = 0.6;
+	// not mandatory part - add later
+	//s->light.color = color_rgb(255, 255, 255);
+
+	sp.center = vec3(0.0, 0.0, 0.0);
+	sp.center = vec3(0.0, 0.0, 20.0);
+	sp.diameter = 6.3;
 	sp.radius = sp.diameter * 0.5;
+	// sp.diameter = 4.0;
+	// sp.radius = sp.diameter * 0.5;
+	// sp.color = color_rgb(255,0,0);
 	sp.color = color_rgb(10,0,255);
 
-	s->cam.dir = vec_norm(vec_sub(sp.center, s->cam.pos));
-
+	// point at sphere if not in view.
+	// or set scene correctly
+	//s->cam.dir = vec_norm(vec_sub(sp.center, s->cam.pos));
 	if (scene_add_sphere(s, sp) != 0)
 		return (1);
 	return (0);
