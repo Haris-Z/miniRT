@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 10:15:55 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 20:54:01 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,26 @@ static int	validate_scene(t_scene *s)
 	-[ ] positive diameter/height
 	-[ ] only once of A/C/L
 */
+
+static	int parse_open_file(char *file_name)
+{
+	int	fd;
+	
+	if (!has_rt_ext(file_name))
+	{
+		rt_error_msg(MSG_PARSE_FILE_EXT);
+		return (E_PARSE_FILE_EXT);
+	}
+	fd = open(file_name, O_RDONLY);
+	if (fd < 0)
+	{
+		rt_error_msg(strerror(errno));
+		return (-1);
+	}
+	return (fd);
+}
+
+
 int	parse_file(const char *path, t_scene *s)
 {
 	int			fd;
@@ -112,6 +132,8 @@ int	parse_file(const char *path, t_scene *s)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (rt_log_error(E_SYS, NULL, -1, NULL));
+	// if (parse_open_file((char *)path) == -1)
+	// 	return (E_PARSE_FILE_EXT);
 	ln = 0;
 	any_tokens = 0;
 	line = get_next_line(fd);
