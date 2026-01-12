@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 10:08:01 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 13:01:49 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	test_file_parsing(int argc, char **argv);
 static int	test_scene_initializaton(int argc, char **argv);
 static int	test_default_scene(void);
 static int	test_default_render_sphere(void);
+static int	test_default_render_scene_objs(void);
 // static void	print_scene_info(t_scene *s);
 
 int	main(int argc, char **argv)
@@ -37,8 +38,28 @@ int	main(int argc, char **argv)
 	(void)argv;
 	//test_default_scene();
 	//test_file_parsing(argc, argv);
-	test_default_render_sphere();
+	//test_default_render_sphere();
+	test_default_render_scene_objs();
+	
+	return (0);
+}
 
+static int	test_default_render_scene_objs(void)
+{
+	t_rt_mlx	app;
+
+	rt_log_set_level(LOG_DEBUG);
+	ft_bzero(&app, sizeof(app));
+	set_default_scene_sphere(&app.scene);
+	if (rt_init(&app, 800, 600, RT_WINDOW_NAME) != 0)
+		return (1);
+	TRACELOG(LOG_DEBUG, "\nbpp=(%d) | endian=(%d) | line_len=(%d)", \
+		app.img.bpp, \
+		app.img.endian, \
+		app.img.line_len);
+	rt_render_default_objs(&app);
+	rt_run(&app);
+	rt_destroy(&app);
 	return (0);
 }
 
