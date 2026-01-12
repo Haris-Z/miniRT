@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 22:00:55 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 08:09:02 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 14:11:11 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,45 @@
 #include "scene.h"
 #include "hit.h"
 #include <math.h>
+
+// refactor
+static int	find_closest_root(double a, double half_b, double disc,
+							double tmin, double tmax, t_hit *hit);
+
+// refactor
+int	hit_sphere(t_sphere *sp, t_ray ray,
+						double tmin, double tmax, t_hit *hit)
+{
+	t_vec3	offset_c;
+	double	a;
+	double	half_b;
+	double	c;
+	double	discriminant;
+
+	offset_c = vec_sub(ray.origin, sp->center);
+	a = vec_dot(ray.direction, ray.direction);
+	half_b = vec_dot(offset_c, ray.direction);
+	c = vec_dot(offset_c, offset_c) - (sp->radius * sp->radius);
+	discriminant = half_b * half_b - a * c;
+	if (discriminant < 0.0)
+		return (0);
+
+	double	root;
+	double	sqrt_disc;
+	sqrt_disc = sqrt(discriminant);
+	root = (-half_b - sqrt_disc) / a;
+	if (root < tmin || root > tmax)
+	{
+		root = (-half_b + sqrt_disc) / a;
+		if (root < tmin || root > tmax)
+			return (0);
+	}
+	hit->t = root;
+	hit->p = ray_at(ray, root);
+	hit->n = hit_get_sphere_normal(sp->center, sp->radius, hit->p);
+	//hit->color = sp->color;
+	return (1);
+}
 
 static int	find_closest_root(double a, double half_b, double disc,
 							double tmin, double tmax, t_hit *hit)
@@ -33,24 +72,53 @@ static int	find_closest_root(double a, double half_b, double disc,
 	return (1);
 }
 
-int	hit_sphere(t_sphere *sp, t_ray ray,
-						double tmin, double tmax, t_hit *hit)
-{
-	t_vec3	offset_c;
-	double	a;
-	double	half_b;
-	double	c;
-	double	discriminant;
 
-	offset_c = vec_sub(ray.origin, sp->center);
-	a = vec_dot(ray.direction, ray.direction);
-	half_b = vec_dot(offset_c, ray.direction);
-	c = vec_dot(offset_c, offset_c) - (sp->radius * sp->radius);
-	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0.0)
-		return (0);
-	return (find_closest_root(a, half_b, discriminant, tmin, tmax, hit));
-}
+/* previous implementation for for reference */
+
+// static int	find_closest_root(double a, double half_b, double disc,
+// 							double tmin, double tmax, t_hit *hit);
+
+/* true on closer hit */
+
+// int	hit_sphere(t_sphere *sp, t_ray ray,
+// 						double tmin, double tmax, t_hit *hit)
+// {
+// 	t_vec3	offset_c;
+// 	double	a;
+// 	double	half_b;
+// 	double	c;
+// 	double	discriminant;
+
+// 	offset_c = vec_sub(ray.origin, sp->center);
+// 	a = vec_dot(ray.direction, ray.direction);
+// 	half_b = vec_dot(offset_c, ray.direction);
+// 	c = vec_dot(offset_c, offset_c) - (sp->radius * sp->radius);
+// 	discriminant = half_b * half_b - a * c;
+// 	if (discriminant < 0.0)
+// 		return (0);
+// 	return (find_closest_root(a, half_b, discriminant, tmin, tmax, hit));
+// }
+
+// static int	find_closest_root(double a, double half_b, double disc,
+// 							double tmin, double tmax, t_hit *hit)
+// {
+// 	double	sqrt_disc;
+// 	double	root;
+	
+// 	sqrt_disc = sqrt(disc);
+// 	root = (-half_b - sqrt_disc) / a;
+// 	if (root < tmin || root > tmax)
+// 	{
+// 		root = (-half_b + sqrt_disc) / a;
+// 		if (root < tmin || root > tmax)
+// 			return (0);
+// 	}
+// 	hit->t = root;
+// 	return (1);
+// }
+
+
+/* Reference from attila */
 
 // double	hit_sphere(vector ray, t_item ball)
 // {
