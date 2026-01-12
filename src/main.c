@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 10:10:44 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 08:26:44 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,34 @@ static void	rt_draw_test_pattern(t_rt_mlx *rt);
 static int	test_file_parsing(int argc, char **argv);
 static int	test_scene_initializaton(int argc, char **argv);
 static int	test_default_scene(void);
+static int	test_default_render_sphere(void);
+// static void	print_scene_info(t_scene *s);
 
 int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
 	//test_default_scene();
-	test_file_parsing(argc, argv);
+	//test_file_parsing(argc, argv);
+	test_default_render_sphere();
 
 	return (0);
 }
+
+static int	test_default_render_sphere(void)
+{
+	t_rt_mlx	app;
+
+	ft_bzero(&app, sizeof(app));
+	set_default_scene_sphere(&app.scene);
+	if (rt_init(&app, 1920, 720, RT_WINDOW_NAME) != 0)
+		return (1);
+	rt_render_default_sphere(&app);
+	rt_run(&app);
+	rt_destroy(&app);
+	return (0);
+}
+
 
 static int	test_default_scene(void)
 {
@@ -99,8 +117,8 @@ static int	test_scene_initializaton(int argc, char **argv)
 	sp.radius = sp.diameter * 0.5;
 	sp.color = color_rgb(10, 0, 255);
 
-	t_sphere sphere[] = {sp};
-	int sp_count = 1;
+	//t_sphere sphere[] = {sp};
+	//int sp_count = 1;
 	
 	rt_log_set_level(LOG_NONE);
 	TRACELOG(LOG_TRACE,"Settings from mini.rt file:\n");
@@ -109,7 +127,7 @@ static int	test_scene_initializaton(int argc, char **argv)
 	TRACELOG(LOG_INFO,"amb.ratio: %f\n", amb.ratio);
 	TRACELOG(LOG_INFO,"amb.color.x=%f amb.color.y=%f amb.color.z=%f\n", amb.color.x, amb.color.y, amb.color.z);
 	TRACELOG(LOG_INFO,"sp.center: (%.1f, %.1f, %.1f), sp.radius: %.1f\n", sp.center.x, sp.center.y, sp.center.z, sp.radius);
-	TRACELOG(LOG_INFO,"sp->center: (%.1f, %.1f, %.1f), sphere->radius: %.1f sphere->radius: %.1f\n , count: %d", sphere->center.x, sphere->center.y, sphere->center.z, sphere->radius, sphere->diameter, sp_count);
+	//TRACELOG(LOG_INFO,"sp->center: (%.1f, %.1f, %.1f), sphere->radius: %.1f sphere->radius: %.1f\n , count: %d", sphere->center.x, sphere->center.y, sphere->center.z, sphere->radius, sphere->diameter, sp_count);
 	
 	scene_init(&app.scene);
 	return (0);
