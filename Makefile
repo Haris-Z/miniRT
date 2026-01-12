@@ -133,10 +133,13 @@ SRCS		:= \
 			cam/cam_init.c \
 			cam/cam_ray.c \
 			hit/hit_sphere.c \
+			hit/hit_objects.c \
+			hit/hit_utils.c \
 			rt/rt_run.c \
 			rt/rt_init.c \
 			rt/rt_img.c \
 			rt/rt_events.c \
+			render/render_default_objs.c \
 			render/render_default_sp.c \
 			color/color.c \
 			parse/parse_amb.c \
@@ -159,6 +162,8 @@ SRCS		:= \
 			log/rt_log.c \
 			log/dbg_log.c \
 			log/trace_log.c
+
+#			hit/hit_scene.c \.
 
 # ============================================================================ #
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
