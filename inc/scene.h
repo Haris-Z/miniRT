@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:52:45 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 10:56:25 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:34:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ typedef struct s_obj
  */
 typedef struct s_scene
 {
-	int			has_ambient;
+	int			has_ambient;	// make flag
 	int			has_camera;
 	int			has_light;
 	t_ambient	amb;
@@ -172,6 +172,8 @@ typedef struct s_scene
 	t_light		light;
 	t_obj		*objs;
 	int			obj_count;
+	// int			width;
+	// int			height;
 }	t_scene;
 
 /* initialize and clear */
