@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 09:36:33 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 10:08:01 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,15 @@ static int	test_default_render_sphere(void)
 {
 	t_rt_mlx	app;
 
+	rt_log_set_level(LOG_DEBUG);
 	ft_bzero(&app, sizeof(app));
 	set_default_scene_sphere(&app.scene);
 	if (rt_init(&app, 800, 600, RT_WINDOW_NAME) != 0)
 		return (1);
+	TRACELOG(LOG_DEBUG, "\nbpp=(%d) | endian=(%d) | line_len=(%d)", \
+		app.img.bpp, \
+		app.img.endian, \
+		app.img.line_len);
 	rt_render_default_sphere(&app);
 	rt_run(&app);
 	rt_destroy(&app);
