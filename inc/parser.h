@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:49:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 18:15:04 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:35:38 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 // # include "scene.h"
 
 typedef struct s_scene t_scene;
+
+// add parse struct
+// fd, ln, line, tok etc.
 
 /**
  * @brief 
