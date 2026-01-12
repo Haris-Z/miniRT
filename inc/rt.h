@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:13:51 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 14:04:18 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 10:37:34 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,6 @@ int		rt_on_loop(void *param);
 
 // test rendering a sphere
 void	rt_render_default_sphere(t_rt_mlx *rt);
+void	rt_render_default_objs(t_rt_mlx *rt);
 
 #endif
