@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:09:01 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/10 12:53:33 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:48:22 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ static const char	*rt_strerror(t_eflag e)
 	const char	*msgs[E_COUNT] = {
 	[E_OK] = "Success",
 	[E_USAGE] = ERR_USAGE,
+	[E_PARSE_FILE_EXT] = MSG_PARSE_FILE_EXT,
 	[E_PARSE_EMPTY_FILE] = MSG_PARSE_EMPTY_FILE,
 	[E_RT_MLX_INIT] = MSG_RT_MLX_INIT,
 	[E_PARSE_UNKNOWN_ID] = MSG_PARSE_UNKNONW_ID,
