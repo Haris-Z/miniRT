@@ -8,7 +8,7 @@ add stuff that you change or ideas here if you want
 ## UPDATE 12.01
 
 - I have added a default scene and default renderer for a sphere.
-- currently i am updating the parser to also add plane and cylinder to the scene
+- currently i am updating the parser to also add plane and cylinder to the scene and adding implementation for hit_plane() and hit_scene()
 
 
 ## MEGA PUSH 
