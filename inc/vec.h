@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:33:29 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 11:06:42 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 08:43:32 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,22 @@
 # define EPSILON 0.0000001
 # define RADIAN 57.2958
 
+//  p = (x,y,z)
+// 3d vec
 typedef struct s_vec3
 {
 	double	x;
 	double	y;
 	double	z;
 }	t_vec3;
+
+// p  = (x,y)
+// 2d vec
+typedef struct s_vec2
+{
+	int	x;
+	int	y;
+}	t_vec2;
 
 // typedef t_vec3 t_vector 
 
