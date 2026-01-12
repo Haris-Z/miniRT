@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 20:33:06 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 08:39:25 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@
  */
 
 /**
- * 	- [x] check my minishell for error context + sys errors
  * 	- [x] add enum for error codes
  * 	- [ ] add defines for error messages
- * 	- [ ] add Tracelogger from other project
+ * 	- [x] add Tracelogger from other project
  * 	- [x] add includes - errno.h string.h in files
  * 	- [ ] add tests
  * 	- [x] add error message list
@@ -37,13 +36,14 @@
 # define ERR_USAGE "./miniRT /path/to/file.rt" // -> 
 
 // Parsing Errors
+# define MSG_PARSE_FILE_EXT "Invalid file ext"
 # define MSG_PARSE_EMPTY_FILE "File empty .. "
 # define MSG_TRAILING_GARBAGE "Invalid line contains trailing garbage"
 # define MSG_PARSE_DUPLICATE_AMBIENT "Duplicate ambient lighting (A)"
 # define MSG_PARSE_UNKNONW_ID "Unknown ID"
-# define ERR_PARSE_A_MSG " add message here ... "
-# define ERR_UNEXPECTED_TOKEN "%s: unexpected token \"%s\""
-# define ERR_RTFILE_L " add message "
+# define MSG_PARSE_A_MSG " add message here ... "
+# define MSG_UNEXPECTED_TOKEN "%s: unexpected token \"%s\""
+
 
 // MLX errors
 # define MSG_RT_MLX_INIT "Failed to Initialize mlx."
@@ -63,6 +63,7 @@ typedef enum e_eflag
 	E_OK = 0,					// Success
 	E_USAGE,					// "./miniRT /path/to/file.rt"
 	E_PARSE_BASE,
+	E_PARSE_FILE_EXT,			// Invalid file ext
 	E_PARSE_EMPTY_FILE,			// "File empty .."
 	E_PARSE_UNKNOWN_ID,			// 
 	E_PARSE_BAD_FLOAT,
