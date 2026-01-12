@@ -128,10 +128,16 @@ LDLIBS    += -lft -lmlx -lXext -lX11 -lm -lz
 SRCS		:= \
 			main.c \
 			error/rt_error.c \
+			ray/ray.c \
+			cam/cam_build.c \
+			cam/cam_init.c \
+			cam/cam_ray.c \
+			hit/hit_sphere.c \
 			rt/rt_run.c \
 			rt/rt_init.c \
 			rt/rt_img.c \
 			rt/rt_events.c \
+			render/render_default_sp.c \
 			color/color.c \
 			parse/parse_amb.c \
 			parse/parse_cam.c \
@@ -153,8 +159,6 @@ SRCS		:= \
 			log/rt_log.c \
 			log/dbg_log.c \
 			log/trace_log.c
-			
-#			ray/ray.c
 
 # ============================================================================ #
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
