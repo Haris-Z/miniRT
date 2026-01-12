@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 08:26:44 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 09:36:33 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	test_default_render_sphere(void)
 
 	ft_bzero(&app, sizeof(app));
 	set_default_scene_sphere(&app.scene);
-	if (rt_init(&app, 1920, 720, RT_WINDOW_NAME) != 0)
+	if (rt_init(&app, 800, 600, RT_WINDOW_NAME) != 0)
 		return (1);
 	rt_render_default_sphere(&app);
 	rt_run(&app);
