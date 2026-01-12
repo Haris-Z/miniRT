@@ -6,14 +6,14 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:49:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 19:35:38 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 09:41:59 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-// # include "scene.h"
+# include "scene.h"
 
 typedef struct s_scene t_scene;
 
