@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 14:03:29 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 14:03:19 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/14 14:06:18 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "cam.h"
 #include "hit.h"
 #include "vec.h"
+#include "trace_log.h"
 
 
 // diffuse:
@@ -22,19 +23,36 @@
 // diffuse = albedo * light.color * (light.bright * ndotl)
 
 //								t_hit *hit.p hit.n hit.albedo
+// static t_color	calc_diffuse(t_scene *s, t_vec3 point,
+// 							t_vec3 normal, t_color albedo)
+// {
+// 	t_vec3	light_dir;
+// 	double	ndotl;
+// 	double	intensity;
+	
+// 	if (!s->has_light)
+// 		return ((t_color){0.0, 0.0, 0.0});
+// 	light_dir = vec_norm(vec_sub(s->light.pos, point));
+// 	ndotl = fmax(0.0, vec_dot(normal, light_dir));//
+// 	intensity = s->light.bright * ndotl;
+// 	return (vec_scale(albedo, intensity));
+// }
+
 static t_color	calc_diffuse(t_scene *s, t_vec3 point,
 							t_vec3 normal, t_color albedo)
 {
 	t_vec3	light_dir;
 	double	ndotl;
 	double	intensity;
+	t_color	diffuse_color;
 	
 	if (!s->has_light)
 		return ((t_color){0.0, 0.0, 0.0});
 	light_dir = vec_norm(vec_sub(s->light.pos, point));
 	ndotl = fmax(0.0, vec_dot(normal, light_dir));//
 	intensity = s->light.bright * ndotl;
-	return (vec_scale(albedo, intensity));
+	diffuse_color = vec_mul(albedo, s->light.color);
+	return (vec_scale(diffuse_color, intensity));
 }
 
 // ambient: albedo * amb.color * amb.ratio
@@ -42,6 +60,9 @@ static t_color	calc_ambient(t_scene *s, t_color albedo)
 {
 	if (!s->has_ambient)
 		return ((t_color){0.0, 0.0, 0.0});
+	// TRACELOG(LOG_TRACE,"has_ambient=%d | ratio=%f | color=(%f,%f,%f)", \.
+	// 	s->has_ambient, s->amb.ratio, \.
+	// 	s->amb.color.x,s->amb.color.y,s->amb.color.z);
 	return (vec_scale(vec_mul(albedo, s->amb.color), s->amb.ratio));
 }
 
@@ -67,8 +88,8 @@ void	rt_render_default_objs(t_rt_mlx *rt)
 
 	if (!rt || !rt->img.ptr)											// checked in rt_init - during 
 		return ;
-	if (!rt->scene.objs || rt->scene.objs->type != OBJ_SPHERE) 			// checked during parsing remove type test later
-		return ;														// checked in scene_add_obj.c remove later
+	//if (!rt->scene.objs || rt->scene.objs->type != OBJ_SPHERE) 			// checked during parsing remove type test later
+	//	return ;														// checked in scene_add_obj.c remove later
 	if (cam_init(&rt->scene.cam, rt->img.img_w, rt->img.img_h, &cam_rt) != 0)
 		return ;
 	y = 0;
@@ -81,7 +102,7 @@ void	rt_render_default_objs(t_rt_mlx *rt)
 			ray = cam_generate_ray(cam_rt, x, y);
 			// check for intersection in sphere 
 			if (hit_scene_objs(&rt->scene, ray, 1e-4, 1e30, &hit))
-				hit.color = shade_hit(&rt->scene, hit, rt->scene.objs->u.sp.color);
+				hit.color = shade_hit(&rt->scene, hit, hit.color); // fixed from sphere color to hit color.
 			else
 				hit.color = (t_color){0.0, 0.0, 0.0}; // Background color
 			rt_img_put_pixel(&rt->img, x, y, color_to_mlx(hit.color));
