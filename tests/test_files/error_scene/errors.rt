@@ -1,0 +1,64 @@
+# Test 1: Invalid ratio (not a number)
+A not_a_number 255,255,255
+
+# Test 2: Ratio out of range (negative)
+A -0.5 255,255,255
+
+# Test 3: Ratio out of range (> 1.0)
+A 1.5 255,255,255
+
+# Test 4: Invalid color format (missing comma)
+A 0.2 255255,255
+
+# Test 5: Invalid color format (too many components)
+A 0.2 255,255,255,255
+
+# Test 6: Color component out of range (> 255)
+A 0.2 300,255,255
+
+# Test 7: Color component negative
+A 0.2 -10,255,255
+
+# Test 8: Valid everything (should pass)
+A 0.2 255,255,255
+C 0,0,0 0,0,1 90
+
+
+# Test 1: First valid ambient
+A 0.3 200,200,200
+
+# Test 2: Second ambient (duplicate - should fail)
+A 0.5 100,100,100
+
+# Test 3: Valid camera
+C -50,1,20 0,0,1 70
+
+# Test 4: Valid light
+L -40,0,30 0.7 255,255,255
+
+# Test 5: Valid objects (to ensure parser continues after error)
+sp 0,0,20 20 255,0,0
+pl 0,0,0 0,1,0 255,255,255
+
+
+# Test 1: Minimum ratio
+A 0.0 0,0,0
+
+# Test 2: Maximum ratio
+A 1.0 255,255,255
+
+# Test 3: Ratio at boundary (should pass)
+A 0.999999 255,255,255
+
+# Test 4: Ratio just over boundary
+A 1.000001 255,255,255
+
+# Test 5: Color at boundaries
+A 0.5 0,0,0
+A 0.5 255,255,255
+
+# Test 6: Spaces in color (might be valid depending on implementation)
+A 0.5 255, 255, 255
+
+# Test 7: Extra spaces between tokens
+A   0.5   255,255,255

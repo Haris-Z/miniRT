@@ -1,0 +1,5 @@
+# Test 2: Too many tokens
+A 0.2 255,255,255 extra
+
+# Test 3: Empty line after A
+A
