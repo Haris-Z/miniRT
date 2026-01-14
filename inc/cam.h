@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 10:26:38 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 08:31:08 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 19:00:38 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 typedef struct s_cam_rt
 {
 	t_vec3	origin;
-	t_vec3	forward;		// look direction f
-	t_vec3	right;			// f x u normalized
-	t_vec3	up;				// up vector u
+	t_vec3	forward;		// look direction f z
+	t_vec3	right;			// f x u normalized x
+	t_vec3	up;				// up vector u      y
 	double	w_viewport;
 	double	h_viewport;
 	int		w;
