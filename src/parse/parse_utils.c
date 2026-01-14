@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 11:35:29 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/14 13:52:30 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ static int	split3(const char *s, int *a, int *b)
 	int	i;
 	int	c;
 
-	i = 0;
+	i = -1;
 	c = 0;
 	*a = -1;
 	*b = -1;
 	if (!s || !*s)
 		return (0);
-	while (s && s[i])
+	while (s && s[++i])
 	{
 		if (s[i] == ',')
 		{
@@ -55,7 +55,6 @@ static int	split3(const char *s, int *a, int *b)
 				*b = i;
 			c++;
 		}
-		i++;
 	}
 	if (c != 2 || *a <= 0 || *b <= *a + 1)
 		return (0);
@@ -69,32 +68,21 @@ int	parse_vec3(const char *tok, t_vec3 *out)
 {
 	int		c1;
 	int		c2;
-	double	x;
-	double	y;
-	double	z;
+	t_vec3	v;
 	char	tmp[128];
 
 	if (!tok || !split3(tok, &c1, &c2))
-	{
-		//rt_error_msg("Invalid vec3 for ");
 		return (1);
-	}
-	if (!parse_next_token(tmp, 128, tok, 0, c1) || parse_double(tmp, &x))
-	{
-		//rt_error_msg("Invalid vec3 for ");
+	if (!parse_next_token(tmp, (int)sizeof(tmp), tok, 0, c1) 
+	|| parse_double(tmp, &v.x))
 		return (1);
-	}
-	if (!parse_next_token(tmp, 128, tok, c1 + 1, c2) || parse_double(tmp, &y))
-	{
-		//rt_error_msg("Invalid vec3 for ");
+	if (!parse_next_token(tmp, (int)sizeof(tmp), tok, c1 + 1, c2) 
+	|| parse_double(tmp, &v.y))
 		return (1);
-	}
-	if (!parse_next_token(tmp, 128, tok, c2 + 1, (int)ft_strlen(tok)) || parse_double(tmp, &z))
-	{
-		//rt_error_msg("Invalid vec3 for ");
+	if (!parse_next_token(tmp, (int)sizeof(tmp), tok, c2 + 1, (int)ft_strlen(tok)) 
+	|| parse_double(tmp, &v.z))
 		return (1);
-	}
-	*out = vec3(x, y, z);
+	*out = v;
 	return (0);
 }
 
