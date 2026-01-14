@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:53:27 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/09 14:56:02 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/14 10:13:59 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ int	parse_light(t_scene *s, char **t)
 
 	ft_bzero(&light, sizeof(light));
 	if (!t[1] || !t[2] || !t[3] || t[4])
-		return (rt_error_msg("Light (L): expected 'L x,y,z ratio R,G,B'"));
+		return (E_PARSE_FORMAT_L);
 	if (parse_vec3(t[1], &light.pos) != 0)
-		return(rt_error_msg("Invalid vec for Position Light"));
+		return(E_PARSE_BAD_VEC);
 	if (parse_ratio(t[2], &light.bright) != 0)
-		return (rt_error_msg("Invalid Brightness ratio (range/bad double) for Light (L)"));
+		return (E_PARSE_BAD_RATIO);
 	if (parse_color_vec(t[3], &light.color) != 0)
-		return (1);
-	if (scene_set_light(s, light))
-		return (rt_error_msg("Duplicate L"));
+		return (E_PARSE_BAD_COLOR);
+	if (scene_set_light(s, light) != 0)
+		return (E_PARSE_DUPLICATE_L);
 	return (0);
 }
 
@@ -52,27 +52,3 @@ int	parse_light(t_scene *s, char **t)
 
 
 
-
-// static char *next_token(char **p)
-// {
-// 	char	*s;
-// 	char	*b;
-// 	s = *p;
-// 	while (*s == ' ' || *s == '\t')
-// 		s++;
-// 	if (!*s)
-// 	{
-// 		*p = s;
-// 		return (NULL);
-// 	}
-// 	b = s;
-// 	while(*s && *s != ' ' && *s != '\t')
-// 		s++;
-// 	if (*s)
-// 	{
-// 		*s ='\0';
-// 		s++;
-// 	}
-// 	*p = s;
-// 	return (b);
-// }
