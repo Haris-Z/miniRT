@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 22:00:55 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 14:11:11 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/14 09:04:55 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	hit_sphere(t_sphere *sp, t_ray ray,
 	hit->t = root;
 	hit->p = ray_at(ray, root);
 	hit->n = hit_get_sphere_normal(sp->center, sp->radius, hit->p);
-	//hit->color = sp->color;
+	hit->color = sp->color;
 	return (1);
 }
 
