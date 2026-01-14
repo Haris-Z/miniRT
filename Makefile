@@ -96,7 +96,7 @@ LIBS_DIR	:= libs
 # Location of test files
 TEST_DIR    := tests
 TEST_FILES	:= tests/test_files
-DEFAULT_TEST:= $(TEST_FILES)/mini.rt
+DEFAULT_TEST:= $(TEST_FILES)/mini_field.rt
 # ============================================================================ #
 LIBFT_DIR	:= $(LIBS_DIR)/libft
 #MLX_DIR		:= $(LIBS_DIR)/minilibx-linux
@@ -150,7 +150,6 @@ SRCS		:= \
 			parse/parse_obj.c \
 			parse/parse_file.c \
 			parse/parse_utils.c \
-			parse/parse_vec.c \
 			scene/scene_add_obj.c \
 			scene/scene_init.c \
 			scene/scene_set_elem.c \
@@ -184,7 +183,7 @@ all: $(NAME)
 # if mlx installed on system
 # Link: .o -> + libs -> executable
 $(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 	@echo "$(GREEN)[$(OK_ICON) ] [miniRT] Build succeeded $(RESET) → $(BOLD)$(NAME)$(RESET)"
 	$(MODE_MSG)
 # ============================================================================ #
@@ -233,9 +232,18 @@ debug: fclean
 	-ex "refresh" \
 	-ex "run $(DEFAULT_TEST)" \
 	./$(NAME)
-
-
 #@gdb -q -ex "source .gdbinit" -ex "bminirt" -ex "run $(TEST_DIR)/test_files/mini.rt" miniRT
+
+# run: $(NAME)
+# 	./$(NAME) $(TEST_FILES)
+
+# valgrind: $(NAME)
+# 	valgrind \
+# 	--leak-check=full \
+# 	--show-leak-kinds=all \
+# 	--track-origins=yes \
+# 	./$(NAME) $(TEST_FILES)/mandatory.rt
+
 
 # delete all generated files
 aclean: fclean clean-docs
@@ -244,15 +252,41 @@ aclean: fclean clean-docs
 
 # run: $(NAME)
 # 	@echo "$(YELLOW)Running quick test ... $(RESET)"
-# 	./$(NAME) main.c $(TEST_DIR)/test_scenes/scenes/mini.rt
 
-test: $(NAME)
+test: $(NAME) ## run with mini_field.rt for testing
 	@echo "$(YELLOW) Runnning test ... $(RESET)"
-	./$(NAME) $(TEST_FILES)/mini.rt
+	./$(NAME) $(DEFAULT_TEST)
 
-# fsan:
+TEST_P = tst_rtparse
 
-# vlg:
+$(TEST_P): $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(CPPFLAGS) tests/parse/test_parser.c $(filter-out $(OBJ_DIR)/main.o, $(OBJS)) $(LDLIBS) $(LDFLAGS) $(LIBFT) -lm -o $(TEST_P)
+
+test_parse: $(TEST_P)
+	./$(TEST_P) tests/test_files/scenes/03_basic.rt
+
+test_errors: ## run tests on error files
+	@echo "TESTING ERROR FILES"
+	@./$(TEST_P) tests/test_files/error_scene/06_only_white.rt
+	@./$(TEST_P) tests/test_files/error_scene/01_duplicate_A.rt
+	@./$(TEST_P) tests/test_files/error_scene/01_duplicate_C.rt
+	@./$(TEST_P) tests/test_files/error_scene/01_duplicate_L.rt
+	@./$(TEST_P) tests/test_files/error_scene/02_missing_A.rt
+	@./$(TEST_P) tests/test_files/error_scene/02_missing_C.rt
+	@./$(TEST_P) tests/test_files/error_scene/02_missing_L.rt
+	@./$(TEST_P) tests/test_files/error_scene/03_empty_after_A.rt
+	@./$(TEST_P) tests/test_files/error_scene/03_error_trailing_garbage.rt
+	@./$(TEST_P) tests/test_files/error_scene/03_missing_color_A.rt
+	@./$(TEST_P) tests/test_files/error_scene/03_too_many_toks_A.rt
+	@./$(TEST_P) tests/test_files/error_scene/04_invalid_ratio_A.rt
+	@./$(TEST_P) tests/test_files/error_scene/04_invalid_ratio_range.rt
+	@./$(TEST_P) tests/test_files/error_scene/05_invalid_vec_C.rt
+	@./$(TEST_P) tests/test_files/error_scene/err_invalid_delim.rt
+	@./$(TEST_P) tests/test_files/error_scene/err_invalid_id.rt
+	@./$(TEST_P) tests/test_files/error_scene/err_invalid_no_ext
+	@./$(TEST_P) tests/test_files/error_scene/err_invalid_param.rt
+	@./$(TEST_P) tests/test_files/error_scene/err_unused_param.rt
+	@./$(TEST_P) tests/test_files/error_scene/warn_fov_range.rt
 
 # ============================================================================ #
 #                           DOCUMENTATION (Doxygen)                            #
