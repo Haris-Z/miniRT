@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 20:54:01 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/14 13:43:50 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@
 #include "parser.h"
 #include "libft.h"
 #include "trace_log.h"
+
+// add simpler file reading - remove gnl
+/*
+	-[x] multiple spaces/tabs between fields
+	-[x] blank lines
+	-[x] any element order
+	-[x] A	| ratio				| rgb
+	-[x] C	| pos	| dir		| fov
+	-[x] L	| pos	| bright	| rgb
+	-[x] sp	| pos	| diameter	| rgb
+	-[x] pl	| pos	| normal	| rgb
+	-[x] cy	| pos	| axis		| diameter	| height	| rgb
+
+	- validate
+	-[x] ratios [0..1]
+	-[x] FOV [0..180]
+	-[x] colors [0..255]
+	-[x] normals/orientation components in [-1..1] + length
+	-[x] positive diameter/height
+	-[x] only once of A/C/L
+*/
 
 /**
  * @brief
@@ -36,148 +57,94 @@ static int	has_rt_ext(const char *s)
 	return (0);
 }
 
-static int	parse_lines(t_scene *s, char **t)
+static int	parse_lines(t_scene *s, char *line, int line_num)
 {
-	if (!t[0])
+	char	**tokens;
+	int		result;
+	
+	if (!line || line[0] == '\n' || line[0] == '#')
 		return (0);
-	if (t[0][0] == '\n')
-		return (0);
-	if (t[0][0] == 'A' && t[0][1] == '\0')
-		return (parse_ambient(s, t));
-	if (t[0][0] == 'C' && t[0][1] == '\0')
-		return (parse_camera(s, t));
-	if (t[0][0] == 'L' && t[0][1] == '\0')
-		return (parse_light(s, t));
-	if (t[0][0] == 's' && t[0][1] == 'p' && t[0][2] == '\0')
-		return (parse_sphere(s, t));
-	// if (t[0][0] == 'p' && t[0][1] == 'l' && t[0][2] == '\0')
-	// 	return (parse_plane(s, t));
-	// if (t[0][0] == 'c' && t[0][1] == 'y' && t[0][2] == '\0')
-	// 	return (parse_cylinder(s, t));
-	TRACELOG(LOG_WARNING, "parse_lines() -> t[0]=(%s)", t[0]);
-	return (E_PARSE_UNKNOWN_ID);
+	tokens = ft_split(line, ' ');
+	if(!tokens)
+		return (rt_error_log(E_SYS, NULL, 0, NULL));
+	result = 0;
+	if (!tokens[0]) 
+		result = E_FILE_EMPTY;
+	else if (tokens[0][0] == 'A' && tokens[0][1] == '\0')
+		result = parse_ambient(s, tokens);
+	else if (tokens[0][0] == 'C' && tokens[0][1] == '\0')
+		result = parse_camera(s, tokens);
+	else if (tokens[0][0] == 'L' && tokens[0][1] == '\0')
+		result = parse_light(s, tokens);
+	else if (tokens[0][0] == 's' && tokens[0][1] == 'p' && tokens[0][2] == '\0')
+		result = parse_sphere(s, tokens);
+	else if (tokens[0][0] == 'p' && tokens[0][1] == 'l' && tokens[0][2] == '\0')
+		result = parse_plane(s, tokens);
+	else if (tokens[0][0] == 'c' && tokens[0][1] == 'y' && tokens[0][2] == '\0')
+		result =  parse_cylinder(s, tokens);
+	else
+		result = E_PARSE_UNKNOWN_ID;
+	if (result)
+		rt_error_log(result, NULL, line_num, tokens[0]);
+	free_array(tokens);
+	return (result);
 }
 
 static int	validate_scene(t_scene *s)
 {
 	if (!s->has_ambient)
+		rt_error_log(E_PARSE_MISSING_TOKEN, MSG_MISSING_A, 0, NULL);
+	else if (!s->has_camera)
+		rt_error_log(E_PARSE_MISSING_TOKEN, MSG_MISSING_C, 0, NULL);
+	else if (!s->has_light)
+		rt_error_log(E_PARSE_MISSING_TOKEN, MSG_MISSING_L, 0, NULL);
+	else
+		return (0);
+	return (1);
+}
+
+static	int parse_open_file(const char *file_name, int *fd)
+{
+	
+	if (!has_rt_ext(file_name))
 	{
-		rt_error_msg("missing ambient light (A)");
-		return (1);
+		rt_error_msg(MSG_FILE_EXT);
+		return (E_FILE_EXT);
 	}
-	if (!s->has_camera)
+	*fd = open(file_name, O_RDONLY);
+	if (*fd < 0)
 	{
-		rt_error_msg("missing cam (C)");
-		return (1);
-	}
-	if (!s->has_light)
-	{
-		rt_error_msg("missing light (L)");
-		return (1);
+		rt_error_msg(strerror(errno));
+		return (E_SYS);
 	}
 	return (0);
 }
 
-// add simpler file reading - remove gnl
-/*
-	-[x] multiple spaces/tabs between fields
-	-[x] blank lines
-	-[x] any element order
-	-[x] A	| ratio				| rgb
-	-[x] C	| pos	| dir		| fov
-	-[x] L	| pos	| bright	| rgb
-	-[x] sp	| pos	| diameter	| rgb
-	-[ ] pl	| pos	| normal	| rgb
-	-[ ] cy	| pos	| axis		| diameter	| height	| rgb
-
-	- validate
-	-[ ] ratios [0..1]
-	-[ ] FOV [0..180]
-	-[ ] colors [0..255]
-	-[ ] normals/orientation components in [-1..1] + unit-length (±1e-3)
-	-[ ] positive diameter/height
-	-[ ] only once of A/C/L
-*/
-
-static	int parse_open_file(char *file_name)
-{
-	int	fd;
-	
-	if (!has_rt_ext(file_name))
-	{
-		rt_error_msg(MSG_PARSE_FILE_EXT);
-		return (E_PARSE_FILE_EXT);
-	}
-	fd = open(file_name, O_RDONLY);
-	if (fd < 0)
-	{
-		rt_error_msg(strerror(errno));
-		return (-1);
-	}
-	return (fd);
-}
-
-
 int	parse_file(const char *path, t_scene *s)
 {
-	int			fd;
-	char		*line;
-	char		**toks;
-	int			ln;
-	t_eflag		e;
-	int			any_tokens;
+	int		fd;
+	char	*line;
+	int		line_no;
+	int		err;
 
-	if (!has_rt_ext(path))
-		return (rt_log_error(E_PARSE_MISSING_TOKEN, "Scene file must have .rt extension", 0, NULL));
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (rt_log_error(E_SYS, NULL, -1, NULL));
-	// if (parse_open_file((char *)path) == -1)
-	// 	return (E_PARSE_FILE_EXT);
-	ln = 0;
-	any_tokens = 0;
+	if (parse_open_file(path, &fd) != 0)
+		return (1);
+	line_no = 0;
 	line = get_next_line(fd);
-	TRACELOG(LOG_TRACE, "line=(%s)", line);
+	err = 0;
 	while (line)
 	{
-		ln++;
-		toks = ft_split(line, ' '); // check subject again if tabs or any whitespace mentioned
-		// int i = 0;
-		// while (toks[i])
-		// {
-		// 	TRACELOG(LOG_INFO, "line=%s", toks[i]);
-		// 	i++;
-		// }
+		line_no++;
+		if (err == 0)
+			err = parse_lines(s, line, line_no);
 		free(line);
-		if (!toks)
-		{
-			close(fd);
-			scene_clear(s);
-			return(rt_error_msg(strerror(errno)));
-		}
-		if (toks[0])
-			any_tokens = 1;
-		e = parse_lines(s, toks);
-		free_array(toks);
-		if (e != E_OK)
-		{
-			close(fd);
-			scene_clear(s);
-			return (rt_log_error(e, NULL, ln, NULL));
-		}
 		line = get_next_line(fd);
 	}
 	close(fd);
-	if (!any_tokens)
+	if (err != E_OK || validate_scene(s) != 0)
 	{
 		scene_clear(s);
-		return (rt_error_msg("parse_file(): any tokens=0"));
-	}
-	e = validate_scene(s);
-	if (e != E_OK)
-	{
-		scene_clear(s);
-		return(rt_log_error(e, NULL, ln, NULL));
+		return (err);
 	}
 	return (0);
 }
