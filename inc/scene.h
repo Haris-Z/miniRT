@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:52:45 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 09:45:03 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 15:00:12 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct s_cylinder
 	t_vec3	axis;
 	double	radius;
 	double	height;
+	double	diameter;
 	t_color	color;
 }	t_cylinder;
 
