@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 11:21:34 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/13 22:28:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int	rt_init(t_rt_mlx *rt, int w, int h, const char *title)
 {
 	//move ft_memset/ft_bzero here for cleaner main
-	rt->mlx = NULL;
+	rt->mlx = NULL; // remove - set in main bzero
 	rt->win = NULL;
 	rt->img.ptr = NULL;
 	rt->img.addr = NULL;
@@ -41,6 +41,7 @@ int	rt_init(t_rt_mlx *rt, int w, int h, const char *title)
 		rt_destroy(rt);
 		return (E_RT_IMG_CREATE);
 	}
+	// clear_image()
 	return (0); // E_OK
 }
 
