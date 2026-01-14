@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 12:57:29 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/12 14:06:52 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/12 15:57:43 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "color.h"
 # include "ray.h"
 # include "scene.h"
+# include <math.h>
 
 # define TMIN 1e-4
 # define TMAX 1e30
