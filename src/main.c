@@ -56,16 +56,15 @@ int	init_vars(t_vars *vars, int screendim[2])
 
 int main()
 {
-	vector**	colors;
 	int			fov = 120;
 	vector		campos;
 	vector		camdir;
 	campos.x = 0;
 	campos.y = 0;
-	campos.z = 5;
+	campos.z = 7;
 	camdir.x = 1;
-	camdir.y = 0;
-	camdir.z = 0;
+	camdir.y = -0.4;
+	camdir.z = -0.5;
 	camdir = normalizev(camdir);
 
 	int	screendim[2] = {1400,800};
@@ -89,7 +88,7 @@ int main()
 	plane2.plane.point.y = 10;
 	plane2.plane.point.z = 0;
 	plane2.plane.orientation.x = 0;
-	plane2.plane.orientation.y = 1;
+	plane2.plane.orientation.y = -1;
 	plane2.plane.orientation.z = 0;
 	plane2.plane.orientation = normalizev(plane2.plane.orientation);
 	plane2.color = 0x0000FFFF;
@@ -103,7 +102,7 @@ int main()
 	plane3.plane.orientation.y = 0;
 	plane3.plane.orientation.z = 0;
 	plane3.plane.orientation = normalizev(plane3.plane.orientation);
-	plane3.color = 0x00C000FF;
+	plane3.color = 0x00FFFFFF;
 
 	t_item	ball;
 	ball.t_type = SHPERE;
@@ -111,7 +110,7 @@ int main()
 	ball.sphere.pos.y = 1;
 	ball.sphere.pos.z = 3;
 	ball.sphere.radius = 2;
-	ball.color = 0x0072903F;
+	ball.color = 0x00AAAAAA;
 
 	t_item	ball2;
 	ball2.t_type = SHPERE;
@@ -119,7 +118,7 @@ int main()
 	ball2.sphere.pos.y = 1;
 	ball2.sphere.pos.z = 6.5;
 	ball2.sphere.radius = 1;
-	ball2.color = 0x0020A020;
+	ball2.color = 0x00FF0000;
 	
 	t_item	ball3;
 	ball3.t_type = SHPERE;
@@ -127,7 +126,7 @@ int main()
 	ball3.sphere.pos.y = 3.5;
 	ball3.sphere.pos.z = 4;
 	ball3.sphere.radius = 0.5;
-	ball3.color = 0x00F0B0A0;
+	ball3.color = 0x0000FF00;
 
 	items = &plane;
 	plane.next = &plane2;
@@ -144,8 +143,8 @@ int main()
 	dirVector_init(vars.cam);
 	vars.colors = init_data(&vars, screendim);
 
-	vars.cam->light.x = 1;
-	vars.cam->light.y  = 5;
+	vars.cam->light.x = 3;
+	vars.cam->light.y  = 1;
 	vars.cam->light.z  = 5;
 
 	int	i = -1;

@@ -36,13 +36,13 @@ int	scaleColor(int min, int max, double amount)
 	int	blue;
 
 	red = ((max & 0x00FF0000) - (min & 0x00FF0000)) >> 16;
-	red = lround(red * amount) + ((min & 0x00FF0000) >> 16) << 16;
-	green = (max & 0x0000FF00) - (min & 0x0000FF00) >> 8 ;
-	green = lround(green * amount) + ((min & 0x0000FF00) >> 8) << 8;
+	red = lround(red * amount) + ((min & 0x00FF0000) >> 16);
+	green = ((max & 0x0000FF00) - (min & 0x0000FF00)) >> 8;
+	green = lround(green * amount) + ((min & 0x0000FF00) >> 8);
 	blue = (max & 0x000000FF) - (min & 0x000000FF);
 	blue = lround(blue * amount) + (min & 0x000000FF);
 
-	return(red + green + blue);
+	return((red << 16) + (green << 8) + blue);
 }
 
 double	getDistBetweenPoints(vector pointA, vector pointB)
@@ -90,7 +90,8 @@ vector	getSurfaceNormal(vector point, t_item *item)
 
 	if (item->t_type == SHPERE)
 		surfaceNormal = subv(point, item->sphere.pos);
-	else if (item->t_type == PLANE)
+	// else if (item->t_type == PLANE)
+	else
 		surfaceNormal = item->plane.orientation;
 	surfaceNormal = normalizev(surfaceNormal);
 	return (surfaceNormal);

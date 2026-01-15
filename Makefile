@@ -2,8 +2,8 @@ NAME = miniRT
 
 all: $(NAME)
 
-# CC = cc -Wall -Wextra -Werror 
-CC = cc -g
+CC = cc -Wall -Wextra -Werror 
+# CC = cc -g
 
 SRC = src/main.c src/camera.c src/rays.c src/vector.c
 
