@@ -62,6 +62,16 @@ vector crossv(vector a, vector b)
 	return (res);
 }
 
+double	getDistBetweenPoints(vector pointA, vector pointB)
+{
+	double	res;
+
+	res = pow(pointA.x - pointB.x, 2) +
+		pow(pointA.y - pointB.y, 2) +
+		pow(pointA.z - pointB.z, 2);
+	return (sqrt(res));
+}
+
 #include <stdio.h>
 void	printV(vector v)
 {

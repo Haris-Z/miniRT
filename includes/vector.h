@@ -18,5 +18,6 @@ double	dotv(vector a, vector b);
 vector	crossv(vector a, vector b);
 vector	normalizev(vector a);
 void	printV(vector v);
+double	getDistBetweenPoints(vector pointA, vector pointB);
 
 #endif

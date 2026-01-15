@@ -94,10 +94,10 @@ void	kill_cam(t_camera	*cam);
 double	hitSp(vector origin ,vector ray, t_sphere sphere);
 double	hitPl(vector origin ,vector ray, t_plane plane);
 void	updateRayDist(int i, t_vars *vars, t_item *obj);
-int	dirVector_init(t_camera *cam);
+int		dirVector_init(t_camera *cam);
 
-int	computeColor(t_vars vars, t_ray ray, t_item **items);
-double	getLightAngle(vector oPoint, vector dir, t_ray ray, vector light, t_item *items);
-int	scaleColor(int min, int max, double amount);
+int		computeColor(t_vars vars, t_ray ray, t_item **items);
+double	getLightAngle(vector oPoint, t_ray ray, vector light, t_item *items);
+int		scaleColor(int min, int max, double amount);
 
 #endif

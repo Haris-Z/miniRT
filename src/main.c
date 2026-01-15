@@ -143,9 +143,9 @@ int main()
 	dirVector_init(vars.cam);
 	vars.colors = init_data(&vars, screendim);
 
-	vars.cam->light.x = 3;
-	vars.cam->light.y  = 1;
-	vars.cam->light.z  = 5;
+	vars.cam->light.x = 1;
+	vars.cam->light.y  = -6;
+	vars.cam->light.z  = 10;
 
 	int	i = -1;
 	vars.cam->items = &items;
