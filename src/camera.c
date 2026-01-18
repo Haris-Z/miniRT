@@ -6,6 +6,7 @@
 
 
 // t_cam_rt	cam_init(t_vec3 pos, t_vec3 orientation, int fov, int screendim[2])
+// light color and dir vector has to be added, also ambient color, or amb.rgb, light.rgb is an int
 t_cam_rt	cam_init(t_scene s, int w, int h)
 {
 	t_cam_rt	cam = {0};
