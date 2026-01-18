@@ -1,0 +1,44 @@
+# Executable
+miniRT
+
+# build artifacts
+*.o
+*.out
+*.a
+
+# Prerequisites
+*.d
+
+# build dirs
+build/*
+bin/*
+obj/*
+
+# vscode configs
+.vscode/
+
+# editor/OS
+.DS_Store
+*.swp
+.idea/*
+
+# debug information files
+#.gdb_history
+
+# PROJECT
+# minilibx
+libs/minilibx-linux/
+tests/intersection/
+tests/light/
+tests/log/
+tests/mlx/
+tests/parse/
+tests/rt/
+tests/tst_libft_integration.c
+tests/test_files/error_scene/
+
+# format
+.clang-format
+.editorconfig
+.clang-tidy
+
