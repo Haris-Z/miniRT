@@ -13,7 +13,6 @@
 #ifndef VEC_H
 # define VEC_H
 
-# define EPSILON 0.0000001
 # define RADIAN 57.2958
 
 //  p = (x,y,z)

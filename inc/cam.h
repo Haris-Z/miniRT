@@ -29,14 +29,21 @@ typedef struct s_rt_cam
 	t_vec3	pos;
 	t_obj	**items;
 	t_vec3	light;
-	t_ray	**rays;
+	t_ray	*rays;
 	int		pixels[2];
 	double	fov;
 	double	ambient;
+	double	focalLength;
+	double	focusDist;
+	double	horRange;
+	double	deltaVerAngle;
+	double	deltaHorAngle;
+	double	verOffset;
 }	t_cam_rt;
 
 // t_cam_rt	*cam_init(t_vec3 pos, t_vec3 orientation, int fov, int screendi[2]);
 t_cam_rt	cam_init(t_scene s, int w, int h);
+void		addDirVectorRow(t_cam_rt *cam);
 
 //		cam_get_viewport_dimensions():
 //		cam_basis();

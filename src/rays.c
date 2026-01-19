@@ -44,7 +44,7 @@ double	hitPl(t_vec3 origin, t_vec3 ray, t_plane plane)
 	return (-1.0);
 }
 
-void	updateRayDist(int i, t_rt_mlx *vars, t_obj *obj)
+void	updateRayDist(t_rt_mlx *vars, t_obj *obj)
 {
 	int	j;
 	double	dist;
@@ -53,13 +53,13 @@ void	updateRayDist(int i, t_rt_mlx *vars, t_obj *obj)
 	while(++j < vars->cam.pixels[0])
 	{
 		if (obj->type == OBJ_SPHERE)
-			dist = hitSp(vars->cam.pos, vars->cam.rays[i][j].direction, obj->sphere);
+			dist = hitSp(vars->cam.pos, vars->cam.rays[j].direction, obj->sphere);
 		else if (obj->type == OBJ_PLANE)
-			dist = hitPl(vars->cam.pos, vars->cam.rays[i][j].direction, obj->plane);
-		if (dist > 0 && (vars->cam.rays[i][j].dist == -1.0 || dist < vars->cam.rays[i][j].dist))
+			dist = hitPl(vars->cam.pos, vars->cam.rays[j].direction, obj->plane);
+		if (dist > 0 && (vars->cam.rays[j].dist == -1.0 || dist < vars->cam.rays[j].dist))
 		{
-			vars->cam.rays[i][j].dist = dist;
-			vars->cam.rays[i][j].closestitem = obj;
+			vars->cam.rays[j].dist = dist;
+			vars->cam.rays[j].closestitem = obj;
 		}
 	}
 }
@@ -81,7 +81,7 @@ int	scaleColor(int min, int max, double amount)
 	blue = (max & 0x000000FF) - (min & 0x000000FF);
 	blue = lround(blue * amount) + (min & 0x000000FF);
 
-	return((red << 16) + (green << 8) + blue);
+	return((red << 16) | (green << 8) | blue);
 }
 
 int	checkSameSide(t_plane plane, t_vec3 cam, t_vec3 light)

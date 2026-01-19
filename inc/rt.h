@@ -20,9 +20,9 @@
 # define RT_H
 
 # define RT_WINDOW_NAME	"miniRT"
-# define SCREEN_WIDTH	800
+# define SCREEN_WIDTH	1000
 # define SCREEN_HEIGHT	600
-# define EPSILON 0.0000001
+# define EPSILON 1e-12
 # define RADIAN 57.2958
 
 # include <limits.h>

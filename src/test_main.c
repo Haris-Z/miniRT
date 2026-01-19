@@ -99,28 +99,30 @@ int	main(int argc, char **argv)
 	print_scene_info(scene_info, argv[1]);
 	if (rt_init(&app, RT_WINDOW_NAME) != 0)
 		return (1);
-	app.cam = cam_init(scene_info, 800, 600);
+	app.cam = cam_init(scene_info, SCREEN_WIDTH, SCREEN_HEIGHT);
 	app.cam.items = &scene_info.objs;
 	dirVector_init(&app.cam);
 	int	i = -1;
 	t_obj	*item;
 	while(++i < app.cam.pixels[1])
 	{
+		addDirVectorRow(&app.cam);
 		item = *app.cam.items;
 		int j;
 		while(item)
 		{
-			updateRayDist(i, &app, item);
+			updateRayDist(&app, item);
 			item = item->next;
 		}
 		j = -1;
 		while(++j < app.cam.pixels[0])
 		{
-			if (app.cam.rays[i][j].closestitem)
-				app.img.addr[i * app.w +j] = computeColor(app,app.cam.rays[i][j], app.cam.items);
+			if (app.cam.rays[j].closestitem)
+				app.img.addr[i * app.w +j] = computeColor(app,app.cam.rays[j], app.cam.items);
 		}
 	}
 	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
+	printf("DONE!!/n");
 	rt_run(&app);
 	rt_destroy(&app);
 	scene_clear(&scene_info);

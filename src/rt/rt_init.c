@@ -98,6 +98,8 @@ void	rt_destroy(t_rt_mlx *rt)
 		mlx_destroy_display(rt->mlx);
 		free(rt->mlx);
 	}
+	if (rt->cam.rays)
+		free(rt->cam.rays);
 	rt->mlx = NULL;
 	rt->win = NULL;
 	rt->img.ptr = NULL;
