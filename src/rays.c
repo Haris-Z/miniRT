@@ -165,7 +165,12 @@ double	getLightAngle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items)
 	surfaceNormal = getSurfaceNormal(point, ray.closestitem);
 	res = vec_dot(surfaceNormal, surfaceToLight);
 	if (res < 0)
-		return (-1.0);
+	{
+		if (ray.closestitem->type == OBJ_PLANE)
+			res = fabs(res);
+		else
+			return (-1.0);
+	}
 	distToVisible = distVisible(&items, ray, point, surfaceToLight);
 	if ((distToVisible > 0) && (distToVisible < getDistBetweenPoints(point, light)))
 		return (-1.0);

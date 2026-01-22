@@ -121,8 +121,9 @@ int	main(int argc, char **argv)
 				app.img.addr[i * app.w +j] = computeColor(app,app.cam.rays[j], app.cam.items);
 		}
 	}
-	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
 	printf("DONE!!/n");
+	fflush(NULL);
+	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
 	rt_run(&app);
 	rt_destroy(&app);
 	scene_clear(&scene_info);

@@ -6,7 +6,7 @@
 /*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:33:29 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/22 15:00:11 by agara            ###   ########.fr       */
+/*   Updated: 2026/01/22 16:43:38 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int		vec_near_zero(t_vec3 v);
  * @return t_vec3 
  */
 t_vec3	vec_reflect(t_vec3 v, t_vec3 n);
+void	printV(t_vec3 a);
 double	getDistBetweenPoints(t_vec3 pointA, t_vec3 pointB);
 
 #endif // VEC_H

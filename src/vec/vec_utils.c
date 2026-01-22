@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:27:34 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 11:11:53 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/22 16:42:50 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,10 @@ int	vec_near_zero(t_vec3 v)
 t_vec3	vec_reflect(t_vec3 v, t_vec3 norm)
 {
 	return (vec_sub(v, vec_scale(norm, 2.0 * vec_dot(v, norm))));
+}
+
+# include <stdio.h>
+void	printV(t_vec3 a)
+{
+	printf("x: %f y: %f z: %f\n", a.x,a.y,a.z);
 }
