@@ -1,5 +1,4 @@
 #include "mini.h"
-#include "vector.h"
 #include "vec.h"
 
 double	hitSp(t_vec3 origin, t_vec3 ray, t_sphere sphere)

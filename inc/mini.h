@@ -3,10 +3,10 @@
 
 # define RADIAN 57.2958
 
-# include "vector.h"
 # include "scene.h"
 # include "cam.h"
 # include "rt.h"
+# include <stdio.h>
 
 typedef struct s_ray t_ray;
 

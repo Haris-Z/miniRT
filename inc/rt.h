@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:13:51 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 10:03:50 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/22 15:04:51 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # include <X11/keysym.h>
 
 # include <mlx.h>
-# include "vector.h"
 # include "cam.h"
 
 /**

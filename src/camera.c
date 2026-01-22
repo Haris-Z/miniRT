@@ -1,5 +1,4 @@
 #include "mini.h"
-#include "vector.h"
 #include <math.h>
 #include <stdio.h>
 #include "scene.h"

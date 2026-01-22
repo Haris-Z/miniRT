@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cam.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 10:26:38 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 09:19:08 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/22 15:04:17 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CAM_H
 
 # include "scene.h"
-# include "vector.h"
 
 typedef struct s_ray
 {
