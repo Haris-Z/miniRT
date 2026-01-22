@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:52:45 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 17:36:02 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/22 17:49:08 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_sphere
 	t_vec3	center;
 	double	radius;
 	double	diameter;
+	int		camInside;
 	t_color	color;
 }	t_sphere;
 

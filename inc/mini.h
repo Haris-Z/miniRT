@@ -13,7 +13,7 @@ typedef struct s_ray t_ray;
 // norminette these functions
 
 void		kill_cam(t_cam_rt	*cam);
-double		hitSp(t_vec3 origin ,t_vec3 ray, t_sphere sphere);
+double		hitSp(t_vec3 origin ,t_vec3 ray, t_sphere *sphere);
 double		hitPl(t_vec3 origin ,t_vec3 ray, t_plane plane);
 void		updateRayDist(t_rt_mlx *vars, t_obj *obj);
 int			dirVector_init(t_cam_rt *cam);

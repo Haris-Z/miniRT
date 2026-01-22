@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_obj.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 05:29:39 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/22 17:50:37 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	parse_sphere(t_scene *s, char **t)
 	if (parse_double(t[2], &sp.diameter) != 0 || sp.diameter <= 0.0)
 		return(rt_error_log(E_PARSE_BAD_FLOAT, "Sphere (sp): diameter must be > 0", 0, NULL));
 	sp.radius = sp.diameter * 0.5;
+	sp.camInside = 0;
 	if (parse_color_vec(t[3], &sp.color) != 0 )
 		return(rt_error_log(E_PARSE_BAD_COLOR, "Sphere (sp): rgb invalid/out of range", 0, NULL));
 	if (scene_add_sphere(s, sp) != 0)
