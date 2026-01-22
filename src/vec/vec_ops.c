@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_ops1.c                                         :+:      :+:    :+:   */
+/*   vec_ops.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 19:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/08 21:27:50 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/22 14:59:47 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,12 @@ t_vec3	vec_cross(t_vec3 a, t_vec3 b)
 			a.x * b.y - a.y * b.x));
 }
 
+double	getDistBetweenPoints(t_vec3 pointA, t_vec3 pointB)
+{
+	double	res;
+
+	res = pow(pointA.x - pointB.x, 2) +
+		pow(pointA.y - pointB.y, 2) +
+		pow(pointA.z - pointB.z, 2);
+	return (sqrt(res));
+}

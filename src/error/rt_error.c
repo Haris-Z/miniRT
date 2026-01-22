@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:09:01 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/13 19:56:59 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/22 14:41:19 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ static const char	*rt_strerror(t_eflag e)
 	[E_PARSE_BAD_RATIO] = MSG_PARSE_BAD_RATIO,			// "Invalid ratio for "
 	[E_PARSE_BAD_FOV] = MSG_PARSE_BAD_FOV,			// "Camera (C): invalid FOV"
 	[E_PARSE_RANGE_FOV] = MSG_PARSE_BAD_FOV,			// "Camera (C): FOV out of range [0..180]"
-	[E_PARSE_RANGE_RATIO] MSG_PARSE_BAD_RATIO,		// "Ratio out of range [0..1] for "
+	[E_PARSE_RANGE_RATIO] = MSG_PARSE_BAD_RATIO,		// "Ratio out of range [0..1] for "
 	[E_PARSE_RANGE_COLOR] = MSG_PARSE_BAD_COLOR,		// "RGB out of range for "
 	[E_PARSE_RANGE_VEC3] = MSG_PARSE_BAD_UNIT_VEC,	
 	[E_PARSE_DUPLICATE_A] = MSG_DUPLICATE_A,

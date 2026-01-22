@@ -10,7 +10,7 @@ t_cam_rt	cam_init(t_scene s, int w, int h)
 {
 	t_cam_rt	cam = {0};
 
-	cam.orientation = normalizev(s.cam.dir);
+	cam.orientation = vec_norm(s.cam.dir);
 	cam.pos = s.cam.pos;
 	cam.pixels[0] = w;
 	cam.pixels[1] = h;
@@ -35,7 +35,7 @@ void	addDirVectorRow(t_cam_rt *cam)
 		cam->rays[i].dist = -1.0;
 		cam->rays[i].closestitem = NULL;
 		horAngle -= cam->deltaHorAngle;
-		cam->rays[i].direction = normalizev(cam->rays[i].direction);
+		cam->rays[i].direction = vec_norm(cam->rays[i].direction);
 	}
 	cam->verOffset -= cam->deltaVerAngle;
 }

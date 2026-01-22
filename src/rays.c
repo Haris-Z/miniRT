@@ -12,9 +12,9 @@ double	hitSp(t_vec3 origin, t_vec3 ray, t_sphere sphere)
 	double	distfar;
 	double	distnear;
 
-	a = dotv(ray, ray);
-	b = -2.0 * dotv(ray, subv(origin, sphere.center));
-	c = dotv(subv(origin, sphere.center), subv(origin, sphere.center)) - sphere.radius * sphere.radius;
+	a = vec_dot(ray, ray);
+	b = -2.0 * vec_dot(ray, vec_sub(origin, sphere.center));
+	c = vec_dot(vec_sub(origin, sphere.center), vec_sub(origin, sphere.center)) - sphere.radius * sphere.radius;
 	discriminant = (b*b - 4*a*c);
 	if (discriminant < 0)
 		return (-1.0);
@@ -34,10 +34,10 @@ double	hitPl(t_vec3 origin, t_vec3 ray, t_plane plane)
 	double	dist;
 	double	denom;
 
-	denom = dotv(plane.normal, ray);
+	denom = vec_dot(plane.normal, ray);
 	if (denom > EPSILON || denom < (-1 * EPSILON))
 	{
-		dist = dotv(subv(plane.point, origin)  , plane.normal) / denom;
+		dist = vec_dot(vec_sub(plane.point, origin)  , plane.normal) / denom;
 		if (dist > 0)
 			return dist;
 	}
@@ -90,9 +90,9 @@ int	checkSameSide(t_plane plane, t_vec3 cam, t_vec3 light)
 	double	camD;
 	double	lightD;
 	
-	planeD = plane.normal.x * plane.point.x + plane.normal.y * plane.point.y +plane.normal.z * plane.point.z;
-	camD = plane.normal.x * cam.x + plane.normal.y * cam.y +plane.normal.z * cam.z;
-	lightD = plane.normal.x * light.x + plane.normal.y * light.y +plane.normal.z * light.z;
+	planeD = vec_dot(plane.normal, plane.point);
+	camD = vec_dot(plane.normal, cam);
+	lightD = vec_dot(plane.normal, light);
 	if (camD > planeD)
 	{
 		if (lightD > planeD)
@@ -109,8 +109,8 @@ t_vec3	getReflectionV(t_vec3 surfaceToLight, t_vec3 surfaceNormal)
 {
 	t_vec3	reflectionV;
 
-	reflectionV = multiv(surfaceNormal, dotv(surfaceNormal, surfaceToLight) * 2);
-	return (subv(reflectionV, surfaceToLight));
+	reflectionV = vec_scale(surfaceNormal, vec_dot(surfaceNormal, surfaceToLight) * 2);
+	return (vec_sub(reflectionV, surfaceToLight));
 }
 
 t_vec3	getSurfaceNormal(t_vec3 point, t_obj *item)
@@ -118,10 +118,10 @@ t_vec3	getSurfaceNormal(t_vec3 point, t_obj *item)
 	t_vec3	surfaceNormal;
 
 	if (item->type == OBJ_SPHERE)
-		surfaceNormal = subv(point, item->sphere.center);
+		surfaceNormal = vec_sub(point, item->sphere.center);
 	else // if (item->t_type == PLANE)
 		surfaceNormal = item->plane.normal;
-	surfaceNormal = normalizev(surfaceNormal);
+	surfaceNormal = vec_norm(surfaceNormal);
 	return (surfaceNormal);
 }
 
@@ -159,12 +159,12 @@ double	getLightAngle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items)
 	double	res;
 	double	distToVisible;
 
-	point = addv(oPoint, multiv(ray.direction, ray.dist));
-	surfaceToLight = normalizev(subv(light, point));
+	point = vec_add(oPoint, vec_scale(ray.direction, ray.dist));
+	surfaceToLight = vec_norm(vec_sub(light, point));
 	if (ray.closestitem->type == OBJ_PLANE && !checkSameSide(ray.closestitem->plane, oPoint, light))
 		return (-1.0);	
 	surfaceNormal = getSurfaceNormal(point, ray.closestitem);
-	res = dotv(surfaceNormal, surfaceToLight);
+	res = vec_dot(surfaceNormal, surfaceToLight);
 	if (res < 0)
 		return (-1.0);
 	distToVisible = distVisible(&items, ray, point, surfaceToLight);
@@ -187,11 +187,11 @@ int	computeColor(t_rt_mlx vars, t_ray ray, t_obj **items)
 	lightAngle = getLightAngle(vars.cam.pos, ray, vars.cam.light, *items);
 	if (lightAngle < 0)
 		return (ambientColor);
-	point = addv(vars.cam.pos, multiv(ray.direction, ray.dist));
+	point = vec_add(vars.cam.pos, vec_scale(ray.direction, ray.dist));
 	surfaceNormal = getSurfaceNormal(point, ray.closestitem);
-	reflectionV = getReflectionV(normalizev(subv(vars.cam.light, point)), surfaceNormal);
+	reflectionV = getReflectionV(vec_norm(vec_sub(vars.cam.light, point)), surfaceNormal);
 	diffuseColor = scaleColor(ambientColor, ray.closestitem->color, lightAngle);
-	shining = dotv(reflectionV, ray.direction);
+	shining = vec_dot(reflectionV, ray.direction);
 	if (shining < 0)
 		return (scaleColor(diffuseColor,0x00FFFFFF, pow(shining,32)));
 	else

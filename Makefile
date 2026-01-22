@@ -120,8 +120,7 @@ VEC := \
 		vec/vec_basic_ops.c \
 		vec/vec_norm.c \
 		vec/vec_ops.c \
-		vec/vec_utils.c \
-		vector.c
+		vec/vec_utils.c 
 
 SRCS := \
 		test_main.c \
