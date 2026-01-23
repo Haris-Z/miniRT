@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:13:51 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/22 15:04:51 by agara            ###   ########.fr       */
+/*   Updated: 2026/01/23 16:40:40 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define RT_H
 
 # define RT_WINDOW_NAME	"miniRT"
-# define SCREEN_WIDTH	1000
+# define SCREEN_WIDTH	800
 # define SCREEN_HEIGHT	600
 # define EPSILON 1e-12
 # define RADIAN 57.2958

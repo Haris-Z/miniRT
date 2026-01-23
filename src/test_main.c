@@ -10,6 +10,7 @@
 
 static void	print_scene_info(t_scene scene, char *file);
 
+// static g_time;
 // int	close_game(t_rt_mlx *vars)
 // {
 	//kill_cam(&vars->cam);
@@ -99,11 +100,18 @@ int	main(int argc, char **argv)
 	print_scene_info(scene_info, argv[1]);
 	if (rt_init(&app, RT_WINDOW_NAME) != 0)
 		return (1);
+	t_color rgb;
+	rgb = color_rgb(255,0,128);
+	t_color rgb1 = color_rgb(255,255,255);
+	printf("\nCOLOR TEST\nr: %f, g: %f , b: %f\n", rgb.x, rgb.y, rgb.z);
+		printf("\nCOLOR TEST\nr: %f, g: %f , b: %f\n", rgb1.x, rgb1.y, rgb1.z);
+	exit(1);
 	app.cam = cam_init(scene_info, SCREEN_WIDTH, SCREEN_HEIGHT);
 	app.cam.items = &scene_info.objs;
 	dirVector_init(&app.cam);
 	int	i = -1;
 	t_obj	*item;
+	///start = timer()
 	while(++i < app.cam.pixels[1])
 	{
 		addDirVectorRow(&app.cam);
@@ -120,7 +128,8 @@ int	main(int argc, char **argv)
 			if (app.cam.rays[j].closestitem)
 				app.img.addr[i * app.w +j] = computeColor(app,app.cam.rays[j], app.cam.items);
 		}
-	}
+	}/// end = timer()
+	// printf(end-start);
 	printf("DONE!!/n");
 	fflush(NULL);
 	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
@@ -180,4 +189,3 @@ static void	print_scene_info(t_scene scene, char *file)
 	printf("Objects: %d\n", i);
 	printf("=============================================================\n");
 }
-

@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "scene.h"
 
+
+
 // t_cam_rt	cam_init(t_vec3 pos, t_vec3 orientation, int fov, int screendim[2])
 // light color and dir vector has to be added, also ambient color, or amb.rgb, light.rgb is an int
 t_cam_rt	cam_init(t_scene s, int w, int h)
@@ -51,6 +53,8 @@ int	dirVector_init(t_cam_rt *cam)
 	if (fabs(cam->orientation.x) < EPSILON)
 		cam->orientation.x += 2 * EPSILON;
 	cam->horRange -= atan(cam->orientation.y / cam->orientation.x);
+
+
 	cam->verOffset = (90 / ((SCREEN_WIDTH / SCREEN_HEIGHT) * cam->focalLength)) / (RADIAN * 2);
 	cam->deltaVerAngle = (2 * cam->verOffset / cam->pixels[1]);
 	cam->verOffset += atan(cam->orientation.z / sqrt((cam->orientation.x * cam->orientation.x) + (cam->orientation.y * cam->orientation.y)));
