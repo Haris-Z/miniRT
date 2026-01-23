@@ -51,7 +51,7 @@ int	main(int argc, char **argv)
 	printf("DONE!!/n");
 	fflush(NULL);
 	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
-	save_to_ppm("test.ppm", &app.img);
+	save_to_ppm("saved_images/test.ppm", &app.img);
 	rt_run(&app);
 	rt_destroy(&app);
 	scene_clear(&scene_info);
