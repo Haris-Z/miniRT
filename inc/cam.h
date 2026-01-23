@@ -6,7 +6,7 @@
 /*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 10:26:38 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/23 21:13:11 by agara            ###   ########.fr       */
+/*   Updated: 2026/01/22 15:04:17 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CAM_H
 
 # include "scene.h"
-# include "vec.h"
 
 typedef struct s_ray
 {

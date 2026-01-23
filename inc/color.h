@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 19:40:57 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/23 21:02:48 by agara            ###   ########.fr       */
+/*   Updated: 2026/01/16 11:44:13 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLOR_H
 # define COLOR_H
 
-# include "cam.h"
 # include "vec.h"
 
 typedef t_vec3	t_color;

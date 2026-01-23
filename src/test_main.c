@@ -73,9 +73,10 @@ static void	print_scene_info(t_scene scene, char *file)
 			   scene.cam.dir.x, scene.cam.dir.y, scene.cam.dir.z,
 			   scene.cam.fov_deg);
 	if (scene.has_light)
-		printf("Light:	 pos(%.2f,%.2f,%.2f)		| brightness=%.2f		| color=(%f,%f,%f) \n",
+		printf("Light:	 pos(%.2f,%.2f,%.2f)		| brightness=%.2f		| color=(%f,%f,%f) \n\
+									| color=%d | colorhex=0x%X\n",
 			   scene.light.pos.x, scene.light.pos.y, scene.light.pos.z,
-			   scene.light.bright, scene.light.color.x, scene.light.color.y, scene.light.color.z);
+			   scene.light.bright, scene.light.color.x, scene.light.color.y, scene.light.color.z, scene.light.rgb, scene.light.rgb);
 	printf("=========================  OBJECTS  ============================================================================\n\n");
 	t_obj *obj = scene.objs;
 	int i = 0;
@@ -83,21 +84,23 @@ static void	print_scene_info(t_scene scene, char *file)
 	{
 		printf("  - ");
 		if (obj->type == OBJ_SPHERE)
-			printf("Sphere:     center(%.2f,%.2f,%.2f) | radius=%.2f | sp.color=(%f,%f,%f)\n",
+			printf("Sphere:     center(%.2f,%.2f,%.2f) | radius=%.2f | sp.color=(%f,%f,%f) | obj.color=%d | obj.color=0x%X |\n",
 				   obj->sphere.center.x, obj->sphere.center.y, obj->sphere.center.z,
-				   obj->sphere.radius, obj->sphere.color.x, obj->sphere.color.y, obj->sphere.color.z \
+				   obj->sphere.radius, obj->sphere.color.x, obj->sphere.color.y, obj->sphere.color.z, \
+				   obj->color, obj->color\
 				);
 		else if (obj->type == OBJ_PLANE)
-			printf("Plane:      point(%.2f,%.2f,%.2f) | normal(%.2f,%.2f,%.2f) | pl.color=(%f,%f,%f)\n",
+			printf("Plane:      point(%.2f,%.2f,%.2f) | normal(%.2f,%.2f,%.2f) | pl.color=(%f,%f,%f) | obj.color=%d | obj.color=0x%X |\n",
 				   obj->plane.point.x, obj->plane.point.y, obj->plane.point.z,
 				   obj->plane.normal.x, obj->plane.normal.y, obj->plane.normal.z, \
-				obj->plane.color.x, obj->plane.color.y, obj->plane.color.z);
+				obj->plane.color.x, obj->plane.color.y, obj->plane.color.z, \
+			obj->color, obj->color);
 		else if (obj->type == OBJ_CYLINDER)
-			printf("Cylinder:   center(%.2f,%.2f,%.2f) | axis=(%.2f,%.2f,%.2f) | diameter=%.2f | height=%.2f | cy.color=(%f,%f,%f)\n",
+			printf("Cylinder:   center(%.2f,%.2f,%.2f) | axis=(%.2f,%.2f,%.2f) | diameter=%.2f | height=%.2f | cy.color=(%f,%f,%f) | obj.color=%d | obj.color=0x%X |\n",
 				   obj->cylinder.center.x, obj->cylinder.center.y, obj->cylinder.center.z, \
 				   obj->cylinder.axis.x, obj->cylinder.axis.y, obj->cylinder.axis.z, \
 				   obj->cylinder.diameter, obj->cylinder.height, \
-				obj->cylinder.color.x, obj->cylinder.color.y, obj->cylinder.color.z);
+				obj->cylinder.color.x, obj->cylinder.color.y, obj->cylinder.color.z, obj->color, obj->color);
 		i++;
 		obj = obj->next;
 	}

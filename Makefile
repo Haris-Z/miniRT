@@ -90,8 +90,7 @@ LDLIBS    += -lft -lmlx -lXext -lX11 -lm
 # ============================================================================ #
 
 COLOR := \
-		color/color.c \
-		color/shader.c
+		color/color.c
 
 ERROR := \
 		error/rt_error.c
