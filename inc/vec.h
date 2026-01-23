@@ -6,7 +6,7 @@
 /*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:33:29 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/22 16:43:38 by agara            ###   ########.fr       */
+/*   Updated: 2026/01/23 21:09:59 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define VEC_H
 
 # define RADIAN 57.2958
+# include "scene.h"
+
+typedef struct s_obj t_obj;
 
 //  p = (x,y,z)
 // 3d vec
@@ -135,5 +138,6 @@ int		vec_near_zero(t_vec3 v);
 t_vec3	vec_reflect(t_vec3 v, t_vec3 n);
 void	printV(t_vec3 a);
 double	getDistBetweenPoints(t_vec3 pointA, t_vec3 pointB);
+// t_vec3	getSurfaceNormal(t_vec3 point, t_obj *item);
 
 #endif // VEC_H

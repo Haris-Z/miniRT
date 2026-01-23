@@ -6,7 +6,7 @@
 /*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:52:45 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/22 17:49:08 by agara            ###   ########.fr       */
+/*   Updated: 2026/01/23 21:12:51 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct s_light
 	t_vec3	pos;
 	double	bright;
 	t_color	color;
-	int		rgb;
 }	t_light;
 
 /**
@@ -155,7 +154,7 @@ struct s_obj
 		t_plane		plane;
 		t_cylinder	cylinder;
 	};
-	int				color;
+	t_color			color;
 	struct s_obj	*next;
 };
 typedef struct s_obj		t_obj;
@@ -168,7 +167,7 @@ typedef struct s_obj		t_obj;
  * 
  * @todo add stuff
  */
-struct s_scene_info
+typedef struct s_scene_info 
 {
 	int			has_light;
 	int			has_ambient;
@@ -177,8 +176,7 @@ struct s_scene_info
 	t_camera	cam;
 	t_light		light;
 	t_obj		*objs;
-};
-typedef struct s_scene_info	t_scene;
+}	t_scene;
 
 
 /* initialize and clear */
