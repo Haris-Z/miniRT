@@ -10,82 +10,6 @@
 
 static void	print_scene_info(t_scene scene, char *file);
 
-// static g_time;
-// int	close_game(t_rt_mlx *vars)
-// {
-	//kill_cam(&vars->cam);
-	// mlx_destroy_image(vars->mlx, vars->colors->img);
-	// mlx_destroy_window(vars->mlx, vars->win);
-	// mlx_destroy_display(vars->mlx);
-	// free(vars->mlx);
-	// free(vars->colors);
-	// exit(0);
-// 	return (0);
-// }
-
-// static t_rt_img	*init_data(t_rt_mlx *vars, int screendim[2])
-// {
-// 	t_rt_img	*data;
-
-// 	data = malloc(sizeof(t_rt_img));
-// 	if (!data)
-// 		return (NULL);
-	
-// 	data->img = mlx_new_image(vars->mlx, screendim[0], screendim[1]);
-// 	data->bits_per_pixel = 32;
-// 	data->line_length = screendim[0];
-// 	data->endian = 1;
-// 	data->addr = (int *)mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length,
-// 							&data->endian);	
-// 	if (!(data->img))
-// 		return (free(data), NULL);
-// 	return (data);
-// }
-
-// int	init_vars(t_vars *vars, int screendim[2])
-// {
-// 	vars->mlx = NULL;
-// 	vars->mlx = mlx_init();
-// 	if (!(vars->mlx))
-// 		return (0);
-// 	vars->win = mlx_new_window(vars->mlx, screendim[0], screendim[1], "Trace my rays!");
-// 	if (!(vars->win))
-// 	{
-// 		mlx_destroy_display(vars->mlx);
-// 		free(vars->mlx);
-// 		return (0);
-// 	}
-// 	return (1);
-// }
-
-// static int	test_rt_init(int argc, char **argv)
-// {
-// 	t_rt_mlx	app;
-
-// 	(void)argc;
-// 	(void)argv;
-// 	ft_bzero(&app, sizeof(app));
-// 	if (rt_init(&app, RT_WINDOW_NAME) != 0)
-// 		return (1);
-// 	rt_run(&app);
-// 	rt_destroy(&app);
-// 	return (0);
-// }
-
-// static int	test_file_parsing(int argc, char **argv)
-// {
-// 	t_scene		scene_info;
-
-// 	if (argc != 2)
-// 		return(rt_error_msg(MSG_USAGE));
-// 	ft_bzero(&scene_info, sizeof(scene_info));
-// 	if(parse_file(argv[1], &scene_info) != 0)
-// 		return (1);
-// 	print_scene_info(scene_info, argv[1]);
-// 	scene_clear(&scene_info);
-// 	return (0);
-// }
-
 int	main(int argc, char **argv)
 {
 	t_rt_mlx	app;
@@ -100,12 +24,6 @@ int	main(int argc, char **argv)
 	print_scene_info(scene_info, argv[1]);
 	if (rt_init(&app, RT_WINDOW_NAME) != 0)
 		return (1);
-	t_color rgb;
-	rgb = color_rgb(255,0,128);
-	t_color rgb1 = color_rgb(255,255,255);
-	printf("\nCOLOR TEST\nr: %f, g: %f , b: %f\n", rgb.x, rgb.y, rgb.z);
-		printf("\nCOLOR TEST\nr: %f, g: %f , b: %f\n", rgb1.x, rgb1.y, rgb1.z);
-	exit(1);
 	app.cam = cam_init(scene_info, SCREEN_WIDTH, SCREEN_HEIGHT);
 	app.cam.items = &scene_info.objs;
 	dirVector_init(&app.cam);
@@ -133,6 +51,7 @@ int	main(int argc, char **argv)
 	printf("DONE!!/n");
 	fflush(NULL);
 	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
+	save_to_ppm("test.ppm", &app.img);
 	rt_run(&app);
 	rt_destroy(&app);
 	scene_clear(&scene_info);
