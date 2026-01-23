@@ -122,6 +122,9 @@ VEC := \
 		vec/vec_ops.c \
 		vec/vec_utils.c 
 
+PPM := \
+		write_to_ppm/save_ppm.c
+
 SRCS := \
 		test_main.c \
 		camera.c \
@@ -130,6 +133,7 @@ SRCS := \
 		$(ERROR) \
 		$(PARSE) \
 		$(RT) \
+		$(PPM) \
 		$(VEC) \
 		$(SCENE)
 
