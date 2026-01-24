@@ -49,3 +49,9 @@ void	printV(t_vec3 a)
 {
 	printf("x: %f y: %f z: %f\n", a.x,a.y,a.z);
 }
+void	printM(t_mat3 a)
+{
+	printf("	%f	%f	%f\n", a.colx.x, a.coly.x, a.colz.x);
+	printf("	%f	%f	%f\n", a.colx.y, a.coly.y, a.colz.y);
+	printf("	%f	%f	%f\n", a.colx.z, a.coly.z, a.colz.z);
+}

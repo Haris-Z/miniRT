@@ -32,46 +32,72 @@ t_cam_rt	cam_init(t_scene s, int w, int h)
 void	addDirVectorRow(t_cam_rt *cam)
 {
 	int	i;
-	double	horAngle;
 
-	horAngle = cam->horRange;
 	i = -1;
 	while(++i < cam->pixels[0])
 	{
-		cam->rays[i].direction.x = (cos(horAngle) * cam->focalLength) - cam->focusDist;
-		cam->rays[i].direction.y = sin(horAngle) * cam->focalLength * -1;
-		cam->rays[i].direction.z = cam->verOffset;
+		cam->xyTemplate[i].z = cam->height;
+		cam->xyTemplate[i] = vec_norm(cam->xyTemplate[i]);
+		cam->rays[i].direction = vec_mul_M(cam->xyTemplate[i], cam->rotationM);
 		cam->rays[i].dist = -1.0;
 		cam->rays[i].closestitem = NULL;
-		horAngle -= cam->deltaHorAngle;
-		cam->rays[i].direction = vec_norm(cam->rays[i].direction);
 	}
-	cam->verOffset -= cam->deltaVerAngle;
+	cam->height -= cam->deltaHeight;
+}
+
+
+void	createXYTemplate(t_cam_rt *cam)
+{
+	int	i;
+	double	sinOffset;
+	double	cosOffset;
+	double	horOffset;
+	double	preRotX;
+	
+	horOffset = atan(cam->orientation.y / cam->orientation.x);
+	sinOffset = sin(horOffset);
+	cosOffset = cos(horOffset);
+	i = -1;
+	while(++i < cam->pixels[0])
+	{
+		preRotX = (cos(cam->horRange) * cam->focalLength) - cam->focusDist;				//rotation around focuspoint
+		cam->xyTemplate[i].y = sin(cam->horRange) * cam->focalLength;
+		cam->xyTemplate[i].x = preRotX * cosOffset - cam->xyTemplate[i].y * sinOffset;	//rotation around cam
+		cam->xyTemplate[i].y = preRotX * sinOffset + cam->xyTemplate[i].y * cosOffset;
+		cam->xyTemplate[i].z = 0;
+		cam->xyTemplate[i] = vec_norm(cam->xyTemplate[i]);
+		cam->horRange -= cam->deltaHorAngle;
+	}
 }
 
 int	dirVector_init(t_cam_rt *cam)
 {
+	double	verRange;
+
 	cam->rays = malloc(sizeof(t_ray) * cam->pixels[0]);
 	if (!cam->rays)
 		return (0);
+	cam->xyTemplate = malloc(sizeof(t_vec3) * cam->pixels[0]);
+	if (!cam->xyTemplate)
+		return (free(cam->rays), 0);
 	cam->focalLength = 180.0 / cam->fov;
 	cam->horRange = asin(sin(cam->fov / (2 * RADIAN)) / cam->focalLength );
 	cam->focusDist = (cos(cam->horRange) * cam->focalLength) - (cos(cam->fov / (RADIAN * 2)));
 	cam->deltaHorAngle = 2 * cam->horRange / cam->pixels[0];
 	if (fabs(cam->orientation.x) < EPSILON)
 		cam->orientation.x += 2 * EPSILON;
-	cam->horRange -= atan(cam->orientation.y / cam->orientation.x);
-
-	cam->verOffset = (90 / ((SCREEN_WIDTH / SCREEN_HEIGHT) * cam->focalLength)) / (RADIAN * 2);
-	cam->deltaVerAngle = (2 * cam->verOffset / cam->pixels[1]);
-	cam->verOffset += atan(cam->orientation.z / sqrt((cam->orientation.x * cam->orientation.x) + (cam->orientation.y * cam->orientation.y)));
-	// printf(" focalLength %f focusdist %f horrange %f deltahorizontal %f verrange %f deltavertical %f\n", 
-	// 	cam->focalLength,cam->focusDist, cam->horRange * RADIAN,  cam->deltaHorAngle * RADIAN,cam->verOffset * RADIAN, cam->deltaVerAngle * RADIAN);	
+	createXYTemplate(cam);
+	verRange = (90 / ((SCREEN_WIDTH / SCREEN_HEIGHT) * cam->focalLength)) / (RADIAN * 2);
+	cam->height = tan(verRange);
+	cam->deltaHeight = cam->height / (cam->pixels[1] / 2);
+	cam->rotationM = calcRotationMatrix(vec_norm(vec3(cam->orientation.y, -1 * cam->orientation.x, 0)),
+		atan(cam->orientation.z / sqrt((cam->orientation.x * cam->orientation.x) + (cam->orientation.y * cam->orientation.y))));
 	return (1);
 }
 
 void	kill_cam(t_cam_rt	*cam)
 {
 	free(cam->rays);
+	free(cam->xyTemplate);
 	//free(cam);
 }

@@ -120,7 +120,8 @@ VEC := \
 		vec/vec_basic_ops.c \
 		vec/vec_norm.c \
 		vec/vec_ops.c \
-		vec/vec_utils.c 
+		vec/vec_utils.c \
+		vec/mat_ops.c
 
 PPM := \
 		write_to_ppm/save_ppm.c

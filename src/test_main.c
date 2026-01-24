@@ -17,6 +17,20 @@
 
 static void	print_scene_info(t_scene scene, char *file);
 
+void	rotTest()
+{
+	t_vec3 a = vec3(0.7071,0.7071,0);
+	// t_mat3 ones = matNew(vec3(1,1,1),vec3(1,1,1),vec3(1,1,1));
+	// printV(vec_mul_M(a, ones));
+	// t_mat3 i = matNew(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1));
+	t_mat3 R = calcRotationMatrix(vec3(0,1,0), 90 / RADIAN);
+	// t_vec3 axis = vec_norm(vec3(cam.orientation.y, -1 * cam.orientation.x, 0));
+
+	a = vec_mul_M(a, R);
+	printV(a);
+
+}
+
 int	main(int argc, char **argv)
 {
 	t_rt_mlx	app;
@@ -34,10 +48,12 @@ int	main(int argc, char **argv)
 		return (1);
 	app.cam = cam_init(scene_info, SCREEN_WIDTH, SCREEN_HEIGHT);
 	app.cam.items = &scene_info.objs;
-	dirVector_init(&app.cam);
+	if (!dirVector_init(&app.cam))
+		return (0); // was a mallocerr
 	int	i = -1;
 	t_obj	*item;
 	///start = timer()
+	// rotTest(app.cam);
 	while(++i < app.cam.pixels[1])
 	{
 		addDirVectorRow(&app.cam);
@@ -59,7 +75,7 @@ int	main(int argc, char **argv)
 	printf("DONE!!\n");
 	fflush(NULL);
 	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
-	save_to_ppm(argv[1], &app.img);
+	// save_to_ppm(argv[1], &app.img);
 	rt_run(&app);
 	rt_destroy(&app);
 	scene_clear(&scene_info);

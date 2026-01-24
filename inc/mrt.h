@@ -41,6 +41,13 @@ typedef struct s_vec3
 	double	z;
 }	t_vec3;
 
+typedef struct s_mat3
+{
+	t_vec3	colx;
+	t_vec3	coly;
+	t_vec3	colz;
+}	t_mat3;
+
 // ----------- COLOR -----------
 
 typedef t_vec3	t_color;
@@ -144,15 +151,17 @@ typedef struct s_rt_cam
 	t_obj	**items;
 	t_vec3	light;
 	t_ray	*rays;
+	t_vec3	*xyTemplate;
+	t_mat3	rotationM;
 	int		pixels[2];
 	double	fov;
 	double	ambient;
 	double	focalLength;
 	double	focusDist;
 	double	horRange;
-	double	deltaVerAngle;
 	double	deltaHorAngle;
-	double	verOffset;
+	double	height;
+	double	deltaHeight;
 }	t_cam_rt;
 
 // ----------- MLX / IMAGE -----------
@@ -192,12 +201,21 @@ t_vec3	vec_cross(t_vec3 a, t_vec3 b);
 t_vec3	vec_norm(t_vec3 v);
 double	vec_len(t_vec3 v);
 double	vec_dot(t_vec3 a, t_vec3 b);
+t_vec3	vec_mul_M(t_vec3 v, t_mat3 m);
 
 /// vector utils
 int		vec_near_zero(t_vec3 v);
 t_vec3	vec_reflect(t_vec3 v, t_vec3 n);
 void	printV(t_vec3 a);
+void	printM(t_mat3 a);
 double	getDistBetweenPoints(t_vec3 pointA, t_vec3 pointB);
+
+/// matrix ops
+t_mat3	matNew(t_vec3 colx, t_vec3 coly, t_vec3 colz);
+t_mat3	matMult(t_mat3 a, t_mat3 b);
+t_mat3	matScale(double amount, t_mat3 mat);
+t_mat3	matAdd(t_mat3 a, t_mat3 b);
+t_mat3	calcRotationMatrix(t_vec3 axis, double verAngle);
 
 // ----------- COLOR -----------
 

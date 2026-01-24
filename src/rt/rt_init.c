@@ -99,7 +99,10 @@ void	rt_destroy(t_rt_mlx *rt)
 		free(rt->mlx);
 	}
 	if (rt->cam.rays)
+	{
 		free(rt->cam.rays);
+		free(rt->cam.xyTemplate);
+	}
 	rt->mlx = NULL;
 	rt->win = NULL;
 	rt->img.ptr = NULL;

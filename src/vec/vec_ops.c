@@ -39,3 +39,13 @@ double	getDistBetweenPoints(t_vec3 pointA, t_vec3 pointB)
 		pow(pointA.z - pointB.z, 2);
 	return (sqrt(res));
 }
+
+t_vec3	vec_mul_M(t_vec3 v, t_mat3 m)
+{
+	t_vec3	res;
+
+	res.x = v.x * m.colx.x + v.y * m.coly.x + v.z * m.colz.x;
+	res.y = v.x * m.colx.y + v.y * m.coly.y + v.z * m.colz.y;
+	res.z = v.x * m.colx.z + v.y * m.coly.z + v.z * m.colz.z;
+	return (res);
+}
