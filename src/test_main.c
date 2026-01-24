@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 			if (app.cam.rays[j].closestitem)
 				app.img.addr[i * app.w +j] = computeColor(app,app.cam.rays[j], app.cam.items);
 		}
-	}/// end = timer()
+	}/// end = timer(
 	// printf(end-start);
 	printf("DONE!!\n");
 	fflush(NULL);
