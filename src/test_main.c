@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:53 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 12:43:55 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 16:42:31 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv)
 	ft_bzero(&scene_info, sizeof(scene_info));
 	if(parse_file(argv[1], &scene_info) != 0)
 		return (1);
+
 	print_scene_info(scene_info, argv[1]);
 	if (rt_init(&app, RT_WINDOW_NAME) != 0)
 		return (1);
@@ -58,7 +59,7 @@ int	main(int argc, char **argv)
 	printf("DONE!!\n");
 	fflush(NULL);
 	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
-	save_to_ppm("saved_images/test.ppm", &app.img);
+	save_to_ppm(argv[1], &app.img);
 	rt_run(&app);
 	rt_destroy(&app);
 	scene_clear(&scene_info);
