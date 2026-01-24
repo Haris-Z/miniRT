@@ -6,12 +6,11 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 20:18:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/23 17:45:40 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:45:39 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "color.h"
-#include "math.h"
+#include "mrt.h"
 
 // shading color calc - value should be [0,1] - restrict to stay between 0/1
 // avoid overflow underflow when converting

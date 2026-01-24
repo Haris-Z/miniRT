@@ -1,12 +1,19 @@
-#include "mini.h"
-#include "rt_error.h"
-#include "cam.h"
-#include "parser.h"
-#include "rt.h"
-#include "scene.h"
-#include "vec.h"
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/24 11:53:53 by hazunic           #+#    #+#             */
+/*   Updated: 2026/01/24 12:43:55 by hazunic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
+#include "mrt.h"
+#include "rt_error.h"
+#include "libft.h"
 
 static void	print_scene_info(t_scene scene, char *file);
 
@@ -66,7 +73,7 @@ static void	print_scene_info(t_scene scene, char *file)
 	if (scene.has_ambient)
 		printf("Ambient: ratio=%.2f			| color=(r=%f,g=%f,b=%f)\n \
 					| color=%d | colorhex=0x%X\n\n",
-			   scene.amb.ratio, scene.amb.color.x, scene.amb.color.x, scene.amb.color.z, scene.amb.rgb, scene.amb.rgb);
+			   scene.amb.ratio, scene.amb.color.x, scene.amb.color.y, scene.amb.color.z, scene.amb.rgb, scene.amb.rgb);
 	if (scene.has_camera)
 		printf("Camera:	 pos(x=%.2f,y=%.2f,z=%.2f)	| dir(x=%.2f,y=%.2f,z=%.2f)	| fov=%.1f°\n\n",
 			   scene.cam.pos.x, scene.cam.pos.y, scene.cam.pos.z,

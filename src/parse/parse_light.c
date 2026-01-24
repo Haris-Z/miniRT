@@ -6,15 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:53:27 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 05:23:03 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:47:47 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdlib.h>
-// #include "rt.h"
 #include "rt_error.h"
-#include "scene.h"
-#include "parser.h"
+#include "mrt.h"
 
 // LIGHT
 // id	Pos			Brightness	Colors

@@ -6,12 +6,11 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 16:47:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 05:52:29 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:49:42 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "scene.h"
+#include "mrt.h"
 #include <rt_error.h>
 #include "libft.h"
 

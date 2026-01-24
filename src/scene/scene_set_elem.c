@@ -6,11 +6,11 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:51:49 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/15 22:45:22 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:50:31 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene.h"
+#include "mrt.h"
 
 /*
 	minimal.rt

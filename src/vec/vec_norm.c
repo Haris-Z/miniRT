@@ -6,12 +6,11 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 20:07:32 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/11 11:12:06 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:50:49 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include "vec.h"
+#include "mrt.h"
 
 t_vec3	vec_norm(t_vec3 v)
 {

@@ -6,14 +6,13 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 05:20:51 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:47:31 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include "mrt.h"
 #include "rt_error.h"
-#include "scene.h"
-#include "parser.h"
 #include "libft.h"
 
 // add simpler file reading - remove gnl

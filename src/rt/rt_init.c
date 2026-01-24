@@ -6,11 +6,11 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 09:55:51 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:49:19 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
+#include "mrt.h"
 #include "libft.h"
 
 
@@ -58,7 +58,7 @@ int rt_init(t_rt_mlx *rt, const char *title)
 /* 
 ** Description 
 */
-#include <stdio.h>
+// #include <stdio.h>
 // int	rt_init(t_rt_mlx *rt, int w, int h, const char *title)
 // {
 // 	rt->mlx = mlx_init();

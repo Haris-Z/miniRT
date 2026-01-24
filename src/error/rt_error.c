@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   rt_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:09:01 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/22 14:41:19 by agara            ###   ########.fr       */
+/*   Updated: 2026/01/24 11:20:34 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "rt_error.h"
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+
+//#include "mrt.h"
+
+#include "libft.h"
+#include "rt_error.h"
+
 
 static const char	*rt_strerror(t_eflag e);
 static void			rt_parse_err(int i, char *msg, char *arg);

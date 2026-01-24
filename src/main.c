@@ -6,14 +6,13 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 08:55:05 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:53:07 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "rt_error.h"
-#include "parser.h"
-#include "rt.h"
+#include "mrt.h"
 #include "libft.h"
 
 static int	test_rt_init(int argc, char **av);

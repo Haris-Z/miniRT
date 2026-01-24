@@ -6,15 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:50:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 06:01:12 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:50:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "color.h"
-#include "scene.h"
+#include "mrt.h"
 #include "libft.h"
-#include "vec.h"
 
 static void	obj_free_list(t_obj *o)
 {
@@ -27,7 +24,6 @@ static void	obj_free_list(t_obj *o)
 		o = next;
 	}
 }
-
 
 /*
 A	0.2 255,255,255
@@ -68,7 +64,6 @@ int	set_default_scene(t_scene *s)
 	scene_set_camera(s, c);
 	scene_set_light(s, l);
 
-
 	sp.center = vec3(0.0, 0.0, 20.0);
 	sp.diameter = 6.3;
 	sp.radius = sp.diameter * 0.5;
@@ -105,7 +100,6 @@ int	set_default_scene(t_scene *s)
 		return (1);
 	return (0);
 }
-
 
 void	scene_clear(t_scene *s)
 {

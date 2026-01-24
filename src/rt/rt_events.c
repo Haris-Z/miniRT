@@ -6,11 +6,11 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 17:04:18 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/15 18:55:29 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:48:43 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
+#include "mrt.h"
 
 // window management
 

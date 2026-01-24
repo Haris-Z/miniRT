@@ -1,9 +1,17 @@
-#include "mini.h"
-#include <math.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/24 11:52:31 by hazunic           #+#    #+#             */
+/*   Updated: 2026/01/24 12:52:48 by hazunic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
-#include "scene.h"
-
-
+#include "mrt.h"
 
 // t_cam_rt	cam_init(t_vec3 pos, t_vec3 orientation, int fov, int screendim[2])
 // light color and dir vector has to be added, also ambient color, or amb.rgb, light.rgb is an int
@@ -54,7 +62,6 @@ int	dirVector_init(t_cam_rt *cam)
 		cam->orientation.x += 2 * EPSILON;
 	cam->horRange -= atan(cam->orientation.y / cam->orientation.x);
 
-
 	cam->verOffset = (90 / ((SCREEN_WIDTH / SCREEN_HEIGHT) * cam->focalLength)) / (RADIAN * 2);
 	cam->deltaVerAngle = (2 * cam->verOffset / cam->pixels[1]);
 	cam->verOffset += atan(cam->orientation.z / sqrt((cam->orientation.x * cam->orientation.x) + (cam->orientation.y * cam->orientation.y)));
@@ -66,5 +73,5 @@ int	dirVector_init(t_cam_rt *cam)
 void	kill_cam(t_cam_rt	*cam)
 {
 	free(cam->rays);
-	free(cam);
+	//free(cam);
 }

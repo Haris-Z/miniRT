@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:27:34 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/22 16:42:50 by agara            ###   ########.fr       */
+/*   Updated: 2026/01/24 11:51:04 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include "vec.h"
+#include "mrt.h"
 
 // create a vec
 t_vec3	vec3(double x, double y, double z)

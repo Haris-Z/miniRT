@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vec_ops.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 19:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/22 14:59:47 by agara            ###   ########.fr       */
+/*   Updated: 2026/01/24 11:50:52 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include "vec.h"
+#include "mrt.h"
 
 t_vec3	vec_scale(t_vec3 v, double s)
 {

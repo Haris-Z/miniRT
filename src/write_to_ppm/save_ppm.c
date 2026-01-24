@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 18:37:39 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 10:48:47 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:52:09 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include "libft.h"
-#include "rt.h"
+#include "mrt.h"
 
 static int	write_to_ppm(int fd, const void *buf, size_t n);
 

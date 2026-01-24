@@ -6,15 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:02:44 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/13 22:06:48 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:47:19 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "rt.h"
+#include "mrt.h"
 #include "rt_error.h"
-#include "scene.h"
-#include "parser.h"
 #include "libft.h"
 
 static int	in_range(double x, double min, double max)

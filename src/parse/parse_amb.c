@@ -6,15 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:02:44 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/16 12:21:18 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:46:38 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "rt.h"
+#include "mrt.h"
 #include "rt_error.h"
-#include "parser.h"
-#include "scene.h"
 #include "libft.h"
 
 int	parse_ratio(const char *tok, double *out)

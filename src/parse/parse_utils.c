@@ -6,15 +6,11 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/18 05:29:52 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:48:33 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include <stdlib.h>
-#include "color.h"
-#include "vec.h"
-#include "parser.h"
+#include "mrt.h"
 #include "rt_error.h"
 #include "libft.h"
 
