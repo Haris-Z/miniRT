@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 		}
 	}/// end = timer()
 	// printf(end-start);
-	printf("DONE!!/n");
+	printf("DONE!!\n");
 	fflush(NULL);
 	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
 	save_to_ppm("saved_images/test.ppm", &app.img);

@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 18:37:39 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/23 19:53:58 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/01/24 10:48:47 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	save_to_ppm(const char *path, const t_rt_img *img)
 	unsigned char		rgb[3];
 
 	if (!path || !img || !img->addr || img->img_w <= 0 || img->img_h <= 0)
-		return (1);
+		return (1);											//-rw-r--r--
 	fd = open(path, O_CREAT | O_TRUNC | O_RDWR , 0644);
 	if (fd < 0)
 	{
@@ -54,7 +54,7 @@ int	save_to_ppm(const char *path, const t_rt_img *img)
 	ft_putnbr_fd(img->img_h, fd);
 	ft_putstr_fd("\n255\n", fd);
 	bpp = img->bpp / 8;
-	y = -0;
+	y = -1;
 	while (++y < img->img_h)
 	{
 		x = -1;
