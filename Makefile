@@ -90,7 +90,12 @@ LDLIBS    += -lft -lmlx -lXext -lX11 -lm
 # ============================================================================ #
 
 COLOR := \
-		color/color.c
+		color/color.c \
+		color/shader.c
+
+B_COLOR := \
+		color/color.c \
+		color/shader_bonus.c
 
 ERROR := \
 		error/rt_error.c
@@ -138,9 +143,24 @@ SRCS := \
 		$(VEC) \
 		$(SCENE)
 
+B_SRCS := \
+		test_main.c \
+		camera.c \
+		rays.c \
+		$(B_COLOR) \
+		$(ERROR) \
+		$(PARSE) \
+		$(RT) \
+		$(PPM) \
+		$(VEC) \
+		$(SCENE)
 # ============================================================================ #
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# ============================================================================ #
+# ============================================================================ #
+B_SRCS := $(addprefix $(SRC_DIR)/,$(B_SRCS))
+B_OBJS := $(B_SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 # ============================================================================ #
 
 # ============================================================================ #
@@ -149,6 +169,10 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS) 
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME) 
+	$(MODE_MSG)
+# ============================================================================ #
+bonus: $(LIBFT) $(B_OBJS) 
+	@$(CC) $(CFLAGS) $(B_OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME) 
 	$(MODE_MSG)
 # ============================================================================ #
 # if mlx sources in libs - has to compile per subject

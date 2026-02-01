@@ -291,6 +291,9 @@ int		parse_cylinder(t_scene *s, char **t);
 t_cam_rt	cam_init(t_scene s, int w, int h);
 void		addDirVectorRow(t_cam_rt *cam);
 
+// ----------- SHADER -----------
+t_vec3	getSurfaceNormal(t_vec3 point, t_obj *item);
+t_vec3	getReflectionV(t_vec3 surfaceToLight, t_vec3 surfaceNormal);
 // ----------- MINI -----------
 
 void		kill_cam(t_cam_rt	*cam);
