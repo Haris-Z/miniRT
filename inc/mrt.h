@@ -118,7 +118,7 @@ struct s_obj
 		t_plane		plane;
 		t_cylinder	cylinder;
 	};
-	int				color;
+	t_color			color;
 	struct s_obj	*next;
 };
 typedef struct s_obj		t_obj;
@@ -149,7 +149,8 @@ typedef struct s_rt_cam
 	t_vec3	orientation;
 	t_vec3	pos;
 	t_obj	**items;
-	t_vec3	light;
+	t_light	light;
+	// t_vec3	light;
 	t_ray	*rays;
 	t_vec3	*xyTemplate;
 	t_mat3	rotationM;
@@ -292,8 +293,9 @@ t_cam_rt	cam_init(t_scene s, int w, int h);
 void		addDirVectorRow(t_cam_rt *cam);
 
 // ----------- SHADER -----------
-t_vec3	getSurfaceNormal(t_vec3 point, t_obj *item);
-t_vec3	getReflectionV(t_vec3 surfaceToLight, t_vec3 surfaceNormal);
+t_vec3		getSurfaceNormal(t_vec3 point, t_obj *item);
+t_vec3		getReflectionV(t_vec3 surfaceToLight, t_vec3 surfaceNormal);
+t_color		computeColor(t_rt_mlx vars, t_ray ray, t_obj **items);
 // ----------- MINI -----------
 
 void		kill_cam(t_cam_rt	*cam);
@@ -301,8 +303,7 @@ double		hitSp(t_vec3 origin ,t_vec3 ray, t_sphere *sphere);
 double		hitPl(t_vec3 origin ,t_vec3 ray, t_plane plane);
 void		updateRayDist(t_rt_mlx *vars, t_obj *obj);
 int			dirVector_init(t_cam_rt *cam);
-int			computeColor(t_rt_mlx vars, t_ray ray, t_obj **items);
 double		getLightAngle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items);
-int			scaleColor(int min, int max, double amount);
+t_color		scaleColor(t_color min, t_color max, double amount);
 
 #endif // MRT_H

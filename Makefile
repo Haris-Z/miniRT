@@ -109,6 +109,9 @@ PARSE := \
 		parse/parse_obj.c \
 		parse/parse_utils.c
 
+RENDER := \
+		render/intersections.c
+
 RT := \
 		rt/rt_events.c \
 		rt/rt_img.c \
@@ -138,6 +141,7 @@ SRCS := \
 		$(COLOR) \
 		$(ERROR) \
 		$(PARSE) \
+		$(RENDER) \
 		$(RT) \
 		$(PPM) \
 		$(VEC) \

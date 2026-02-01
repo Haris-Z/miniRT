@@ -34,7 +34,7 @@ int	scene_add_sphere(t_scene *s, t_sphere sp)
 	if (!o)
 		return (1);
 	o->sphere = sp;
-	o->color = color_to_int(sp.color);
+	o->color = sp.color;
 	o->next = s->objs;
 	s->objs = o;
 	return (0);
@@ -51,7 +51,7 @@ int	scene_add_plane(t_scene *s, t_plane pl)
 		return (1);
 	}
 	o->plane = pl;
-	o->color = color_to_int(pl.color);
+	o->color = pl.color;
 	o->next = s->objs;
 	s->objs = o;
 	return (0);
@@ -68,7 +68,7 @@ int	scene_add_cylinder(t_scene *s, t_cylinder cy)
 		return (1);
 	}
 	o->cylinder = cy;
-	o->color = color_to_int(cy.color);
+	o->color = cy.color;
 	o->next = s->objs;
 	s->objs = o;
 	return (0);

@@ -68,7 +68,7 @@ int	main(int argc, char **argv)
 		while(++j < app.cam.pixels[0])
 		{
 			if (app.cam.rays[j].closestitem)
-				app.img.addr[i * app.w +j] = computeColor(app,app.cam.rays[j], app.cam.items);
+				app.img.addr[i * app.w +j] = color_to_mlx(computeColor(app,app.cam.rays[j], app.cam.items));
 		}
 	}/// end = timer(
 	// printf(end-start);
@@ -108,23 +108,22 @@ static void	print_scene_info(t_scene scene, char *file)
 	{
 		printf("  - ");
 		if (obj->type == OBJ_SPHERE)
-			printf("Sphere:     center(%.2f,%.2f,%.2f) | radius=%.2f | sp.color=(%f,%f,%f) | obj.color=%d | obj.color=0x%X |\n",
+			printf("Sphere:     center(%.2f,%.2f,%.2f) | radius=%.2f | sp.color=(%f,%f,%f) |\n",
 				   obj->sphere.center.x, obj->sphere.center.y, obj->sphere.center.z,
-				   obj->sphere.radius, obj->sphere.color.x, obj->sphere.color.y, obj->sphere.color.z, \
-				   obj->color, obj->color\
+				   obj->sphere.radius, obj->sphere.color.x, obj->sphere.color.y, obj->sphere.color.z
 				);
 		else if (obj->type == OBJ_PLANE)
-			printf("Plane:      point(%.2f,%.2f,%.2f) | normal(%.2f,%.2f,%.2f) | pl.color=(%f,%f,%f) | obj.color=%d | obj.color=0x%X |\n",
-				   obj->plane.point.x, obj->plane.point.y, obj->plane.point.z,
-				   obj->plane.normal.x, obj->plane.normal.y, obj->plane.normal.z, \
-				obj->plane.color.x, obj->plane.color.y, obj->plane.color.z, \
-			obj->color, obj->color);
+			printf("Plane:      point(%.2f,%.2f,%.2f) | normal(%.2f,%.2f,%.2f) | pl.color=(%f,%f,%f) |\n",
+					obj->plane.point.x, obj->plane.point.y, obj->plane.point.z,
+					obj->plane.normal.x, obj->plane.normal.y, obj->plane.normal.z, \
+					obj->plane.color.x, obj->plane.color.y, obj->plane.color.z
+				);
 		else if (obj->type == OBJ_CYLINDER)
-			printf("Cylinder:   center(%.2f,%.2f,%.2f) | axis=(%.2f,%.2f,%.2f) | diameter=%.2f | height=%.2f | cy.color=(%f,%f,%f) | obj.color=%d | obj.color=0x%X |\n",
+			printf("Cylinder:   center(%.2f,%.2f,%.2f) | axis=(%.2f,%.2f,%.2f) | diameter=%.2f | height=%.2f | cy.color=(%f,%f,%f) |\n",
 				   obj->cylinder.center.x, obj->cylinder.center.y, obj->cylinder.center.z, \
 				   obj->cylinder.axis.x, obj->cylinder.axis.y, obj->cylinder.axis.z, \
 				   obj->cylinder.diameter, obj->cylinder.height, \
-				obj->cylinder.color.x, obj->cylinder.color.y, obj->cylinder.color.z, obj->color, obj->color);
+				obj->cylinder.color.x, obj->cylinder.color.y, obj->cylinder.color.z);
 		i++;
 		obj = obj->next;
 	}
