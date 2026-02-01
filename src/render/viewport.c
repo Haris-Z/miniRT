@@ -29,7 +29,7 @@ t_cam_rt	cam_init(t_scene s, int w, int h)
 	return (cam);
 } 
 
-void	addDirVectorRow(t_cam_rt *cam)
+void	add_dir_vector_row(t_cam_rt *cam)
 {
 	int	i;
 
@@ -70,7 +70,7 @@ void	createXYTemplate(t_cam_rt *cam)
 	}
 }
 
-int	dirVector_init(t_cam_rt *cam)
+int	dir_vector_init(t_cam_rt *cam)
 {
 	double	verRange;
 

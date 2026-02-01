@@ -290,20 +290,20 @@ int		parse_cylinder(t_scene *s, char **t);
 // ----------- CAMERA -----------
 
 t_cam_rt	cam_init(t_scene s, int w, int h);
-void		addDirVectorRow(t_cam_rt *cam);
+void		add_dir_vector_row(t_cam_rt *cam);
 
 // ----------- SHADER -----------
-t_vec3		getSurfaceNormal(t_vec3 point, t_obj *item);
-t_vec3		getReflectionV(t_vec3 surfaceToLight, t_vec3 surfaceNormal);
-t_color		computeColor(t_rt_mlx vars, t_ray ray, t_obj **items);
+t_vec3		get_surface_normal(t_vec3 point, t_obj *item);
+t_vec3		get_reflection_v(t_vec3 surfaceToLight, t_vec3 surfaceNormal);
+t_color		compute_color(t_rt_mlx vars, t_ray ray, t_obj **items);
 // ----------- MINI -----------
 
 void		kill_cam(t_cam_rt	*cam);
-double		hitSp(t_vec3 origin ,t_vec3 ray, t_sphere *sphere);
-double		hitPl(t_vec3 origin ,t_vec3 ray, t_plane plane);
-void		updateRayDist(t_rt_mlx *vars, t_obj *obj);
-int			dirVector_init(t_cam_rt *cam);
-double		getLightAngle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items);
-t_color		scaleColor(t_color min, t_color max, double amount);
+double		hit_sp(t_vec3 origin ,t_vec3 ray, t_sphere *sphere);
+double		hit_pl(t_vec3 origin ,t_vec3 ray, t_plane plane);
+void		update_ray_dist(t_rt_mlx *vars, t_obj *obj);
+int			dir_vector_init(t_cam_rt *cam);
+double		get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items);
+t_color		scale_color(t_color min, t_color max, double amount);
 
 #endif // MRT_H

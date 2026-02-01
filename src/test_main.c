@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 		return (1);
 	app.cam = cam_init(scene_info, SCREEN_WIDTH, SCREEN_HEIGHT);
 	app.cam.items = &scene_info.objs;
-	if (!dirVector_init(&app.cam))
+	if (!dir_vector_init(&app.cam))
 		return (0); // was a mallocerr
 	int	i = -1;
 	t_obj	*item;
@@ -56,19 +56,19 @@ int	main(int argc, char **argv)
 	// rotTest(app.cam);
 	while(++i < app.cam.pixels[1])
 	{
-		addDirVectorRow(&app.cam);
+		add_dir_vector_row(&app.cam);
 		item = *app.cam.items;
 		int j;
 		while(item)
 		{
-			updateRayDist(&app, item);
+			update_ray_dist(&app, item);
 			item = item->next;
 		}
 		j = -1;
 		while(++j < app.cam.pixels[0])
 		{
 			if (app.cam.rays[j].closestitem)
-				app.img.addr[i * app.w +j] = color_to_mlx(computeColor(app,app.cam.rays[j], app.cam.items));
+				app.img.addr[i * app.w +j] = color_to_mlx(compute_color(app,app.cam.rays[j], app.cam.items));
 		}
 	}/// end = timer(
 	// printf(end-start);
