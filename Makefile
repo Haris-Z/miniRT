@@ -91,11 +91,13 @@ LDLIBS    += -lft -lmlx -lXext -lX11 -lm
 
 COLOR := \
 		color/color.c \
-		color/shader.c
+		color/shader.c \
+		color/shader_utils.c
 
 B_COLOR := \
 		color/color.c \
-		color/shader_bonus.c
+		color/shader_bonus.c \
+		color/shader_utils.c 
 
 ERROR := \
 		error/rt_error.c
@@ -110,7 +112,9 @@ PARSE := \
 		parse/parse_utils.c
 
 RENDER := \
-		render/intersections.c
+		render/intersections.c \
+		render/viewport.c \
+		render/rays.c
 
 RT := \
 		rt/rt_events.c \
@@ -136,8 +140,6 @@ PPM := \
 
 SRCS := \
 		test_main.c \
-		camera.c \
-		rays.c \
 		$(COLOR) \
 		$(ERROR) \
 		$(PARSE) \
@@ -149,11 +151,10 @@ SRCS := \
 
 B_SRCS := \
 		test_main.c \
-		camera.c \
-		rays.c \
 		$(B_COLOR) \
 		$(ERROR) \
 		$(PARSE) \
+		$(RENDER) \
 		$(RT) \
 		$(PPM) \
 		$(VEC) \

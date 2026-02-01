@@ -4,43 +4,38 @@
 // diffuse : ambient	-> itemColor	| lightAngle
 // specular: diffuse	-> 255			| viewAngle
 
-int	scaleColor(int min, int max, double amount)
+t_color	scaleColor(t_color min, t_color max, double amount)
 {
-	int	red;
-	int	green;
-	int	blue;
+	t_color	res;
 
-	red = ((max & 0x00FF0000) - (min & 0x00FF0000)) >> 16;
-	red = lround(red * amount) + ((min & 0x00FF0000) >> 16);
-	green = ((max & 0x0000FF00) - (min & 0x0000FF00)) >> 8;
-	green = lround(green * amount) + ((min & 0x0000FF00) >> 8);
-	blue = (max & 0x000000FF) - (min & 0x000000FF);
-	blue = lround(blue * amount) + (min & 0x000000FF);
+	res.x = ((max.x - min.x) * amount) + min.x;
+	res.y = ((max.y - min.y) * amount) + min.y;
+	res.z = ((max.z - min.z) * amount) + min.z;
 
-	return((red << 16) | (green << 8) | blue);
+	return(res);
 }
 
-int	computeColor(t_rt_mlx vars, t_ray ray, t_obj **items)
+t_color	computeColor(t_rt_mlx vars, t_ray ray, t_obj **items)
 {
-	int 	ambientColor;
-	int		diffuseColor;
+	t_color	ambientColor;
+	t_color	diffuseColor;
 	double	lightAngle;
 	t_vec3	point;
 	t_vec3	surfaceNormal;
 	t_vec3	reflectionV;
 	double	shining;
 
-	ambientColor = scaleColor(0, ray.closestitem->color, vars.cam.ambient);
-	lightAngle = getLightAngle(vars.cam.pos, ray, vars.cam.light, *items);
+	ambientColor = scaleColor(color_rgb(0, 0, 0), ray.closestitem->color, vars.cam.ambient);
+	lightAngle = getLightAngle(vars.cam.pos, ray, vars.cam.light.pos, *items);
 	if (lightAngle < 0)
 		return (ambientColor);
 	point = vec_add(vars.cam.pos, vec_scale(ray.direction, ray.dist));
 	surfaceNormal = getSurfaceNormal(point, ray.closestitem);
-	reflectionV = getReflectionV(vec_norm(vec_sub(vars.cam.light, point)), surfaceNormal);
-	diffuseColor = scaleColor(ambientColor, ray.closestitem->color, lightAngle);
+	reflectionV = getReflectionV(vec_norm(vec_sub(vars.cam.light.pos, point)), surfaceNormal);
+	diffuseColor = scaleColor(ambientColor, ray.closestitem->color, lightAngle * vars.cam.light.bright);
 	shining = vec_dot(reflectionV, ray.direction);
 	if (shining < 0)
-		return (scaleColor(diffuseColor,0x00FFFFFF, pow(shining,32)));
+		return (scaleColor(diffuseColor, color_rgb(255, 255, 255), pow(shining,32) * vars.cam.light.bright));
 	else
 		return diffuseColor;
 }
