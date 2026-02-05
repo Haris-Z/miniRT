@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 16:47:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:49:42 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/05 19:20:26 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,45 @@ int	scene_add_cylinder(t_scene *s, t_cylinder cy)
 	o->color = cy.color;
 	o->next = s->objs;
 	s->objs = o;
+	return (0);
+}
+
+static int	obj_list_count(t_obj *o)
+{
+	int	n;
+
+	n = 0;
+	while (o)
+	{
+		n++;
+		o = o->next;
+	}
+	return (n);
+}
+
+int	scene_obj_array(t_scene *s)
+{
+	t_obj	*o;
+	int		n;
+	int		i;
+
+	if (!s)
+		return (1);
+	n = obj_list_count(s->objs);
+	if (n == 0)
+		return (0);
+	s->objs_arr = (t_obj *)ft_calloc(n, sizeof(*s->objs_arr));
+	if (!s->objs_arr)
+		return (1);
+	o = s->objs;
+	i = 0;
+	while (o)
+	{
+		s->objs_arr[i] = *o;
+		s->objs_arr[i].next = NULL;
+		i++;
+		o = o->next;
+	}
+	s->objs_n = n;
 	return (0);
 }
