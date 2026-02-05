@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 12:51:32 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/05 20:11:06 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_cylinder
 	t_vec3	center;
 	t_vec3	axis;
 	double	diameter;
-	double	height;
+	double	verRange;
 	t_color	color;
 }	t_cylinder;
 
@@ -152,7 +152,6 @@ typedef struct s_rt_cam
 	t_light	light;
 	// t_vec3	light;
 	t_ray	*rays;
-	t_vec3	*xyTemplate;
 	t_mat3	rotationM;
 	int		pixels[2];
 	double	fov;
@@ -161,8 +160,10 @@ typedef struct s_rt_cam
 	double	focusDist;
 	double	horRange;
 	double	deltaHorAngle;
-	double	height;
-	double	deltaHeight;
+	double	verRange;
+	double	deltaVerRange;
+	double	verOffset;
+	double	horOffset;
 }	t_cam_rt;
 
 // ----------- MLX / IMAGE -----------
