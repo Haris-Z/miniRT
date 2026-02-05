@@ -7,3 +7,8 @@
 
 - [PLOTS-GRAPHS](https://academo.org/demos/)
 - [README](https://readme.so/de/editor)
+- [RAY-TRACING-PRIMITIVES](https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html)
+- [SHAPES](https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm)
+- [RAY-DISK-INTERSECION](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection.html)
+- [CYLINDRICAL-COORDINATE-SYSTEM](https://en.wikipedia.org/wiki/Cylindrical_coordinate_system)
+- [GPROF-INFO](https://www.thegeekstuff.com/2012/08/gprof-tutorial/)
