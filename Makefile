@@ -33,9 +33,12 @@ LDLIBS			:=
 #   make SAN=1          → adds -fsanitize=address (compile + link)
 #   make DEBUG=1 SAN=1  → both
 DEBUG	?= 0
-DEBUG_STR = OFF
+PROFILER ?= 0
 SAN		?= 1
+
+DEBUG_STR = OFF
 SAN_STR := OFF
+
 ifeq ($(DEBUG),1)
 	CFLAGS += -ggdb3 -O0
 	DEBUG_STR := ON
@@ -45,6 +48,12 @@ ifeq ($(SAN),1)
 	LDFLAGS += -fsanitize=address,undefined -fno-omit-frame-pointer
 	SAN_STR := ON
 endif
+ifeq ($(PROFILER),1)
+	CFLAGS += -pg
+	LDFLAGS += -pg
+endif
+
+
 define MODE_MSG
 	@echo "$(GRAY)[miniRT mode]$(RESET)"
 	@echo "$(GRAY)DEBUG=$(DEBUG_STR)$(RESET)"
@@ -277,6 +286,15 @@ test_errors: ## run tests on error files
 	@./$(TEST_P) tests/test_files/error_scene/warn_fov_range.rt
 
 # ============================================================================ #
+
+prof: fclean ## Compile with -pg and run gprof
+	@$(MAKE) --no-print-directory PROFILER=1 DEBUG=1 SAN=0
+	@echo "Running miniRT with profiling..."
+	@./$(NAME) $(DEFAULT_TEST)
+	@echo "Generating gprof report..."
+	@gprof $(NAME) gmon.out > gprof_report.txt
+	@echo "Report saved to gprof_report.txt"
+
 # ============================================================================ #
 
 # ============================================================================ #
