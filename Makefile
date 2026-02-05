@@ -147,8 +147,12 @@ VEC := \
 PPM := \
 		write_to_ppm/save_ppm.c
 
+DPRINTS := \
+			debug/prints.c
+
 SRCS := \
 		test_main.c \
+		$(DPRINTS) \
 		$(COLOR) \
 		$(ERROR) \
 		$(PARSE) \
@@ -168,6 +172,7 @@ B_SRCS := \
 		$(PPM) \
 		$(VEC) \
 		$(SCENE)
+
 # ============================================================================ #
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
