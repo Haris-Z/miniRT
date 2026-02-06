@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/05 20:11:06 by agara            ###   ########.fr       */
+/*   Updated: 2026/02/06 16:00:44 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,9 @@ struct s_scene_info
 	t_ambient	amb;
 	t_camera	cam;
 	t_light		light;
-	t_obj		*objs;
+	t_obj		*objs;		// list ->
+	t_obj		*objs_arr;	// array of structs
+	int			objs_n;		// number of objects in array
 };
 typedef struct s_scene_info	t_scene;
 
@@ -232,6 +234,8 @@ int		color_to_int(t_color c);
 // init and clear
 void	scene_init(t_scene *s);
 void	scene_clear(t_scene *s);
+// list to array of struccts
+int		scene_obj_array(t_scene *s);
 
 // init settings from parsing
 int		scene_set_ambient(t_scene *s, t_ambient a);
@@ -306,5 +310,9 @@ void		update_ray_dist(t_rt_mlx *vars, t_obj *obj);
 int			dir_vector_init(t_cam_rt *cam);
 double		get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items);
 t_color		scale_color(t_color min, t_color max, double amount);
+
+// debug prints
+
+void	print_scene_info(t_scene scene, char *file);
 
 #endif // MRT_H
