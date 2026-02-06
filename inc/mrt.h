@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/06 16:00:44 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/06 16:15:02 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef enum e_type			t_type;
 struct s_obj
 {
 	t_type			type;
+	int				obj_total;
 	union					// i think this is not allowed by norm
 	{
 		t_sphere	sphere;
@@ -120,6 +121,7 @@ struct s_obj
 	};
 	t_color			color;
 	struct s_obj	*next;
+	
 };
 typedef struct s_obj		t_obj;
 
@@ -314,5 +316,6 @@ t_color		scale_color(t_color min, t_color max, double amount);
 // debug prints
 
 void	print_scene_info(t_scene scene, char *file);
+void	print_vector(char *name, t_vec3 v);
 
 #endif // MRT_H
