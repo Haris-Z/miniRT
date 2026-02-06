@@ -7,9 +7,6 @@ L 3,3,3 0.5 200,200,200
 # - Center (y=0,z=0) is RED.
 # - +Y axis is GREEN, -Y axis is BLUE.
 # - +Z axis is CYAN, -Z axis is YELLOW.
-# If the colors appear on the wrong sides, your Y/Z sign or axis mapping is wrong.
-# If you can’t see the full ±120 range with FOV 160, move the grid farther (e.g. x=30)
-# or move camera back; the file is still correct.
 
 # z = 120
 sp 10,-120,120 2 200,0,200
