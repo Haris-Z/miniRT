@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/06 16:15:02 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/06 16:27:38 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_cylinder
 	t_vec3	center;
 	t_vec3	axis;
 	double	diameter;
-	double	verRange;
+	double	height;
 	t_color	color;
 }	t_cylinder;
 
@@ -212,8 +212,6 @@ t_vec3	vec_mul_M(t_vec3 v, t_mat3 m);
 /// vector utils
 int		vec_near_zero(t_vec3 v);
 t_vec3	vec_reflect(t_vec3 v, t_vec3 n);
-void	printV(t_vec3 a);
-void	printM(t_mat3 a);
 double	getDistBetweenPoints(t_vec3 pointA, t_vec3 pointB);
 
 /// matrix ops
