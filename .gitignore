@@ -37,8 +37,11 @@ tests/rt/
 tests/tst_libft_integration.c
 tests/test_files/error_scene/
 
+notes/
+tests/
+saved_images/
+
 # format
 .clang-format
 .editorconfig
 .clang-tidy
-
