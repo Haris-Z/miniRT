@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:49:19 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/06 16:31:52 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	rt_destroy(t_rt_mlx *rt)
 	if (rt->cam.rays)
 	{
 		free(rt->cam.rays);
-		free(rt->cam.xyTemplate);
+		//free(rt->cam.xyTemplate);
 	}
 	rt->mlx = NULL;
 	rt->win = NULL;
