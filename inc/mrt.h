@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/06 18:03:31 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/06 19:09:00 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 # define SCREEN_WIDTH	800
 # define SCREEN_HEIGHT	600
 # define EPSILON 1e-12
+# define BOT_CAP 0
+# define TOP_CAP 1
 
 # include <limits.h>
+# include <stdbool.h>
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -99,7 +102,7 @@ typedef struct s_cylinder
 	double	diameter;
 	double	radius;
 	double	height;
-	int		cam_inside;
+	bool	cam_inside;
 	t_color	color;
 }	t_cylinder;
 
