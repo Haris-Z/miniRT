@@ -38,7 +38,7 @@ tests/tst_libft_integration.c
 tests/test_files/error_scene/
 
 notes/
-tests/
+tests/test_files/cylinder/
 saved_images/
 
 # format
