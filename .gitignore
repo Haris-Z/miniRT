@@ -37,10 +37,34 @@ tests/rt/
 tests/tst_libft_integration.c
 tests/test_files/error_scene/
 
+<<<<<<< HEAD
 notes/
 tests/
 saved_images/
 
+=======
+
+tests/01_cy_center_vs_base_touch_floor.rt
+tests/01_inside_sphere.rt
+tests/02_cy_caps_facing_camera.rt
+tests/02_grazing_tangent.rt
+tests/03_cy_finite_height_side_clip.rt
+tests/03_cylinder_caps.rt
+tests/04_cy_tilted_axis_45deg.rt
+tests/04_shadow_acne.rt
+tests/05_cy_inside_normals_tmin.rt
+tests/05_extreme_fov_120.rt
+tests/all_objects.rt
+
+
+gprof_report.txt
+gmon.out
+
+saved_images/
+
+notes/
+
+>>>>>>> 04d9f9b (update:)
 # format
 .clang-format
 .editorconfig
