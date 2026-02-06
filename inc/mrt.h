@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/06 16:27:38 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/06 18:03:31 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <X11/keysym.h>
 
 # include <mlx.h>
-# include "cam.h"
+# include "debug_print.h"
 
 // ----------- VECTOR -----------
 
@@ -97,7 +97,9 @@ typedef struct s_cylinder
 	t_vec3	center;
 	t_vec3	axis;
 	double	diameter;
+	double	radius;
 	double	height;
+	int		cam_inside;
 	t_color	color;
 }	t_cylinder;
 
@@ -301,19 +303,19 @@ void		add_dir_vector_row(t_cam_rt *cam);
 t_vec3		get_surface_normal(t_vec3 point, t_obj *item);
 t_vec3		get_reflection_v(t_vec3 surfaceToLight, t_vec3 surfaceNormal);
 t_color		compute_color(t_rt_mlx vars, t_ray ray, t_obj **items);
+
 // ----------- MINI -----------
 
-void		kill_cam(t_cam_rt	*cam);
+// intersections
 double		hit_sp(t_vec3 origin ,t_vec3 ray, t_sphere *sphere);
 double		hit_pl(t_vec3 origin ,t_vec3 ray, t_plane plane);
+double		hit_cy(t_vec3 origin, t_vec3 ray, t_cylinder *cy);
+
+// render utils
 void		update_ray_dist(t_rt_mlx *vars, t_obj *obj);
 int			dir_vector_init(t_cam_rt *cam);
 double		get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items);
 t_color		scale_color(t_color min, t_color max, double amount);
-
-// debug prints
-
-void	print_scene_info(t_scene scene, char *file);
-void	print_vector(char *name, t_vec3 v);
+void		kill_cam(t_cam_rt	*cam);
 
 #endif // MRT_H
