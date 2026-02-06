@@ -50,29 +50,69 @@ static int	check_same_side(t_plane plane, t_vec3 cam, t_vec3 light)
 static double	dist_visible(t_obj **items, t_ray ray,
 	t_vec3 point, t_vec3 surfaceToLight)
 {
-	t_obj	*item;
 	double	res;
 	double	dist;
+	int		count;
+	int		i;
+	t_obj	*item; // array
 
-	item = *items;
+	if (!items || !*items)
+		return (-1.0);
 	res = -1.0;
-	while (item)
+	i = 0;
+	item = *items;
+	count = item->obj_total;
+	while (i < count)
 	{
-		if (item == ray.closestitem)
+		if (&item[i] == ray.closestitem)
 		{
-			item = item->next;
+			i++;
 			continue ;
 		}
-		if (item->type == OBJ_SPHERE)
-			dist = hit_sp(point, surfaceToLight, &item->sphere);
-		if (item->type == OBJ_PLANE)
-			dist = hit_pl(point, surfaceToLight, item->plane);
+		if (item[i].type == OBJ_SPHERE)
+			dist = hit_sp(point, surfaceToLight, &item[i].sphere);
+		if (item[i].type == OBJ_PLANE)
+			dist = hit_pl(point, surfaceToLight, item[i].plane);
 		if (dist > 0 && (dist < res || res < 0))
 			res = dist;
-		item = item->next;
+		i++;
 	}
 	return (res);
 }
+
+/*
+**
+** PREVIOUS WITH LIST
+**
+*/
+// static double	dist_visible(t_obj **items, t_ray ray,
+// 	t_vec3 point, t_vec3 surfaceToLight)
+// {
+// 	t_obj	*item;
+// 	double	res;
+// 	double	dist;
+
+// 	item = *items;
+// 	res = -1.0;
+// 	while (item)
+// 	{
+// 		if (item == ray.closestitem)
+// 		{
+// 			item = item->next;
+// 			continue ;
+// 		}
+// 		if (item->type == OBJ_SPHERE)
+// 			dist = hit_sp(point, surfaceToLight, &item->sphere);
+// 		if (item->type == OBJ_PLANE)
+// 			dist = hit_pl(point, surfaceToLight, item->plane);
+// 		if (dist > 0 && (dist < res || res < 0))
+// 			res = dist;
+// 		item = item->next;
+// 	}
+// 	return (res);
+// }
+
+
 
 double	get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items)
 {
