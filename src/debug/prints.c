@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 19:25:53 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/05 19:31:03 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/05 19:55:55 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,12 @@ void	print_scene_info(t_scene scene, char *file)
 	printf("=============================================================\n");
 	printf("Objects: %d\n", i);
 	printf("=============================================================\n");
+}
+
+void	print_vector(char *name, t_vec3 v)
+{
+	if (name)
+		printf("%s: ", name);
+	printf("(%.2f, %.2f, %.2f)", v.x, v.y, v.z);
+	printf("\n");
 }
