@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:53:31 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/08 15:20:35 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void	update_ray_dist(t_rt_mlx *vars, t_obj *obj)
 		else if (obj->type == OBJ_PLANE)
 			dist = hit_pl(vars->cam.pos,
 					vars->cam.rays[j].direction, obj->plane);
+		else if (obj->type == OBJ_CYLINDER)
+			dist = hit_cy(vars->cam.pos,
+				vars->cam.rays[j].direction,
+				&obj->cylinder);
 		if (dist > 0 && (vars->cam.rays[j].dist == -1.0
 				|| dist < vars->cam.rays[j].dist))
 		{
