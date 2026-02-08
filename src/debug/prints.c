@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 19:25:53 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/06 16:27:20 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/08 17:52:36 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,12 @@ void	printM(t_mat3 a)
 	printf("	%f	%f	%f\n", a.colx.x, a.coly.x, a.colz.x);
 	printf("	%f	%f	%f\n", a.colx.y, a.coly.y, a.colz.y);
 	printf("	%f	%f	%f\n", a.colx.z, a.coly.z, a.colz.z);
+}
+
+void	print_epsilon(double multiplier)
+{
+	if (multiplier >= 1)
+		printf("EPSILON * %.12f = %.12f\n", multiplier, EPSILON * multiplier);
+	else
+		printf("EPSILON = %.12f\n", EPSILON);
 }
