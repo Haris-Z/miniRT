@@ -1,0 +1,15 @@
+# Expected:
+# A gray floor (plane) at z = -2
+# A green vertical cylinder where bot cap touches the floor exactly
+
+A 0.1 255,255,255
+C 0,0,1 1,0,0 70
+L 3,3,6 0.8 255,255,255
+
+pl 0,0,-2 0,0,1 180,180,180
+
+# center is at z=1, height=6 => bottom cap z = 1 - 3 = -2 (touches floor)
+cy 10,0,1 0,0,1 4 6 0,255,0
+
+# reference sphere bit  behind
+sp 14,-4,0 2 255,0,0
