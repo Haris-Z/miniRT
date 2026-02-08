@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:48:15 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/08 15:37:09 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	parse_cylinder(t_scene *s, char **t)
 		return (rt_error_msg("Invalid unit vector for Cylinder (cy) axis"));
 	if (parse_double(t[3], &cy.diameter) != 0 || cy.diameter <= 0.0)
 		return (rt_error_msg("Cylinder (cy): diameter must be > 0"));
+	cy.radius = cy.diameter * 0.5;
 	if (parse_double(t[4], &cy.height) != 0 || cy.height <= 0.0)
 		return (rt_error_msg("Cylinder (cy): height must be > 0"));
 	if (parse_color_vec(t[5], &cy.color) != 0)
