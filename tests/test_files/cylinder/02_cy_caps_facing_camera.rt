@@ -1,0 +1,15 @@
+# cap intersection + cap normal correctness
+# Expected:
+# front cap/disk of cylinder facing the camera,
+# plus the curved side.
+A 0.1 255,255,255
+C 0,0,0 1,0,0 70
+L -6,6,10 0.8 255,255,255
+
+pl 0,0,-3 0,0,1 160,160,160
+
+# axis along +X -> one cap faces the camera
+# center x=14, height=8 => front cap plane around x=10
+cy 14,0,0 1,0,0 4 8 0,255,0
+
+sp 22,5,0 2 255,0,0
