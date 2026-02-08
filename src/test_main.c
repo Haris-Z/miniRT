@@ -6,15 +6,17 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:53 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/05 21:51:35 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/08 14:35:07 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "mrt.h"
+#include "debug_print.h"
+
 #include "rt_error.h"
 #include "libft.h"
-#include "debug_print.h"
+
 
 void	rotTest()
 {
@@ -107,7 +109,7 @@ int	main(int argc, char **argv)
 	printf("DONE!!\n");
 	fflush(NULL);
 	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
-	// save_to_ppm(argv[1], &app.img);
+	//save_to_ppm(argv[1], &app.img);
 	rt_run(&app);
 	rt_destroy(&app);
 	scene_clear(&scene_info);

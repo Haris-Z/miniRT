@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/06 19:09:00 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/08 14:36:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define EPSILON 1e-12
 # define BOT_CAP 0
 # define TOP_CAP 1
+# define NO_HIT -1.0
 
 # include <limits.h>
 # include <stdbool.h>
@@ -32,7 +33,7 @@
 # include <X11/keysym.h>
 
 # include <mlx.h>
-# include "debug_print.h"
+//# include "debug_print.h"
 
 // ----------- VECTOR -----------
 
