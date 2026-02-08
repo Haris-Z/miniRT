@@ -15,3 +15,5 @@
 
 
 - [CYLINDER-INTERSECTION](https://www.youtube.com/watch?v=6VHpZYTHZG4&pp=ygUSY3lsaW5kZXIgcmF5dHJhY2Vy)
+
+- [EXAMPLE-DOCUMENTATION](https://ygor-sena.github.io/42cursus-miniRT/structs__camera.html#a8944ccdbc9a175ea4cdb00439aaad118)
