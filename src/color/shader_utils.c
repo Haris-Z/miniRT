@@ -53,11 +53,12 @@ static t_vec3	cy_cap_center(t_cylinder *cy, int top)
 static int	is_on_cap(t_vec3 p, t_vec3 cap, t_cylinder *cy)
 {
 	double	d; // distance alonx axis from cap plane
+
 	// vec_sub(p, cap) = v from cap to center p
 	// project vec on axis direction
 	// if p on plane, than d ~ 0
 	d = vec_dot(vec_sub(p, cap), cy->axis);
-	return (fabs(d) <= 5.0 * EPSILON);
+	return (fabs(d) <= 5.0 * EPSILON); // to avoid cap, hits getting treated as side hits
 }
 
 /*
