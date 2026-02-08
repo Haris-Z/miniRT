@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/08 14:36:14 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/08 14:37:16 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include <X11/keysym.h>
 
 # include <mlx.h>
-//# include "debug_print.h"
 
 // ----------- VECTOR -----------
 
