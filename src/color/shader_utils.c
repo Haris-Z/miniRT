@@ -84,18 +84,18 @@ static t_vec3	cy_side_normal(t_vec3 p, t_cylinder *cy)
 */
 static t_vec3	cy_normal(t_vec3 p, t_cylinder *cy)
 {
-	t_vec3	top;
-	t_vec3	bot;
-	t_vec3	n;
+	t_vec3	top; // top cap center
+	t_vec3	bot; // bot cap center
+	t_vec3	n; // normal
 
 	bot = cy_cap_center(cy, BOT_CAP);
 	top = cy_cap_center(cy, TOP_CAP);
 	if (is_on_cap(p, top, cy))
-		n = cy->axis;
+		n = cy->axis;						// outward for top cap
 	else if (is_on_cap(p, bot, cy))
-		n = vec_scale(cy->axis, -1.0);
+		n = vec_scale(cy->axis, -1.0);	// outwarod for bot
 	else
-		n = cy_side_normal(p, cy);
+		n = cy_side_normal(p, cy);			// outward for sid
 	if (cy->cam_inside)						// if inside
 		n = vec_scale(n, -1.0);		// flip to face inward
 	return (vec_norm(n));
