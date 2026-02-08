@@ -12,3 +12,6 @@
 - [RAY-DISK-INTERSECION](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection.html)
 - [CYLINDRICAL-COORDINATE-SYSTEM](https://en.wikipedia.org/wiki/Cylindrical_coordinate_system)
 - [GPROF-INFO](https://www.thegeekstuff.com/2012/08/gprof-tutorial/)
+
+
+- [CYLINDER-INTERSECTION](https://www.youtube.com/watch?v=6VHpZYTHZG4&pp=ygUSY3lsaW5kZXIgcmF5dHJhY2Vy)
