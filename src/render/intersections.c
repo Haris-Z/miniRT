@@ -300,7 +300,6 @@ static double hit_cy_cap(t_vec3 origin, t_vec3 ray, t_cylinder *cy, t_vec3 cap_c
 	return (t);
 }
 
-
 /*#########################################################################*/
 /* ray-cylinder intersection (called in update_ray_dist and dist_visible() */
 /*#########################################################################*/
@@ -328,7 +327,6 @@ double	hit_cy(t_vec3 origin, t_vec3 ray, t_cylinder *cy)
 	// check if ray origin inside/outside
 	if (origin_inside(cy, origin, half_height))
 		cy->cam_inside = true;
-	
 	//cy->cam_inside = origin_inside(cy, origin, half_height);
 	// get all possible intersections/hits
 	// 	compute center of caps
