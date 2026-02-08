@@ -6,7 +6,7 @@
 /*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:52:31 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/05 20:31:11 by agara            ###   ########.fr       */
+/*   Updated: 2026/02/08 19:18:24 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,24 @@ void	add_dir_vector_row(t_cam_rt *cam)
 	double	sinOffset;
 	double	cosOffset;
 
-	sinOffset = sin(cam->horOffset);
-	cosOffset = cos(cam->horOffset);
-	horAngle = cam->horRange;
+	sinOffset = sin(cam->vp.horOffset);
+	cosOffset = cos(cam->vp.horOffset);
+	horAngle = cam->vp.horRange;
 	i = -1;
 	while(++i < cam->pixels[0])
 	{
-		preRotX = (cam->focalLength * cos(horAngle) * sin((90.0/RADIAN) - cam->verRange)) - cam->focusDist;
-		cam->rays[i].direction.y = cam->focalLength * sin(horAngle) * sin((90.0/RADIAN) - cam->verRange);
-		cam->rays[i].direction.z = cam->focalLength * cos((90.0/RADIAN) - cam->verRange);
- 		cam->rays[i].direction.x = preRotX * cos(cam->horOffset) - cam->rays[i].direction.y * sin(cam->horOffset);	//rotation around cam
- 		cam->rays[i].direction.y = preRotX * sin(cam->horOffset) + cam->rays[i].direction.y * cos(cam->horOffset);
-		cam->rays[i].direction = vec_mul_M(cam->rays[i].direction, cam->rotationM);
+		preRotX = (cam->vp.focalLength * cos(horAngle) * sin((90.0/RADIAN) - cam->vp.verRange)) - cam->vp.focusDist;
+		cam->rays[i].direction.y = cam->vp.focalLength * sin(horAngle) * sin((90.0/RADIAN) - cam->vp.verRange);
+		cam->rays[i].direction.z = cam->vp.focalLength * cos((90.0/RADIAN) - cam->vp.verRange);
+ 		cam->rays[i].direction.x = preRotX * cosOffset - cam->rays[i].direction.y * sinOffset;	//rotation around cam
+ 		cam->rays[i].direction.y = preRotX * sinOffset + cam->rays[i].direction.y * cosOffset;
+		cam->rays[i].direction = vec_mul_M(cam->rays[i].direction, cam->vp.rotationM);
 		cam->rays[i].direction = vec_norm(cam->rays[i].direction);
 		cam->rays[i].dist = -1.0;
 		cam->rays[i].closestitem = NULL;
-		horAngle -= cam->deltaHorAngle;
+		horAngle -= cam->vp.deltaHorAngle;
 	}
-	cam->verRange -= cam->deltaVerRange;
+	cam->vp.verRange -= cam->vp.deltaVerRange;
 }
 
 int	dir_vector_init(t_cam_rt *cam)
@@ -63,17 +63,17 @@ int	dir_vector_init(t_cam_rt *cam)
 	if (!cam->rays)
 		return (0);
 	// cam->focalLength = (double)powf(180.0 / cam->fov, 2);
-	cam->focalLength = 180.0 / cam->fov;
-	cam->horRange = asin(sin(cam->fov / (2 * RADIAN)) / cam->focalLength);
-	cam->focusDist = (cos(cam->horRange) * cam->focalLength) - (cos(cam->fov / (RADIAN * 2)));
-	cam->deltaHorAngle = (2 * cam->horRange) / cam->pixels[0];
+	cam->vp.focalLength = 180.0 / cam->fov;
+	cam->vp.horRange = asin(sin(cam->fov / (2 * RADIAN)) / cam->vp.focalLength);
+	cam->vp.focusDist = (cos(cam->vp.horRange) * cam->vp.focalLength) - (cos(cam->fov / (RADIAN * 2)));
+	cam->vp.deltaHorAngle = (2 * cam->vp.horRange) / cam->pixels[0];
 	if (fabs(cam->orientation.x) < EPSILON)
 		cam->orientation.x += 2 * EPSILON;
-	cam->verRange = (cam->horRange * SCREEN_HEIGHT) / SCREEN_WIDTH;
-	cam->deltaVerRange =  (cam->verRange * 2) / cam->pixels[1];
-	cam->horOffset = -1.0 * atan(cam->orientation.y / cam->orientation.x);
-	printf("flen %f verRange %f deltahightsum %f deltahorsum %f width %f\n",cam->focalLength,cam->verRange * RADIAN, cam->deltaVerRange * cam->pixels[1] * RADIAN,cam->deltaHorAngle * cam->pixels[0] * RADIAN, cam->horRange * RADIAN);
-	cam->rotationM = calcRotationMatrix(vec_norm(vec3(cam->orientation.y, -1 * cam->orientation.x, 0)),
+	cam->vp.verRange = (cam->vp.horRange * SCREEN_HEIGHT) / SCREEN_WIDTH;
+	cam->vp.deltaVerRange =  (cam->vp.verRange * 2) / cam->pixels[1];
+	cam->vp.horOffset = -1.0 * atan(cam->orientation.y / cam->orientation.x);
+	//printf("flen %f verRange %f deltahightsum %f deltahorsum %f width %f\n",cam->focalLength,cam->verRange * RADIAN, cam->deltaVerRange * cam->pixels[1] * RADIAN,cam->deltaHorAngle * cam->pixels[0] * RADIAN, cam->horRange * RADIAN);
+	cam->vp.rotationM = calcRotationMatrix(vec_norm(vec3(cam->orientation.y, -1 * cam->orientation.x, 0)),
 		atan(cam->orientation.z / sqrt((cam->orientation.x * cam->orientation.x) + (cam->orientation.y * cam->orientation.y))));
 	return (1);
 }

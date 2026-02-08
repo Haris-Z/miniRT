@@ -86,7 +86,7 @@ int	main(int argc, char **argv)
 	// init render stuff
 	app.cam = cam_init(scene_info, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!dir_vector_init(&app.cam))
-		return (0); // was a mallocerr
+		return (rt_error_msg("malloc\n")); // was a mallocerr
 	app.cam.items = &scene_info.objs_arr;
 	(*app.cam.items)->obj_total = objs_n;
 

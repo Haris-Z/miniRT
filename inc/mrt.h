@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/08 14:37:16 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/08 19:06:31 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,19 +153,9 @@ typedef struct s_ray
 	t_obj	*closestitem;
 }	t_ray;
 
-typedef struct s_rt_cam
+typedef struct s_viewport
 {
-	t_vec3	orientation;
-	t_vec3	pos;
-	t_obj	**items;
-	t_light	light;
-	// t_vec3	light;
-	t_ray	*rays;
-	t_mat3	rotationM;
-	int		pixels[2];
-	double	fov;
-	double	ambient;
-	double	focalLength;
+    double	focalLength;
 	double	focusDist;
 	double	horRange;
 	double	deltaHorAngle;
@@ -173,6 +163,20 @@ typedef struct s_rt_cam
 	double	deltaVerRange;
 	double	verOffset;
 	double	horOffset;
+    t_mat3	rotationM;
+} t_viewport;
+
+typedef struct s_rt_cam
+{
+	t_vec3		orientation;
+	t_vec3		pos;
+	t_obj		**items;
+	t_light		light;
+	t_ray		*rays;
+	int			pixels[2];
+	double		fov;
+	double		ambient;
+	t_viewport	vp;
 }	t_cam_rt;
 
 // ----------- MLX / IMAGE -----------

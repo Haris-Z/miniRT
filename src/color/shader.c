@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shader.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/08 19:22:49 by agara             #+#    #+#             */
+/*   Updated: 2026/02/08 19:22:58 by agara            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mrt.h"
 
 // ambient : 0			-> itemColor	| userInput
@@ -30,7 +42,6 @@ t_color	compute_color(t_rt_mlx vars, t_ray ray, t_obj **items)
 			ray.closestitem->color, light_angle * vars.cam.light.bright);
 	return (diffuse_color);
 }
-
 
 /*
 **
