@@ -134,6 +134,6 @@
 //  */
 // t_vec3	vec_reflect(t_vec3 v, t_vec3 n);
 // void	printV(t_vec3 a);
-// double	getDistBetweenPoints(t_vec3 pointA, t_vec3 pointB);
+// double	get_dist_between_p(t_vec3 pointA, t_vec3 pointB);
 
 // #endif // VEC_H

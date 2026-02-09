@@ -43,5 +43,3 @@ t_vec3	vec_reflect(t_vec3 v, t_vec3 norm)
 {
 	return (vec_sub(v, vec_scale(norm, 2.0 * vec_dot(v, norm))));
 }
-
-

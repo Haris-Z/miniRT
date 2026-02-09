@@ -30,17 +30,17 @@ t_vec3	vec_cross(t_vec3 a, t_vec3 b)
 			a.x * b.y - a.y * b.x));
 }
 
-double	getDistBetweenPoints(t_vec3 pointA, t_vec3 pointB)
+double	get_dist_between_p(t_vec3 pointA, t_vec3 pointB)
 {
 	double	res;
 
-	res = pow(pointA.x - pointB.x, 2) +
-		pow(pointA.y - pointB.y, 2) +
-		pow(pointA.z - pointB.z, 2);
+	res = pow(pointA.x - pointB.x, 2)
+		+ pow(pointA.y - pointB.y, 2)
+		+ pow(pointA.z - pointB.z, 2);
 	return (sqrt(res));
 }
 
-t_vec3	vec_mul_M(t_vec3 v, t_mat3 m)
+t_vec3	vec_mul_m(t_vec3 v, t_mat3 m)
 {
 	t_vec3	res;
 

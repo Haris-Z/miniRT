@@ -216,19 +216,19 @@ t_vec3	vec_cross(t_vec3 a, t_vec3 b);
 t_vec3	vec_norm(t_vec3 v);
 double	vec_len(t_vec3 v);
 double	vec_dot(t_vec3 a, t_vec3 b);
-t_vec3	vec_mul_M(t_vec3 v, t_mat3 m);
+t_vec3	vec_mul_m(t_vec3 v, t_mat3 m);
 
 /// vector utils
 int		vec_near_zero(t_vec3 v);
 t_vec3	vec_reflect(t_vec3 v, t_vec3 n);
-double	getDistBetweenPoints(t_vec3 pointA, t_vec3 pointB);
+double	get_dist_between_p(t_vec3 pointA, t_vec3 pointB);
 
 /// matrix ops
-t_mat3	matNew(t_vec3 colx, t_vec3 coly, t_vec3 colz);
-t_mat3	matMult(t_mat3 a, t_mat3 b);
-t_mat3	matScale(double amount, t_mat3 mat);
-t_mat3	matAdd(t_mat3 a, t_mat3 b);
-t_mat3	calcRotationMatrix(t_vec3 axis, double verAngle);
+t_mat3	mat_new(t_vec3 colx, t_vec3 coly, t_vec3 colz);
+t_mat3	mat_mult(t_mat3 a, t_mat3 b);
+t_mat3	mat_scale(double amount, t_mat3 mat);
+t_mat3	mat_add(t_mat3 a, t_mat3 b);
+t_mat3	calc_rotation_matrix(t_vec3 axis, double verAngle);
 
 // ----------- COLOR -----------
 

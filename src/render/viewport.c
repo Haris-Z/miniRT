@@ -27,23 +27,23 @@ t_cam_rt	cam_init(t_scene s, int w, int h)
 	cam.fov = s.cam.fov_deg;
 	cam.light = s.light;
 	return (cam);
-} 
+}
 
 static void	add_dir_vector(t_cam_rt *cam, double preCalc[3], int i)
 {
-	double	preRotX;
-	
-	preRotX = (cam->vp.focalLength * cos(preCalc[2])
-		* sin((90.0 / RADIAN) - cam->vp.verRange)) - cam->vp.focusDist;
+	double	pre_rot_x;
+
+	pre_rot_x = (cam->vp.focalLength * cos(preCalc[2])
+			* sin((90.0 / RADIAN) - cam->vp.verRange)) - cam->vp.focusDist;
 	cam->rays[i].direction.y = cam->vp.focalLength
 		* sin(preCalc[2]) * sin((90.0 / RADIAN) - cam->vp.verRange);
 	cam->rays[i].direction.z = cam->vp.focalLength
 		* cos((90.0 / RADIAN) - cam->vp.verRange);
-	cam->rays[i].direction.x = preRotX * preCalc[1]
+	cam->rays[i].direction.x = pre_rot_x * preCalc[1]
 		- cam->rays[i].direction.y * preCalc[0];
-	cam->rays[i].direction.y = preRotX * preCalc[0]
+	cam->rays[i].direction.y = pre_rot_x * preCalc[0]
 		+ cam->rays[i].direction.y * preCalc[1];
-	cam->rays[i].direction = vec_mul_M(cam->rays[i].direction,
+	cam->rays[i].direction = vec_mul_m(cam->rays[i].direction,
 			cam->vp.rotationM);
 	cam->rays[i].direction = vec_norm(cam->rays[i].direction);
 	cam->rays[i].dist = -1.0;
@@ -67,7 +67,7 @@ void	add_dir_vector_row(t_cam_rt *cam)
 
 static void	get_matrix(t_mat3 *mat, t_vec3 orientation)
 {
-	*mat = calcRotationMatrix(vec_norm(vec3(orientation.y,
+	*mat = calc_rotation_matrix(vec_norm(vec3(orientation.y,
 					-1 * orientation.x, 0)),
 			atan(orientation.z
 				/ sqrt((orientation.x * orientation.x)

@@ -21,12 +21,12 @@
 void	rotTest()
 {
 	t_vec3 a = vec3(0.7071,0.7071,0);
-	// t_mat3 ones = matNew(vec3(1,1,1),vec3(1,1,1),vec3(1,1,1));
-	// printV(vec_mul_M(a, ones));
-	// t_mat3 i = matNew(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1));
-	t_mat3 R = calcRotationMatrix(vec3(0,1,0), 90 / RADIAN);
+	// t_mat3 ones = mat_new(vec3(1,1,1),vec3(1,1,1),vec3(1,1,1));
+	// printV(vec_mul_m(a, ones));
+	// t_mat3 i = mat_new(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1));
+	t_mat3 R = calc_rotation_matrix(vec3(0,1,0), 90 / RADIAN);
 	// t_vec3 axis = vec_norm(vec3(cam.orientation.y, -1 * cam.orientation.x, 0));
-	a = vec_mul_M(a, R);
+	a = vec_mul_m(a, R);
 	printV(a);
 }
 
