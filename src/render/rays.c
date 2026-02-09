@@ -28,8 +28,8 @@ void	update_ray_dist(t_rt_mlx *vars, t_obj *obj)
 					vars->cam.rays[j].direction, obj->plane);
 		else if (obj->type == OBJ_CYLINDER)
 			dist = hit_cy(vars->cam.pos,
-				vars->cam.rays[j].direction,
-				&obj->cylinder);
+					vars->cam.rays[j].direction,
+					&obj->cylinder);
 		if (dist > 0 && (vars->cam.rays[j].dist == -1.0
 				|| dist < vars->cam.rays[j].dist))
 		{

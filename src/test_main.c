@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 	int			i;
 	int			j;
 	int			k;
-	t_obj		*objs;
+	// t_obj		*objs;
 	int			objs_n;
 	
 	// check args
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 
 	// CHECK 
 	// int t = 0;
-	objs = scene_info.objs_arr;
+	// objs = scene_info.objs_arr;
 	objs_n = scene_info.objs_n;
 	// while (t < objs_n)
 	// {
