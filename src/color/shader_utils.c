@@ -252,7 +252,7 @@ double	get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items)
 	}
 	dist_to_visible = dist_visible(&items, ray, point, surface_to_light);
 	if ((dist_to_visible > 0)
-		&& (dist_to_visible < get_dist_between_p(point, light)))
+		&& ((get_dist_between_p(point, light) - dist_to_visible) > EPSILON))
 		return (-1.0);
 	return (res);
 }
