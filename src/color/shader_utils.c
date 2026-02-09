@@ -189,7 +189,7 @@ static double	dist_visible(t_obj **items, t_ray ray,
 			dist = hit_pl(point, surfaceToLight, item[i].plane);
 		if (item[i].type == OBJ_CYLINDER)
 			dist = hit_cy(point, surfaceToLight, &item[i].cylinder);
-		if (dist > 0 && (dist < res || res < 0))
+		if (dist > EPSILON && (dist < res || res < 0))
 			res = dist;
 		i++;
 	}
