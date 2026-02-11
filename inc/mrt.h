@@ -319,7 +319,7 @@ double		hit_pl(t_vec3 origin ,t_vec3 ray, t_plane plane);
 double		hit_cy(t_vec3 origin, t_vec3 ray, t_cylinder *cy);
 
 // render utils
-void		update_ray_dist(t_rt_mlx *vars, t_obj *obj);
+void		render(t_scene scene_info, t_rt_mlx app);
 int			dir_vector_init(t_cam_rt *cam);
 double		get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items);
 t_color		scale_color(t_color min, t_color max, double amount);

@@ -17,20 +17,6 @@
 #include "rt_error.h"
 #include "libft.h"
 
-
-void	rotTest()
-{
-	t_vec3 a = vec3(0.7071,0.7071,0);
-	// t_mat3 ones = mat_new(vec3(1,1,1),vec3(1,1,1),vec3(1,1,1));
-	// printV(vec_mul_m(a, ones));
-	// t_mat3 i = mat_new(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1));
-	t_mat3 R = calc_rotation_matrix(vec3(0,1,0), 90 / RADIAN);
-	// t_vec3 axis = vec_norm(vec3(cam.orientation.y, -1 * cam.orientation.x, 0));
-	a = vec_mul_m(a, R);
-	printV(a);
-}
-
-
 /*
 **  ###############################
 **	MAIN WITH LIST-TO-ARRAY
@@ -41,9 +27,6 @@ int	main(int argc, char **argv)
 {
 	t_rt_mlx	app;
 	t_scene		scene_info;
-	int			i;
-	int			j;
-	int			k;
 	// t_obj		*objs;
 	int			objs_n;
 	
@@ -56,7 +39,6 @@ int	main(int argc, char **argv)
 	ft_bzero(&scene_info, sizeof(scene_info));
 	if(parse_file(argv[1], &scene_info) != 0)
 		return (1);
-	print_scene_info(scene_info, argv[1]);
 	
 	// list to array
 	if (scene_obj_array(&scene_info) != 0)
@@ -67,18 +49,7 @@ int	main(int argc, char **argv)
 	// int t = 0;
 	// objs = scene_info.objs_arr;
 	objs_n = scene_info.objs_n;
-	// while (t < objs_n)
-	// {
-	// 	if (objs[t].type == OBJ_SPHERE)
-	// 	{
-	// 		printf("SPHERE[%d]: %.2f\n", t, objs[t].sphere.radius);
-	// 		print_vector("center", objs[t].sphere.center);
-	// 		print_vector("color", objs[t].sphere.color);
-	// 	}
-	// 	t++;
-	// }
-	// exit(1);
-
+	
 	// init mlx stuff
 	if (rt_init(&app, RT_WINDOW_NAME) != 0)
 		return (1);
@@ -90,26 +61,11 @@ int	main(int argc, char **argv)
 	app.cam.items = &scene_info.objs_arr;
 	(*app.cam.items)->obj_total = objs_n;
 
-	// rotTest(app.cam);
-	i = -1;
-	while(++i < app.cam.pixels[1])
-	{
-		add_dir_vector_row(&app.cam);
-		k = -1;
-		while(++k < scene_info.objs_n)
-			update_ray_dist(&app, &((*app.cam.items)[k]));
-		j = -1;
-		while(++j < app.cam.pixels[0])
-		{
-			if (app.cam.rays[j].closestitem)
-				app.img.addr[i * app.w + j] = color_to_mlx(compute_color(app,app.cam.rays[j], app.cam.items));
-		}
-	}/// end = timer(
-	// printf(end-start);
+	render(scene_info, app);
 	printf("DONE!!\n");
 	fflush(NULL);
 	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
-	//save_to_ppm(argv[1], &app.img);
+	save_to_ppm(argv[1], &app.img);
 	rt_run(&app);
 	rt_destroy(&app);
 	scene_clear(&scene_info);

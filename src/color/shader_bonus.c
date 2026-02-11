@@ -35,7 +35,7 @@ t_color	compute_color(t_rt_mlx vars, t_ray ray, t_obj **items)
 	diffuseColor = scale_color(ambientColor, ray.closestitem->color, lightAngle * vars.cam.light.bright);
 	shining = vec_dot(reflectionV, ray.direction);
 	if (shining < 0)
-		return (scale_color(diffuseColor, color_rgb(255, 255, 255), pow(shining,32) * vars.cam.light.bright));
+		return (scale_color(diffuseColor, color_rgb(255, 255, 255), pow(shining,8) * vars.cam.light.bright));
 	else
 		return diffuseColor;
 }

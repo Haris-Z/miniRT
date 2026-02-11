@@ -12,7 +12,7 @@
 
 #include "mrt.h"
 
-void	update_ray_dist(t_rt_mlx *vars, t_obj *obj)
+static void	update_ray_dist(t_rt_mlx *vars, t_obj *obj)
 {
 	int		j;
 	double	dist;
@@ -35,6 +35,29 @@ void	update_ray_dist(t_rt_mlx *vars, t_obj *obj)
 		{
 			vars->cam.rays[j].dist = dist;
 			vars->cam.rays[j].closestitem = obj;
+		}
+	}
+}
+
+void	render(t_scene scene_info, t_rt_mlx app)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = -1;
+	while (++i < app.cam.pixels[1])
+	{
+		add_dir_vector_row(&app.cam);
+		k = -1;
+		while (++k < scene_info.objs_n)
+			update_ray_dist(&app, &((*app.cam.items)[k]));
+		j = -1;
+		while (++j < app.cam.pixels[0])
+		{
+			if (app.cam.rays[j].closestitem)
+				app.img.addr[i * app.w + j] = color_to_mlx(
+						compute_color(app, app.cam.rays[j], app.cam.items));
 		}
 	}
 }
