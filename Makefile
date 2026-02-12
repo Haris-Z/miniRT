@@ -125,6 +125,10 @@ RENDER := \
 		render/viewport.c \
 		render/rays.c
 
+B_RENDER := \
+		render/intersections.c \
+		render/viewport_bonus.c \
+		render/rays_bonus.c
 RT := \
 		rt/rt_events.c \
 		rt/rt_img.c \
@@ -164,10 +168,11 @@ SRCS := \
 
 B_SRCS := \
 		test_main.c \
+		$(DPRINTS) \
 		$(B_COLOR) \
 		$(ERROR) \
 		$(PARSE) \
-		$(RENDER) \
+		$(B_RENDER) \
 		$(RT) \
 		$(PPM) \
 		$(VEC) \

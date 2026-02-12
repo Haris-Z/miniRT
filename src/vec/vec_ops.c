@@ -20,6 +20,7 @@ t_vec3	vec_scale(t_vec3 v, double s)
 double	vec_dot(t_vec3 a, t_vec3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
+	// return (fma(a.x, b.x, fma(a.y, b.y, a.z * b.z)));
 }
 
 t_vec3	vec_cross(t_vec3 a, t_vec3 b)

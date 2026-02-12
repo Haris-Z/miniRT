@@ -56,16 +56,16 @@ int	main(int argc, char **argv)
 
 	// init render stuff
 	app.cam = cam_init(scene_info, SCREEN_WIDTH, SCREEN_HEIGHT);
-	if (!dir_vector_init(&app.cam))
-		return (rt_error_msg("malloc\n")); // was a mallocerr
+
 	app.cam.items = &scene_info.objs_arr;
 	(*app.cam.items)->obj_total = objs_n;
-
-	render(scene_info, app);
+	if (render(scene_info, &app))
+	{
+		mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
+		save_to_ppm(argv[1], &app.img);
+	}
 	printf("DONE!!\n");
 	fflush(NULL);
-	mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
-	save_to_ppm(argv[1], &app.img);
 	rt_run(&app);
 	rt_destroy(&app);
 	scene_clear(&scene_info);

@@ -15,8 +15,9 @@
 
 # define RADIAN 57.295779513 // 180/π⁠° ≈ 57.295779513°
 # define RT_WINDOW_NAME	"miniRT"
-# define SCREEN_WIDTH	800
-# define SCREEN_HEIGHT	600
+# define SCREEN_WIDTH	1920
+# define SCREEN_HEIGHT	1080
+# define MSAA 4
 # define EPSILON 1e-12
 # define BOT_CAP 0
 # define TOP_CAP 1
@@ -161,7 +162,7 @@ typedef struct s_viewport
 	double	deltaHorAngle;
 	double	verRange;
 	double	deltaVerRange;
-	double	verOffset;
+	double	verOffset; //not used?
 	double	horOffset;
     t_mat3	rotationM;
 } t_viewport;
@@ -319,7 +320,8 @@ double		hit_pl(t_vec3 origin ,t_vec3 ray, t_plane plane);
 double		hit_cy(t_vec3 origin, t_vec3 ray, t_cylinder *cy);
 
 // render utils
-void		render(t_scene scene_info, t_rt_mlx app);
+int			render(t_scene scene_info, t_rt_mlx *app);
+t_ray		get_dir_vector(t_cam_rt *cam, double preCalc[4]);
 int			dir_vector_init(t_cam_rt *cam);
 double		get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light, t_obj *items);
 t_color		scale_color(t_color min, t_color max, double amount);

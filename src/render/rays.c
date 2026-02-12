@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "mrt.h"
+#include "rt_error.h"
 
 static void	update_ray_dist(t_rt_mlx *vars, t_obj *obj)
 {
@@ -38,26 +39,31 @@ static void	update_ray_dist(t_rt_mlx *vars, t_obj *obj)
 		}
 	}
 }
-
-void	render(t_scene scene_info, t_rt_mlx app)
+#include "debug_print.h"
+#include <stdio.h>
+int	render(t_scene scene_info, t_rt_mlx *app)
 {
 	int	i;
 	int	j;
 	int	k;
-
+	if (!dir_vector_init(&(app->cam)))
+		return (rt_error_msg("malloc\n"), 0);	
+	printf("deltaH %.6f deltaV %.6f\n", app->cam.vp.deltaVerRange,app->cam.vp.deltaHorAngle);
 	i = -1;
-	while (++i < app.cam.pixels[1])
+	while (++i < app->cam.pixels[1])
 	{
-		add_dir_vector_row(&app.cam);
+		add_dir_vector_row(&(app->cam));
 		k = -1;
 		while (++k < scene_info.objs_n)
-			update_ray_dist(&app, &((*app.cam.items)[k]));
+			update_ray_dist(app, &((*(*app).cam.items)[k]));
 		j = -1;
-		while (++j < app.cam.pixels[0])
+		while (++j < app->cam.pixels[0])
 		{
-			if (app.cam.rays[j].closestitem)
-				app.img.addr[i * app.w + j] = color_to_mlx(
-						compute_color(app, app.cam.rays[j], app.cam.items));
+			if (app->cam.rays[j].closestitem)
+				app->img.addr[i * app->w + j] = color_to_mlx(
+						compute_color(*app, app->cam.rays[j], app->cam.items));
+			// print_vector("	",app->cam.rays[j].direction);
 		}
 	}
+	return (1);
 }

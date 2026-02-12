@@ -68,7 +68,7 @@ void	print_vector(char *name, t_vec3 v)
 {
 	if (name)
 		printf("%s: ", name);
-	printf("(%.2f, %.2f, %.2f)", v.x, v.y, v.z);
+	printf("(%.5f, %.5f, %.5f)", v.x, v.y, v.z);
 	printf("\n");
 }
 

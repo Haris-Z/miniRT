@@ -89,6 +89,8 @@ int rt_init(t_rt_mlx *rt, const char *title)
 */
 void	rt_destroy(t_rt_mlx *rt)
 {
+	if (rt->cam.rays)
+		free(rt->cam.rays);
 	if (rt->img.ptr)
 		rt_img_destroy(rt, &rt->img);
 	if (rt->win)
@@ -97,11 +99,6 @@ void	rt_destroy(t_rt_mlx *rt)
 	{
 		mlx_destroy_display(rt->mlx);
 		free(rt->mlx);
-	}
-	if (rt->cam.rays)
-	{
-		free(rt->cam.rays);
-		//free(rt->cam.xyTemplate);
 	}
 	rt->mlx = NULL;
 	rt->win = NULL;
