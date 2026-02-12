@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:02:44 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:47:19 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/12 22:56:07 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	parse_unit_vec(t_vec3 v)
 	if (!in_range(v.x, -1.0, 1.0)
 		|| !in_range(v.y, -1.0, 1.0)
 		|| !in_range(v.z, -1.0, 1.0))
-		return (rt_error_msg("Camera direction out of range [-1..1]"));
+		return (rt_error_msg("Camera direction out of range [-1..1]")); //Line:[i] (C): dir(nx, ny,nz) | (n.x) out of Range[-1,1]
 	len = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 	if (len < 1e-12)
 		return (rt_error_msg("Camera direction cannot be zero"));
@@ -77,4 +77,3 @@ int	parse_camera(t_scene *s, char **t)
 		return (E_PARSE_DUPLICATE_C);
 	return (0);
 }
-

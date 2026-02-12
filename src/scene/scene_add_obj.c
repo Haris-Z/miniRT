@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 16:47:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/05 19:20:26 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/12 23:02:59 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ int	scene_add_sphere(t_scene *s, t_sphere sp)
 
 	o = obj_new(OBJ_SPHERE);
 	if (!o)
+	{
+		rt_error_msg(strerror(errno));
 		return (1);
+	}
 	o->sphere = sp;
 	o->color = sp.color;
 	o->next = s->objs;
@@ -94,13 +97,19 @@ int	scene_obj_array(t_scene *s)
 	int		i;
 
 	if (!s)
+	{
+		rt_error_msg("scene_obj_array(): Invalid input param <s>");
 		return (1);
+	}
 	n = obj_list_count(s->objs);
 	if (n == 0)
 		return (0);
 	s->objs_arr = (t_obj *)ft_calloc(n, sizeof(*s->objs_arr));
 	if (!s->objs_arr)
+	{
+		rt_error_msg(strerror(errno));
 		return (1);
+	}
 	o = s->objs;
 	i = 0;
 	while (o)
