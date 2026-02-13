@@ -14,6 +14,11 @@
 - [GPROF-INFO](https://www.thegeekstuff.com/2012/08/gprof-tutorial/)
 
 
+
+- [PHOTO-VIDEO-CALULCATORS](https://www.omnicalculator.com/other#:~:text=Photo%20and%20video%20calculators)
+- [LINEAR-ALGEBRA-CALCULATOR](https://www.omnicalculator.com/math#:~:text=Linear%20algebra%20calculators)
+- [TRIG-CALCULATOR](https://www.omnicalculator.com/math#:~:text=Tensor%20Product%20Calculator-,Trigonometry%20calculators,-%F0%9F%93%90)
 - [CYLINDER-INTERSECTION](https://www.youtube.com/watch?v=6VHpZYTHZG4&pp=ygUSY3lsaW5kZXIgcmF5dHJhY2Vy)
+
 
 - [EXAMPLE-DOCUMENTATION](https://ygor-sena.github.io/42cursus-miniRT/structs__camera.html#a8944ccdbc9a175ea4cdb00439aaad118)
