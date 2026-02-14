@@ -33,7 +33,7 @@ t_color	compute_color(t_rt_mlx vars, t_ray ray, t_obj **items)
 	double	light_angle;
 
 	ambient_color = scale_color(color_rgb(0, 0, 0),
-			ray.closestitem->color, vars.cam.ambient);
+			ray.closestitem->color, vars.cam.ambient.ratio);
 	light_angle = get_light_angle(vars.cam.pos,
 			ray, vars.cam.light.pos, *items);
 	if (light_angle < 0)

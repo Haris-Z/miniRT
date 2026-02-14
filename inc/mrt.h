@@ -15,9 +15,9 @@
 
 # define RADIAN 57.295779513 // 180/π⁠° ≈ 57.295779513°
 # define RT_WINDOW_NAME	"miniRT"
-# define SCREEN_WIDTH	1920
-# define SCREEN_HEIGHT	1080
-# define MSAA 4
+# define SCREEN_WIDTH	800
+# define SCREEN_HEIGHT	600
+# define MSAA 2
 # define EPSILON 1e-12
 # define BOT_CAP 0
 # define TOP_CAP 1
@@ -176,7 +176,7 @@ typedef struct s_rt_cam
 	t_ray		*rays;
 	int			pixels[2];
 	double		fov;
-	double		ambient;
+	t_ambient	ambient;
 	t_viewport	vp;
 }	t_cam_rt;
 

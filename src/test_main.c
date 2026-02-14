@@ -62,7 +62,7 @@ int	main(int argc, char **argv)
 	if (render(scene_info, &app))
 	{
 		mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
-		save_to_ppm(argv[1], &app.img);
+		// save_to_ppm(argv[1], &app.img);
 	}
 	printf("DONE!!\n");
 	fflush(NULL);

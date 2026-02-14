@@ -23,7 +23,7 @@ t_cam_rt	cam_init(t_scene s, int w, int h)
 	cam.pos = s.cam.pos;
 	cam.pixels[0] = w;
 	cam.pixels[1] = h;
-	cam.ambient = s.amb.ratio;
+	cam.ambient = s.amb;
 	cam.fov = s.cam.fov_deg;
 	cam.light = s.light;
 	return (cam);

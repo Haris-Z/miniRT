@@ -32,7 +32,7 @@ LDLIBS			:=
 #   make DEBUG=1        → adds -g3 -O0
 #   make SAN=1          → adds -fsanitize=address (compile + link)
 #   make DEBUG=1 SAN=1  → both
-DEBUG	?= 0
+DEBUG	?= 1
 PROFILER ?= 0
 SAN		?= 1
 
@@ -305,6 +305,13 @@ prof: fclean ## Compile with -pg and run gprof
 	@gprof $(NAME) gmon.out > gprof_report.txt
 	@echo "Report saved to gprof_report.txt"
 
+prof_b: fclean ## Compile with -pg and run gprof
+	@make bonus --no-print-directory PROFILER=1 DEBUG=1 SAN=0
+	@echo "Running miniRT with profiling..."
+	@./$(NAME) $(DEFAULT_TEST)
+	@echo "Generating gprof report..."
+	@gprof $(NAME) gmon.out > gprof_report.txt
+	@echo "Report saved to gprof_report.txt"
 # ============================================================================ #
 
 # ============================================================================ #

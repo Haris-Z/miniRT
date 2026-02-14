@@ -85,7 +85,6 @@ int	render(t_scene scene_info, t_rt_mlx *app)
 				while (++m < MSAA)
 				{
 					dir = get_dir_vector(&app->cam, pre_calc);
-					// printf("Hor:  %.4f Ver %.4f	\n",pre_calc[3], pre_calc[2]);
 					k = -1;
 					while (++k < scene_info.objs_n)
 						update_ray_dist(app->cam, &((*(*app).cam.items)[k]), &dir);
@@ -101,8 +100,6 @@ int	render(t_scene scene_info, t_rt_mlx *app)
 			pixel_start[1] = pre_calc[3]; 
 		}
 		pixel_start[0] = pre_calc[2];
-		// printf("pixelstart 0 %f\n",pixel_start[0]);
-
 	}
 	return (1);
 }
