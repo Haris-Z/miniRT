@@ -38,8 +38,8 @@ tests/tst_libft_integration.c
 tests/test_files/error_scene/
 
 notes/
-tests/test_files/cylinder/
 saved_images/
+saved_images/my_images/
 
 # format
 .clang-format
