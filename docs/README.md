@@ -26,16 +26,15 @@ Its possibe to render 3 shapes:
 - Spheres ('sp') defined by coordinates of center(x,y,z), length of radius and color
 - Cylinder ('cy') defined by coordinates of center(x,y,z), length of radius, height of axis and color
 - Planes ('pl') defined by coordinates of a point, normalvector and color
-#### the colors expected in R,G,B values between 0 - 255
-#### the vectors expected stricktly as normalized unit vectors
-#### Example
-A 0.8 255,0,0 
-C -10,0,0 1,0,0 120 
-L -20,0,15 0.8 0,0,255 
-sp 14,10,0 2 0,255,0 
-pl 0,0,-2 0,0,1 180,180,180 
-cy 10,0,1 0,0,1 4 6 0,0,255 
-
+- the colors expected in R,G,B values between 0 - 255
+- the vectors expected stricktly as normalized unit vectors
+- Example
+A 0.8 255,0,0
+C -10,0,0 1,0,0 120
+L -20,0,15 0.8 0,0,255
+sp 14,10,0 2 0,255,0
+pl 0,0,-2 0,0,1 180,180,180
+cy 10,0,1 0,0,1 4 6 0,0,255
 ## RESOURCES - LINKS
 
 - [PLOTS-GRAPHS](https://academo.org/demos/)
