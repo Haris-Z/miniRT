@@ -1,9 +1,25 @@
-# miniRT
+# miniRT - a Raytracing Engine in C
 
+## Description
+This project has been created as part of the 42 curriculum by agara and hazunic.
 
+### Mandantory features
+- Colorful ambient lightning
+- Only white diffuse lightning
+- Basic shapes: sphere, plane, cylider
+### Bonus features
+- Colorful diffuse lightning
+- Specular lightning
+- Multiple spot light scources
+- Multisampling Anti Aliasing - MSAA
 
+## Instructions
+### Build
+make
+### Build with bonus features
+make bonus
 
-# RESOURCES - LINKS
+## RESOURCES - LINKS
 
 - [PLOTS-GRAPHS](https://academo.org/demos/)
 - [README](https://readme.so/de/editor)
