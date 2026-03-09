@@ -48,7 +48,7 @@ static void	add_dir_vector(t_cam_rt *cam, double preCalc[3], int i)
 	cam->rays[i].direction = vec_norm(cam->rays[i].direction);
 	cam->rays[i].dist = -1.0;
 	cam->rays[i].closestitem = NULL;
-	preCalc[2] -= cam->vp.deltaHorAngle;
+	preCalc[2] += cam->vp.deltaHorAngle;
 }
 
 void	add_dir_vector_row(t_cam_rt *cam)
@@ -58,7 +58,7 @@ void	add_dir_vector_row(t_cam_rt *cam)
 
 	pre_calc[0] = sin(cam->vp.horOffset);
 	pre_calc[1] = cos(cam->vp.horOffset);
-	pre_calc[2] = cam->vp.horRange;
+	pre_calc[2] = cam->vp.horRange * -1;
 	i = -1;
 	while (++i < cam->pixels[0])
 		add_dir_vector(cam, pre_calc, i);
@@ -79,8 +79,8 @@ int	dir_vector_init(t_cam_rt *cam)
 	cam->rays = malloc(sizeof(t_ray) * cam->pixels[0]);
 	if (!cam->rays)
 		return (0);
-	// cam->focalLength = (double)powf(180.0 / cam->fov, 2);
-	cam->vp.focalLength = 180.0 / cam->fov;
+	cam->vp.focalLength = (double)powf(180.0 / cam->fov, 5);
+	// cam->vp.focalLength = 180.0 / cam->fov;
 	cam->vp.horRange = asin(sin(cam->fov / (2 * RADIAN)) / cam->vp.focalLength);
 	cam->vp.focusDist = (cos(cam->vp.horRange) * cam->vp.focalLength)
 		- (cos(cam->fov / (RADIAN * 2)));
@@ -89,7 +89,9 @@ int	dir_vector_init(t_cam_rt *cam)
 		cam->orientation.x += 2 * EPSILON;
 	cam->vp.verRange = (cam->vp.horRange * SCREEN_HEIGHT) / SCREEN_WIDTH;
 	cam->vp.deltaVerRange = (cam->vp.verRange * 2) / cam->pixels[1];
-	cam->vp.horOffset = -1.0 * atan(cam->orientation.y / cam->orientation.x);
+	// cam->vp.horOffset = -1.0 * atan(cam->orientation.y / cam->orientation.x);
+	cam->vp.horOffset = atan2(cam->orientation.y, cam->orientation.x);
+	printf("horoffset %f \n",cam->vp.horOffset * RADIAN);
 	get_matrix(&cam->vp.rotationM, cam->orientation);
 	return (1);
 }
