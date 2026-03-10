@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/08 15:20:35 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/10 18:52:42 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	render(t_scene scene_info, t_rt_mlx *app)
 	int	k;
 	if (!dir_vector_init(&(app->cam)))
 		return (rt_error_msg("malloc\n"), 0);	
-	printf("deltaH %.6f deltaV %.6f\n", app->cam.vp.deltaVerRange,app->cam.vp.deltaHorAngle);
 	i = -1;
 	while (++i < app->cam.pixels[1])
 	{

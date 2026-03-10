@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rays.c                                             :+:      :+:    :+:   */
+/*   rays_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/08 15:20:35 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/26 19:44:28 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	update_ray_dist(t_cam_rt cam, t_obj *obj, t_ray *ray)
 {
 	double	dist;
 
+	dist = 0.0;
 	if (obj->type == OBJ_SPHERE)
 		dist = hit_sp(cam.pos,
 				ray->direction, &obj->sphere);

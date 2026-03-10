@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   viewport.c                                         :+:      :+:    :+:   */
+/*   viewport_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:52:31 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/08 19:18:24 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/10 18:25:36 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	dir_vector_init(t_cam_rt *cam)
 		cam->orientation.x += 2 * EPSILON;
 	cam->vp.verRange = (cam->vp.horRange * SCREEN_HEIGHT) / SCREEN_WIDTH;
 	cam->vp.deltaVerRange = (cam->vp.verRange * 2) / (cam->pixels[1] * MSAA);
-	cam->vp.horOffset = -1.0 * atan(cam->orientation.y / cam->orientation.x);
+	cam->vp.horOffset = atan2(cam->orientation.y, cam->orientation.x);
 	get_matrix(&cam->vp.rotationM, cam->orientation);
 	return (1);
 }
