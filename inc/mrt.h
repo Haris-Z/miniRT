@@ -15,15 +15,16 @@
 
 # define RADIAN 57.295779513 // 180/π⁠° ≈ 57.295779513°
 # define RT_WINDOW_NAME	"miniRT"
+# define EPSILON 1e-12
+# define BOT_CAP 0
+# define TOP_CAP 1
+# define NO_HIT -1.0
+
 # define SCREEN_WIDTH	800
 # define SCREEN_HEIGHT	601
 # define MSAA 2
 # define FOCAL_SCALE_EXP 5 // 1 to inf
 # define SHINE 12 // 1 to inf
-# define EPSILON 1e-12
-# define BOT_CAP 0
-# define TOP_CAP 1
-# define NO_HIT -1.0
 
 # include <limits.h>
 # include <stdbool.h>
