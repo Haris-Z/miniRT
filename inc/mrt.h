@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/08 19:06:31 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/10 21:39:51 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define RADIAN 57.295779513 // 180/π⁠° ≈ 57.295779513°
 # define RT_WINDOW_NAME	"miniRT"
 # define SCREEN_WIDTH	800
-# define SCREEN_HEIGHT	600
+# define SCREEN_HEIGHT	601
 # define MSAA 2
 # define FOCAL_SCALE_EXP 5 // 1 to inf
 # define SHINE 12 // 1 to inf
