@@ -79,8 +79,7 @@ int	dir_vector_init(t_cam_rt *cam)
 	cam->rays = malloc(sizeof(t_ray) * cam->pixels[0]);
 	if (!cam->rays)
 		return (0);
-	cam->vp.focalLength = (double)powf(180.0 / cam->fov, 5);
-	// cam->vp.focalLength = 180.0 / cam->fov;
+	cam->vp.focalLength = (double)powf(180.0 / cam->fov, FOCAL_SCALE_EXP);
 	cam->vp.horRange = asin(sin(cam->fov / (2 * RADIAN)) / cam->vp.focalLength);
 	cam->vp.focusDist = (cos(cam->vp.horRange) * cam->vp.focalLength)
 		- (cos(cam->fov / (RADIAN * 2)));

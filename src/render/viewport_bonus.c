@@ -67,8 +67,7 @@ static void	get_matrix(t_mat3 *mat, t_vec3 orientation)
 
 int	dir_vector_init(t_cam_rt *cam)
 {
-	// cam->focalLength = (double)powf(180.0 / cam->fov, 2);
-	cam->vp.focalLength = 180.0 / cam->fov;
+	cam->vp.focalLength = (double)powf(180.0 / cam->fov, FOCAL_SCALE_EXP);
 	cam->vp.horRange = asin(sin(cam->fov / (2 * RADIAN)) / cam->vp.focalLength);
 	cam->vp.focusDist = (cos(cam->vp.horRange) * cam->vp.focalLength)
 		- (cos(cam->fov / (RADIAN * 2)));

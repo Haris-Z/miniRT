@@ -91,7 +91,7 @@ t_color	compute_color(t_rt_mlx vars, t_ray ray, t_obj **items)
 	if (shining > 0)
 		specularColor = color_rgb(0, 0, 0);
 	else
-		specularColor = scale_color(color_rgb(0, 0, 0), vars.cam.light.color, (double)powf(shining,12) * vars.cam.light.bright);
+		specularColor = scale_color(color_rgb(0, 0, 0), vars.cam.light.color, (double)powf(shining, SHINE) * vars.cam.light.bright);
 	(void)shining;
 	(void)diffuseColor;
 	(void)reflectionV;

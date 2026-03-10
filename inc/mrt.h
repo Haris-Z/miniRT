@@ -18,6 +18,8 @@
 # define SCREEN_WIDTH	800
 # define SCREEN_HEIGHT	600
 # define MSAA 2
+# define FOCAL_SCALE_EXP 5 // 1 to inf
+# define SHINE 12 // 1 to inf
 # define EPSILON 1e-12
 # define BOT_CAP 0
 # define TOP_CAP 1
