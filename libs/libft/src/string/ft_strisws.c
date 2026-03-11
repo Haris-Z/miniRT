@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_libft.c                                       :+:      :+:    :+:   */
+/*   ft_strisws.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/17 14:31:21 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/17 16:34:04 by hazunic          ###   ########.fr       */
+/*   Created: 2026/02/26 13:25:57 by hazunic           #+#    #+#             */
+/*   Updated: 2026/02/26 14:27:49 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <fcntl.h>
 #include "libft.h"
 
-int	main(void)
+int	ft_stris_ws(const char *s)
 {
-	size_t len = ft_strlen("hello");
-	printf("hello libft\n");
-	printf("len: %lu\n", len);
+	size_t	i;
 
-	printf("\nTEST: get_next_line\n");
-	char	*line;
-	int		fd;
-
-	fd = open("tests/lines.txt", O_RDONLY);
-	line = get_next_line(fd);
-	int i = 1;
-	while(line != NULL)
+	i = 0;
+	while (s[i])
 	{
-		printf("line %d: %s", i, line);
+		if (!ft_isspace((unsigned char)s[i]))
+			return (1);
 		i++;
-		free(line);
-		line = get_next_line(fd);
 	}
 	return (0);
 }

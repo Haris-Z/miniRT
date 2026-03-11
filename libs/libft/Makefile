@@ -12,11 +12,12 @@ NAME        := libft.a
 # ============================================================================ #
 #   COMPILER & COMPILER FLAGS                                                  #
 # ============================================================================ #
-CC          := cc
-CFLAGS      := -Wall -Wextra -Werror
-CPPFLAGS    :=
-LDFLAGS     :=
-LDLIBS      :=
+CC			:= cc
+CFLAGS		:= -Wall -Wextra -Werror
+CPPFLAGS	:=
+LDFLAGS		:=
+LDLIBS		:=
+DEPFLAGS	:= -MMD -MP
 # ============================================================================ #
 #   DEBUG FLAGS                                                                #
 # ============================================================================ #
@@ -70,17 +71,9 @@ RMDIR       := rm -rf
 #                             PROJECT LAYOUT                                   #
 # ============================================================================ #
 # Location of sources files
-SRC_DIR     := src
-OBJ_DIR     := obj
-INC_DIR     := inc
-# Location of test files
-TEST_DIR    := tests
-TEST_BIN  := test_lib
-TEST_SRC  := $(TEST_DIR)/test_libft.c
-
-# Public Headers / Include flages
-#LIBFT_H      := $(INC_DIR)/
-#INCLUDES    := -I$(INC_DIR)
+SRC_DIR   := src
+OBJ_DIR   := obj
+INC_DIR   := inc
 
 CPPFLAGS += -I$(INC_DIR)
 # ============================================================================ #
@@ -112,6 +105,7 @@ MEM := \
 	mem_/ft_memset.c
 
 STRING := \
+	string/ft_strisws.c \
 	string/ft_strchr.c \
 	string/ft_strdup.c \
 	string/ft_striteri.c \
@@ -129,15 +123,16 @@ STRING := \
 
 UTILS := \
 	utils/free_mem.c \
-	utils/ft_atod.c \
-	utils/ft_atof.c \
 	utils/ft_atoi.c \
 	utils/ft_atol.c \
 	utils/ft_calloc.c \
 	utils/ft_free_and_null.c \
 	utils/ft_itoa.c \
 	utils/ft_realloc.c \
-	utils/ft_split.c
+	utils/ft_split.c \
+	utils/ft_splitws.c \
+	utils/ft_strtoi.c \
+	utils/ft_strtod.c
 
 PUT := \
 	put_/ft_putchar_fd.c \
@@ -157,7 +152,8 @@ LIST := \
 	list/ft_lstsize.c
 
 GNL := \
-	gnl/get_next_line.c
+	gnl/get_next_line.c \
+	gnl/get_next_line_utils.c
 
 ERROR := \
 	error/errors.c
@@ -174,8 +170,8 @@ SRCS_REL := \
 
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS_REL))
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-#DEPS := $(OBJS:.o=.d)
-#DEP  := $(OBJ:.o=.d)
+DEPS := $(OBJS:.o=.d)
+
 # ============================================================================ #
 #                                  RULES                                       #
 # ============================================================================ #
@@ -188,9 +184,9 @@ $(NAME): $(OBJS)
 # ============================================================================ #
 # Compile each .c to its corresponding .o (objects live next to sources)
 # ============================================================================ #
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/libft.h
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CPPFLAGS) $(CFLAGS) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(DEPFLAGS) -c $< -o $@
 # ============================================================================ #
 #                              CLEAN OBJECT FILES                              #
 # ============================================================================ #
@@ -210,13 +206,6 @@ re: fclean all
 #                                TEST TARGETS                                  #
 # ============================================================================ #
 
-test: $(TEST_BIN)
-	./$(TEST_BIN)
-
-$(TEST_BIN): $(NAME) $(TEST_SRC)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -I$(TEST_DIR) \
-	$(TEST_SRC) $(NAME) $(LDFLAGS) $(LDLIBS) -o $@
-
 # Default target
 # .DEFAULT_GOAL := help
 help: ## Show this help
@@ -225,7 +214,9 @@ help: ## Show this help
 		sed -e 's/:.*##/: /' | \
 		awk 'BEGIN {FS = ":[ ]"} {printf "  $(CYAN)%-18s$(RESET) %s\n", $$1, $$2}'
 
+-include $(DEPS)
+
 .PHONY:	all clean fclean re \
-		help test
+		help
 
 #make --trace

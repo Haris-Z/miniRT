@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:38:10 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/17 13:35:15 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/10 16:45:55 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,6 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
-/// buffer size for get_next_line
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif // BUFFER_SIZE
-
-/// for get next line
-# define READ_ERROR -1
-# define EOF_REACHED 0
 
 # include <stdint.h>
 # include <stddef.h>
@@ -391,6 +382,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
  * @return NULL-terminated array of tokens, or NULL on allocation failure.
  */
 char	**ft_split(char const *s, char c);
+char	**ft_split_ws(const char *s);
 
 /**
  * @brief Trims characters from both ends of a string.
@@ -579,5 +571,9 @@ void	free_array(char **arr);
  * @ingroup getline
  */
 char	*get_next_line(int fd);
+
+int		ft_stris_ws(const char *s);
+int		ft_strtoi(const char *s, int *out);
+int		ft_strtod(const char *s, double *out);
 
 #endif /* LIBFT_H */

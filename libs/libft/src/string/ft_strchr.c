@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:13:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/17 14:38:36 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/26 14:27:06 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strchr(const char *s, int c)
 {
 	unsigned char	first_occurence;
-	size_t	i;
+	size_t			i;
 
 	first_occurence = (unsigned char )c;
 	i = 0;

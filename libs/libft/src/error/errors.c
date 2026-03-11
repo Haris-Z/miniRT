@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 22:29:28 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/17 13:40:48 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/02/26 14:29:45 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 //#include <string.h>
 #include "libft.h"
 
-void	print_error_builtins(char *cmd, const char *arg, char *error)
-{
-	ft_putendl_fd("Error:", STDERR_FILENO);
-	if (cmd)
-	{
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-		ft_putstr_fd((char *)arg, STDERR_FILENO);
-	}
-	if (arg)
-		ft_putstr_fd(" ", STDERR_FILENO);
-	else
-		ft_putstr_fd(":", STDERR_FILENO);
-	ft_putendl_fd(error, STDERR_FILENO);
-}
-
-void	debug(char *file, const char *func, int line, char *arg)
-{
-	printf("%s: %d:  %s: | %s\n", file, line, func, arg);
-}
+// void	print_error_builtins(char *cmd, const char *arg, char *error)
+// {
+// 	ft_putendl_fd("Error:", STDERR_FILENO);
+// 	if (cmd)
+// 	{
+// 		ft_putstr_fd(cmd, STDERR_FILENO);
+// 		ft_putstr_fd(": ", STDERR_FILENO);
+// 		ft_putstr_fd((char *)arg, STDERR_FILENO);
+// 	}
+// 	if (arg)
+// 		ft_putstr_fd(" ", STDERR_FILENO);
+// 	else
+// 		ft_putstr_fd(":", STDERR_FILENO);
+// 	ft_putendl_fd(error, STDERR_FILENO);
+// }
+// 
+// void	debug(char *file, const char *func, int line, char *arg)
+// {
+// 	printf("%s: %d:  %s: | %s\n", file, line, func, arg);
+// }
 
 void	report_error(const char *context, const char *message)
 {
