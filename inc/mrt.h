@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:09:56 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:53:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,7 @@ t_vec3		set_face_normal(t_vec3 ray_dir, t_vec3 outward);
 double		min_pos(double a, double b);
 
 // render utils
-int			render(t_scene scene_info, t_rt_mlx *app);
+int			render(t_scene *scene_info, t_rt_mlx *app);
 t_ray		get_dir_vector(t_cam_rt *cam, double preCalc[4]);
 int			dir_vector_init(t_cam_rt *cam);
 double		get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light,

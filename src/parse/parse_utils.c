@@ -6,103 +6,120 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:48:33 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/11 23:28:01 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
 #include "rt_error.h"
 #include "libft.h"
+#include "limits.h"
 
-// simplify whole file
+static int	validate_rgb(const char *s, int *out);
+static bool	tok_count(char **tok, int expected);
 
-static int	parse_next_token(char *dst, int dstsize, const char *src, int start, int end)
-{
-	int	i;
-
-	i = 0;
-	while (start + i < end && i < dstsize - 1)
-	{
-		dst[i] = src[start + i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (i > 0);
-}
-
-static int	split3(const char *s, int *a, int *b)
-{
-	int	i;
-	int	c;
-
-	i = -1;
-	c = 0;
-	*a = -1;
-	*b = -1;
-	if (!s || !*s)
-		return (0);
-	while (s && s[++i])
-	{
-		if (s[i] == ',')
-		{
-			if (c == 0)
-				*a = i;
-			else if (c == 1)
-				*b = i;
-			c++;
-		}
-	}
-	if (c != 2 || *a <= 0 || *b <= *a + 1)
-		return (0);
-	if (s[i - 1] == ',')
-		return (0);
-	return (1);
-}
-
-// re-implement - make more tests
 int	parse_vec3(const char *tok, t_vec3 *out)
 {
-	int		c1;
-	int		c2;
-	t_vec3	v;
-	char	tmp[128];
+	char	**p;
 
-	if (!tok || !split3(tok, &c1, &c2))
-		return (1);
-	if (!parse_next_token(tmp, (int)sizeof(tmp), tok, 0, c1) 
-	|| parse_double(tmp, &v.x))
-		return (1);
-	if (!parse_next_token(tmp, (int)sizeof(tmp), tok, c1 + 1, c2) 
-	|| parse_double(tmp, &v.y))
-		return (1);
-	if (!parse_next_token(tmp, (int)sizeof(tmp), \
-	tok, c2 + 1, (int)ft_strlen(tok)) 
-	|| parse_double(tmp, &v.z))
-		return (1);
-	*out = v;
+	if (!tok || !out)
+		return (RT_ERR_ARG);
+	p = ft_split(tok, ',');
+	if (!p)
+		return (RT_ERR_MALLOC);
+	if (!tok_count(p, 3))
+		return (free_array(p), RT_ERR_FORMAT);
+	if (ft_strtod(p[0], &out->x) != 0)
+		return (free_array(p), RT_ERR_BAD_FLOAT);
+	if (ft_strtod(p[1], &out->y) != 0)
+		return (free_array(p), RT_ERR_BAD_FLOAT);
+	if (ft_strtod(p[2], &out->z) != 0)
+		return (free_array(p), RT_ERR_BAD_FLOAT);
+	free_array(p);
+	return (0);
+}
+
+int	parse_unit_vec3(const char *s, t_vec3 *out)
+{
+	double	len;
+	int		err;
+
+	err = parse_vec3(s, out);
+	if (err != RT_SUCCESS)
+		return (err);
+	if (out->x < -1.0 || out->x > 1.0 || out->y < -1.0 || out->y > 1.0
+		|| out->z < -1.0 || out->z > 1.0)
+		return (RT_ERR_URANGE);
+	len = vec_len(*out);
+	if (len < 1e-12)
+		return (RT_ERR_UZERO);
+	//*out = rt_scale(*out, 1.0 / len);
+	return (RT_SUCCESS);
+}
+
+int	parse_unit_vec(t_vec3 v)
+{
+	double	len;
+
+	if ((v.x < -1.0 || v.x > 1.0)
+		|| (v.y < -1.0 || v.y > 1.0)
+		|| (v.z < -1.0 || v.z > 1.0))
+		return (RT_ERR_URANGE);
+	len = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+	if (len < 1e-12)
+		return (RT_ERR_UZERO);
+	if (fabs(len - 1.0) > 1e-3)
+		return (RT_ERR_UNORM);
 	return (0);
 }
 
 int	parse_color_vec(const char *tok, t_color *out)
 {
-	int		c1;
-	int		c2;
+	char	**p;
+	int		err;
 	int		r;
 	int		g;
 	int		b;
-	char	tmp[64];
 
-	if (!tok || !split3(tok, &c1, &c2))
-		return (rt_error_msg("Invalid RGB token"));
-	if (!parse_next_token(tmp, (int)sizeof(tmp), tok, 0, c1)
-		|| parse_int(tmp, &r) || r < 0 || r > 255)
-		return (rt_error_msg("RGB out of range for (r)"));
-	if (!parse_next_token(tmp, (int)sizeof(tmp), tok, c1 + 1, c2)
-		|| parse_int(tmp, &g) || g < 0 || g > 255)
-		return (rt_error_msg("RGB out of range for (g)"));
-	if (!parse_next_token(tmp, (int)sizeof(tmp), tok, c2 + 1, (int)ft_strlen(tok))
-		|| parse_int(tmp, &b) || b < 0 || b > 255)
-		return (rt_error_msg("RGB out of range for (b)"));
+	p = ft_split(tok, ',');
+	if (!p)
+		return (RT_ERR_MALLOC);
+	if (tok_count(p, 3) == false)
+		return (free_array(p), RT_ERR_FORMAT);
+	err = validate_rgb(p[0], &r);
+	if (err != RT_SUCCESS)
+		return (free_array(p), err);
+	err = validate_rgb(p[1], &g);
+	if (err != RT_SUCCESS)
+		return (free_array(p), err);
+	err = validate_rgb(p[2], &b);
+	if (err != RT_SUCCESS)
+		return (free_array(p), err);
 	*out = color_rgb(r, g, b);
+	free_array(p);
+	return (E_OK);
+}
+
+static int	validate_rgb(const char *s, int *out)
+{
+	int	color_val;
+
+	if (ft_strtoi(s, &color_val))
+		return (RT_ERR_BAD_INT);
+	if (color_val < 0 || color_val > 255)
+		return (RT_ERR_RANGE_COLOR);
+	*out = color_val;
 	return (0);
+}
+
+static bool	tok_count(char **tok, int expected)
+{
+	int	n;
+
+	n = 0;
+	while (tok && tok[n])
+		n++;
+	if (n != expected)
+		return (false);
+	return (true);
 }

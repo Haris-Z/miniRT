@@ -6,139 +6,151 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:47:31 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:31:13 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
+#include <fcntl.h> // remove
 #include "mrt.h"
 #include "rt_error.h"
 #include "libft.h"
+#include <stdio.h> // remove
 
-// add simpler file reading - remove gnl
-/*
-	-[x] multiple spaces/tabs between fields
-	-[x] blank lines
-	-[x] any element order
-	-[x] A	| ratio				| rgb
-	-[x] C	| pos	| dir		| fov
-	-[x] L	| pos	| bright	| rgb
-	-[x] sp	| pos	| diameter	| rgb
-	-[x] pl	| pos	| normal	| rgb
-	-[x] cy	| pos	| axis		| diameter	| height	| rgb
+static int	parse_line(t_scene *s, char *line, int line_num);
+static int	validate_scene(t_scene *s);
+static char	*sanitize_line(char *s);
 
-	- validate
-	-[x] ratios [0..1]
-	-[x] FOV [0..180]
-	-[x] colors [0..255]
-	-[x] normals/orientation components in [-1..1] + length
-	-[x] positive diameter/height
-	-[x] only once of A/C/L
-*/
-/**
- * @brief
- * 
- */
-static int	has_rt_ext(const char *s)
+// filename for error
+int	load_scene(int fd, t_scene *s)
 {
-	size_t	i;
-
-	i = ft_strlen(s);
-	if (i < 3)
-		return (0);
-	if (s[i - 3] == '.' && s[i - 2] == 'r' && s[i - 1] == 't')
-		return (1);
-	return (0);
-}
-
-static int	parse_lines(t_scene *s, char *line, int line_num)
-{
-	char	**tokens;
-	int		result;
-	
-	if (!line || line[0] == '\n' || line[0] == '#')
-		return (0);
-	tokens = ft_split(line, ' ');
-	if(!tokens)
-		return (rt_error_log(E_SYS, NULL, 0, NULL));
-	result = 0;
-	if (!tokens[0]) 
-		result = E_FILE_EMPTY;
-	else if (tokens[0][0] == 'A' && tokens[0][1] == '\0')
-		result = parse_ambient(s, tokens);
-	else if (tokens[0][0] == 'C' && tokens[0][1] == '\0')
-		result = parse_camera(s, tokens);
-	else if (tokens[0][0] == 'L' && tokens[0][1] == '\0')
-		result = parse_light(s, tokens);
-	else if (tokens[0][0] == 's' && tokens[0][1] == 'p' && tokens[0][2] == '\0')
-		result = parse_sphere(s, tokens);
-	else if (tokens[0][0] == 'p' && tokens[0][1] == 'l' && tokens[0][2] == '\0')
-		result = parse_plane(s, tokens);
-	else if (tokens[0][0] == 'c' && tokens[0][1] == 'y' && tokens[0][2] == '\0')
-		result =  parse_cylinder(s, tokens);
-	else
-		result = E_PARSE_UNKNOWN_ID;
-	if (result)
-		rt_error_log(result, NULL, line_num, tokens[0]);
-	free_array(tokens);
-	return (result);
-}
-
-static int	validate_scene(t_scene *s)
-{
-	if (!s->has_ambient)
-		rt_error_log(E_PARSE_MISSING_TOKEN, MSG_MISSING_A, 0, NULL);
-	else if (!s->has_camera)
-		rt_error_log(E_PARSE_MISSING_TOKEN, MSG_MISSING_C, 0, NULL);
-	else if (!s->has_light)
-		rt_error_log(E_PARSE_MISSING_TOKEN, MSG_MISSING_L, 0, NULL);
-	else
-		return (0);
-	return (1);
-}
-
-static	int parse_open_file(const char *file_name, int *fd)
-{
-	
-	if (!has_rt_ext(file_name))
-	{
-		rt_error_msg(MSG_FILE_EXT);
-		return (E_FILE_EXT);
-	}
-	*fd = open(file_name, O_RDONLY);
-	if (*fd < 0)
-	{
-		rt_error_msg(strerror(errno));
-		return (E_SYS);
-	}
-	return (0);
-}
-
-int	parse_file(const char *path, t_scene *s)
-{
-	int		fd;
 	char	*line;
 	int		line_no;
 	int		err;
 
-	if (parse_open_file(path, &fd) != 0)
-		return (1);
-	line_no = 0;
-	line = get_next_line(fd);
-	err = 0;
-	while (line)
+	ft_bzero(s, sizeof(*s));
+	line_no = 1;
+	while (true)
 	{
-		line_no++;
-		if (err == 0)
-			err = parse_lines(s, line, line_no); // verify if gnl is freed on only return
-		free(line);
 		line = get_next_line(fd);
+		if (!line)
+			break ;
+		line = sanitize_line(line);
+		if (!line)
+			continue ;
+		err = parse_line(s, line, line_no);
+		if (err != E_OK)
+		{
+			// add to print_parse_errror
+			printf(C_ULINE"   -->  [%s]\n"C_RESET, line);
+			free(line);
+			break ;
+		}
+		line_no++;
+		free(line);
 	}
 	close(fd);
-	if (err != E_OK || validate_scene(s) != 0)
-	{
+	if (!err)
+		err = validate_scene(s);
+	if (err != E_OK)
 		scene_clear(s);
-		return (err);
+	return (err);
+}
+
+static int	parse_line(t_scene *s, char *line, int line_num)
+{
+	char	**tokens;
+	int		err;
+
+	err = E_OK;
+	tokens = ft_split_ws(line);
+	if (!tokens)
+		return (rt_error_msg(strerror(errno)));
+	else if (tokens[0][0] == 'A' && tokens[0][1] == '\0')
+		err = parse_ambient(s, tokens);
+	else if (tokens[0][0] == 'C' && tokens[0][1] == '\0')
+		err = parse_camera(s, tokens);
+	else if (tokens[0][0] == 'L' && tokens[0][1] == '\0')
+		err = parse_light(s, tokens);
+	else if (tokens[0][0] == 's' && tokens[0][1] == 'p' && tokens[0][2] == '\0')
+		err = parse_sphere(s, tokens);
+	else if (tokens[0][0] == 'p' && tokens[0][1] == 'l' && tokens[0][2] == '\0')
+		err = parse_plane(s, tokens);
+	else if (tokens[0][0] == 'c' && tokens[0][1] == 'y' && tokens[0][2] == '\0')
+		err = parse_cylinder(s, tokens);
+	else
+		err = RT_ERR_ID;
+	if (err != E_OK)
+		print_parse_err(line_num, tokens[0], err);
+	free_array(tokens);
+	return (err);
+}
+
+//else if () "too many lights"
+static int	validate_scene(t_scene *s)
+{
+	if (!s->has_ambient)
+	{
+		print_parse_err(0, C_RED"[!] -> [A]"C_RESET, RT_ERR_MISSING);
+		return (RT_ERR_MISSING);
+	}
+	if (!s->has_camera)
+	{
+		print_parse_err(0, C_RED"[!]-> [C]"C_RESET, RT_ERR_MISSING);
+		return (RT_ERR_MISSING);
+	}
+	if (!s->has_light)
+	{
+		print_parse_err(0, C_RED"[!] -> [L]"C_RESET, RT_ERR_MISSING);
+		return (RT_ERR_MISSING);
 	}
 	return (0);
 }
+
+static char	*sanitize_line(char *s)
+{
+	size_t	i;
+
+	// if (!s)
+	// 	return (NULL);
+	i = 0;
+	while (s[i] && s[i] != '\n')
+		i++;
+	if (s[i] == '\n')
+		s[i] = '\0';
+	i = 0;
+	if (s[i] == '#')
+		s[i] = '\0';
+	i = ft_strlen(s);
+	while (i > 0 && ft_isspace((unsigned char)s[i - 1]))
+		s[--i] = '\0';
+	if (!ft_stris_ws(s))
+	{
+		free(s);
+		return (NULL);
+	}
+	return (s);
+}
+
+// const t_parse_entry	*rt_find_entry(const char *id)
+// {
+// 	static const t_parse_entry	table[] = {
+// 		{"A",  parse_ambient},
+// 		{"C",  parse_camera},
+// 		{"L",  parse_light},
+// 		{"sp", parse_sphere},
+// 		{"pl", parse_plane},
+// 		{"cy", parse_cylinder},
+// 		{NULL, NULL}
+// 	};
+// 	int	i;
+// 
+// 	i = 0;
+// 	while (table[i].id)
+// 	{
+// 		if (ft_strncmp(table[i].id, id, ft_strlen(id)) == 0)
+// 			return (&table[i]);
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
+

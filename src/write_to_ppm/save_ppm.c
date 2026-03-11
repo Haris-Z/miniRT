@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 18:37:39 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 16:55:38 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:51:21 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	save_to_ppm(const char *path, const t_rt_img *img)
 
 	if (!path || !img || !img->addr || img->img_w <= 0 || img->img_h <= 0)
 		return (1);
-	// factor out to extra func
+	// [ factor out to extra func --> create_file_path() from here
 	char				buf[512];
 	char				*start;
 	char				*usec;
@@ -73,6 +73,7 @@ int	save_to_ppm(const char *path, const t_rt_img *img)
 	ft_strlcat(buf, usec, sizeof buf);
 	free(usec);
 	ft_strlcat(buf, ".ppm", sizeof buf);
+	// to here ]
 
 	fd = open((const char *)buf, O_CREAT | O_TRUNC | O_RDWR , 0644); //-rw-r--r--
 	if (fd < 0)
@@ -81,6 +82,7 @@ int	save_to_ppm(const char *path, const t_rt_img *img)
 		return (1);
 	}
 	write_ppm_header(img->img_w, img->img_h, fd);
+	// [ factor out from here -- > func_name()
 	bpp = img->bpp / 8;
 	y = -1;
 	while (++y < img->img_h)
@@ -100,6 +102,7 @@ int	save_to_ppm(const char *path, const t_rt_img *img)
 			}
 		}
 	}
+	// ] to here
 	close(fd);
 	ft_putstr_fd("created: ", 1);
 	ft_putendl_fd((char *)buf, 1);

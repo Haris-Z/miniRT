@@ -114,23 +114,28 @@ ERROR := \
 		error/rt_error.c
 
 PARSE := \
-		parse/parse_amb.c \
-		parse/parse_cam.c \
 		parse/parse_file.c \
-		parse/parse_light.c \
-		parse/parse_num.c \
+		parse/parse_elem.c \
 		parse/parse_obj.c \
-		parse/parse_utils.c
+		parse/parse_utils.c \
+		parse/file_open.c
 
 RENDER := \
 		render/intersections.c \
+		render/hit_cy.c \
+		render/cy_utils.c \
+		render/hit_utils.c \
 		render/viewport.c \
 		render/rays.c
 
 B_RENDER := \
 		render/intersections.c \
+		render/hit_cy.c \
+		render/cy_utils.c \
+		render/hit_utils.c \
 		render/viewport_bonus.c \
 		render/rays_bonus.c
+
 RT := \
 		rt/rt_events.c \
 		rt/rt_img.c \
@@ -154,7 +159,8 @@ PPM := \
 		write_to_ppm/save_ppm.c
 
 DPRINTS := \
-			debug/prints.c
+			debug/prints.c \
+			debug/print_scene.c
 
 SRCS := \
 		test_main.c \

@@ -35,32 +35,7 @@ t_color	mix_color(t_color ambient, t_color *diffuse, t_color *specular, int num)
 	return (res);
 }
 
-// t_color	compute_color(t_rt_mlx vars, t_ray ray, t_obj **items)
-// {
-// 	t_color	ambientColor;
-// 	t_color	diffuseColor;
-// 	double	lightAngle;
-// 	t_vec3	point;
-// 	t_vec3	surfaceNormal;
-// 	t_vec3	reflectionV;
-// 	double	shining;
-
-// 	ambientColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, vars.cam.ambient.ratio);
-// 	lightAngle = get_light_angle(vars.cam.pos, ray, vars.cam.light.pos, *items);
-// 	if (lightAngle < 0)
-// 		return (ambientColor);
-// 	point = vec_add(vars.cam.pos, vec_scale(ray.direction, ray.dist));
-// 	surfaceNormal = get_surface_normal(point, ray.closestitem);
-// 	reflectionV = get_reflection_v(vec_norm(vec_sub(vars.cam.light.pos, point)), surfaceNormal);
-// 	diffuseColor = scale_color(ambientColor, ray.closestitem->color, lightAngle * vars.cam.light.bright);
-// 	shining = vec_dot(reflectionV, ray.direction);
-// 	(void)diffuseColor;
-// 	if (shining < 0)
-// 		return (scale_color(color_rgb(0, 0, 0), color_rgb(255, 255, 255), pow(shining,12) * vars.cam.light.bright));
-// 	else
-// 		return color_rgb(0, 0, 0);
-// }
-t_color	compute_color(t_rt_mlx vars, t_ray ray, t_obj **items)
+t_color	compute_color(t_rt_mlx vars, t_ray ray, t_object *items, int n)
 {
 	t_color	ambientColor;
 	t_color	diffuseColor;
@@ -73,7 +48,7 @@ t_color	compute_color(t_rt_mlx vars, t_ray ray, t_obj **items)
 
 	ambientColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, vars.cam.ambient.ratio);
 	ambientColor = vec_mul(ambientColor, vars.cam.ambient.color);
-	lightAngle = get_light_angle(vars.cam.pos, ray, vars.cam.light.pos, *items);
+	lightAngle = get_light_angle(vars.cam.pos, ray, vars.cam.light.pos, items, n);
 	if (lightAngle < 0)
 	{
 		diffuseColor = color_rgb(0, 0, 0);
@@ -84,7 +59,7 @@ t_color	compute_color(t_rt_mlx vars, t_ray ray, t_obj **items)
 		diffuseColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, lightAngle * vars.cam.light.bright);
 		diffuseColor = vec_mul(diffuseColor, vars.cam.light.color);
 		point = vec_add(vars.cam.pos, vec_scale(ray.direction, ray.dist));
-		surfaceNormal = get_surface_normal(point, ray.closestitem);
+		surfaceNormal = get_surface_normal(point, ray.direction, ray.closestitem);
 		reflectionV = get_reflection_v(vec_norm(vec_sub(vars.cam.light.pos, point)), surfaceNormal);
 		shining = vec_dot(reflectionV, ray.direction);
 	}

@@ -6,22 +6,13 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:09:01 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:20:34 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:22:45 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <errno.h>
-#include <string.h>
-
-//#include "mrt.h"
-
-#include "libft.h"
+#include "mrt.h"
 #include "rt_error.h"
-
-
-static const char	*rt_strerror(t_eflag e);
-static void			rt_parse_err(int i, char *msg, char *arg);
+#include "parse.h"
 
 int	rt_error_msg(const char *msg)
 {
@@ -32,106 +23,116 @@ int	rt_error_msg(const char *msg)
 	return (1);
 }
 
-/**
- * @brief 
- * 
- * @param code 
- * @param msg 
- * @param i 
- * @return int
- * @todo split function - check for msg NULL arg NULL
- */
-int	rt_error_log(int code, const char *msg, int i, char *arg)
+const char	*rt_file_strerror(t_rt_err err)
 {
-	if (code > E_PARSE_BASE && code < E_PARSE_END)
+	if (err == RT_ERR_ARG)
+		return ("Invalid argument");
+	if (err == RT_ERR_USAGE)
+		return ("Usage: ./miniRT < file_name.rt >");
+	if (err == RT_ERR_EXT)
+		return ("File extension must be [ .rt ]");
+	if (err == RT_ERR_OPEN)
+		return ("Can't open file");
+	if (err == RT_ERR_READ)
+		return ("Can't read file");
+	if (err == RT_ERR_EMPTY)
+		return ("File is empty");
+	if (err == RT_ERR_MALLOC)
+		return ("Out of Memory");
+	return ("Unknown error");
+}
+// print_file_error
+void	rt_print_error(const char *path, t_rt_err err, const t_rt_file *f)
+{
+	ft_putstr_fd(C_BOLD C_RED "Error\n" C_RESET, STDERR_FILENO);
+	ft_putstr_fd(C_RESET, 2);
+	ft_putstr_fd((char *)rt_file_strerror(err), STDERR_FILENO);
+	if (path)
 	{
-		rt_parse_err(i, (char *)rt_strerror(code), arg);
-		if (msg)
-			ft_putendl_fd((char *)msg,2);
-		ft_putstr_fd("\n", 2);
-		return (code);
+		ft_putstr_fd(": --> [", STDERR_FILENO);
+		ft_putstr_fd(C_DIM, STDERR_FILENO);
+		ft_putstr_fd((char *)path, STDERR_FILENO);
+		ft_putstr_fd(C_RESET, STDERR_FILENO);
+		ft_putstr_fd("]", STDERR_FILENO);
 	}
-	if (code > E_RT_BASE && code < E_RT_END)
+	if (f && f->sys_errno != 0)
 	{
-		ft_putendl_fd((char *)MSG_ERROR, 2);
-		ft_putstr_fd("[RT]: ", 2);
-		ft_putendl_fd((char *)rt_strerror(code), 2);
-		return(code);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(C_BOLD C_ULINE, STDERR_FILENO);
+		ft_putstr_fd((char *)strerror(f->sys_errno), STDERR_FILENO);
+		ft_putstr_fd(C_RESET, STDERR_FILENO);
 	}
-	if (code == E_SYS)
-	{
-		ft_putendl_fd((char *)MSG_ERROR, 2);
-		ft_putstr_fd("[SYS]: ", 2);
-		ft_putendl_fd(strerror(errno), 2);
-		return (code);
-	}
-	rt_error_msg((char *)msg);
-	return (code);
+	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-static void	rt_parse_err(int i, char *msg, char *arg)
+const char	*rt_parse_strerror(int err)
 {
-	ft_putstr_fd(MSG_ERROR, 2);
-	ft_putstr_fd("[PARSE]: ", 2);
-	if (i)
-	{
-		ft_putstr_fd("Line ", 2);
-		ft_putnbr_fd(i, 2);
-		ft_putstr_fd(": ", 2);
-		if (arg)
-		{
-			ft_putstr_fd("(", 2);
-			ft_putstr_fd(arg, 2);
-			ft_putstr_fd(") ", 2);
-		}
-	}
-	if (msg)
-		ft_putstr_fd(msg, 2);
+	if (err == RT_ERR_MALLOC)
+		return ("Out of Memory");
+	if (err == RT_ERR_TOK)
+		return ("Unexpected line format");
+	if (err == RT_ERR_ID)
+		return ("Unknown ID");
+	if (err == RT_ERR_DUP)
+		return ("Duplicate Element");
+	if (err == RT_ERR_FORMAT)
+		return ("Invalid line format");
+
+	if (err == RT_ERR_FORMAT_LIGHT)
+		return ("Invalid line format\nExpected:\nId\tPos \
+		Brightness\tColors\nL\t-40,0,30\t0.7\t\t\t255,255,255\n");
+	if (err == RT_ERR_MISSING)
+		return ("Missing Element Identifier - expected at least A, C, L");
+
+	if (err == RT_ERR_BAD_INT)
+		return ("Invalid integer value");
+	if (err == RT_ERR_BAD_FLOAT)
+		return ("Invalid float value");
+	if (err == RT_ERR_RANGE_COLOR)
+		return ("Color value out of range - expected [0, 255]");
+	if (err == RT_ERR_URANGE)
+		return ("Unit Vector out of Range: [-1,1]");
+	if (err == RT_ERR_UZERO)
+		return ("Unit Vector cannot be zero");
+	if (err == RT_ERR_UNORM)
+		return ("Unit vector must be normalized");
+	if (err == RT_ERR_BAD_RATIO)
+		return ("Bad float ratio - expected [0.0, 1,0]");
+
+	if (err == RT_ERR_RANGE_FOV)
+		return ("FOV out of range - expected [0, 180]");
+
+
+	if (err == RT_ERR_DIAMETER)
+			return ("Diameter should be bigger than 0");
+
+	if (err == RT_ERR_HEIGHT)
+			return ("Height should be bigger than 0");
+	return ("Unknown error");
 }
 
-/**
- * @brief 
- * 
- * @param e 
- * @return const char* 
- */
-static const char	*rt_strerror(t_eflag e)
+void	print_parse_err(int lineno, char *id, int err)//, int sys_errno)
 {
-	const char	*msgs[E_COUNT] = {
-	[E_OK] = "Success",
-	[E_FILE_EXT] = MSG_FILE_EXT, [E_FILE_EMPTY] = MSG_FILE_EMPTY,
-	[E_PARSE_UNKNOWN_ID] = MSG_PARSE_ID,
-	[E_PARSE_FORMAT_C] = MSG_FORMAT_C,
-	[E_PARSE_FORMAT_A] = MSG_FORMAT_A,
-	[E_PARSE_FORMAT_L] = MSG_FORMAT_L,
-	[E_PARSE_FORMAT_SP] = MSG_FORMAT_SP,
-	[E_PARSE_FORMAT_PL] = MSG_FORMAT_PL,
-	[E_PARSE_FORMAT_CY] = MSG_FORMAT_CY,
-	[E_BAD_PARAM] = MSG_SP_D,
-	[E_PARSE_INVALID_LINE] = MSG_INVALID_LINE,
-	[E_PARSE_BAD_FLOAT] = MSG_PARSE_BAD_FLOAT,
-	[E_PARSE_BAD_INT] = MSG_PARSE_BAD_INT,
-	[E_PARSE_BAD_COLOR] = MSG_PARSE_BAD_COLOR,			// "Invalid RGB color for "
-	[E_PARSE_BAD_VEC] = MSG_PARSE_BAD_VEC,		// "Unit vector is zero for "
-	[E_PARSE_BAD_VEC3_NORM] = MSG_PARSE_BAD_NORMAL,		// "Vector must be normalized for "
-	[E_PARSE_BAD_RATIO] = MSG_PARSE_BAD_RATIO,			// "Invalid ratio for "
-	[E_PARSE_BAD_FOV] = MSG_PARSE_BAD_FOV,			// "Camera (C): invalid FOV"
-	[E_PARSE_RANGE_FOV] = MSG_PARSE_BAD_FOV,			// "Camera (C): FOV out of range [0..180]"
-	[E_PARSE_RANGE_RATIO] = MSG_PARSE_BAD_RATIO,		// "Ratio out of range [0..1] for "
-	[E_PARSE_RANGE_COLOR] = MSG_PARSE_BAD_COLOR,		// "RGB out of range for "
-	[E_PARSE_RANGE_VEC3] = MSG_PARSE_BAD_UNIT_VEC,	
-	[E_PARSE_DUPLICATE_A] = MSG_DUPLICATE_A,
-	[E_PARSE_DUPLICATE_C] = MSG_DUPLICATE_C,
-	[E_PARSE_DUPLICATE_L] = MSG_DUPLICATE_L,
-	[E_PARSE_MISSING_TOKEN] = MSG_MISSING_TOKEN,
-	[E_RT_MLX_INIT] = MSG_RT_MLX_INIT,				// "Failed to Initialize mlx."
-	[E_RT_WIN_CREATE] = MSG_RT_WIN_CREATE,			// "Errror\n Failed to initialize mlx_window ... "
-	[E_RT_IMG_CREATE] = MSG_RT_IMG_CREATE,			// "Failed to initialize mlx_image ... "
-	};
-
-	if ((int)e < 0 || e >= E_COUNT)
-		return ("Unknown Error");
-	if (msgs[e] == 0)
-		return ("Unknown error message");
-	return (msgs[e]);
+	ft_putstr_fd(C_BOLD C_RED "Error\n" C_RESET, STDERR_FILENO);
+	ft_putstr_fd(C_RESET, STDERR_FILENO);
+	ft_putstr_fd("Line ", STDERR_FILENO);
+	ft_putnbr_fd(lineno, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	if (id)
+	{
+		ft_putstr_fd("(", STDERR_FILENO);
+		ft_putstr_fd(id, STDERR_FILENO); // eg. (A), (C), (L), (sp), (pl), (cy)
+		ft_putstr_fd("): ", STDERR_FILENO);
+		ft_putstr_fd(C_DIM, STDERR_FILENO);
+		ft_putstr_fd((char *)rt_parse_strerror(err), STDERR_FILENO); // eg. Duplicate ID, MISSING ID, etc...
+		ft_putstr_fd(C_RESET, STDERR_FILENO);
+	}
+	// if (sys_errno)
+	// {
+	// 	ft_putstr_fd(": ", STDERR_FILENO);
+	// 	ft_putstr_fd(C_BOLD C_ULINE, STDERR_FILENO);
+	// 	ft_putstr_fd((char *)strerror(sys_errno), STDERR_FILENO);
+	// 	ft_putstr_fd(C_RESET, STDERR_FILENO);
+	// }
+	ft_putstr_fd("\n", STDERR_FILENO);
 }

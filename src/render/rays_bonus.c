@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   rays_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/26 19:44:28 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/11 23:14:46 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
 #include "rt_error.h"
 
-static void	update_ray_dist(t_cam_rt cam, t_obj *obj, t_ray *ray)
+static void	update_ray_dist(t_cam_rt cam, t_object *obj, t_ray *ray)
 {
 	double	dist;
 
-	dist = 0.0;
-	if (obj->type == OBJ_SPHERE)
+	dist = 0.0; 
+	if (obj->type == SPHERE)
 		dist = hit_sp(cam.pos,
-				ray->direction, &obj->sphere);
-	else if (obj->type == OBJ_PLANE)
+				ray->direction, &obj->shape.sp);
+	else if (obj->type == PLANE)
 		dist = hit_pl(cam.pos,
-				ray->direction, obj->plane);
-	else if (obj->type == OBJ_CYLINDER)
+				ray->direction, obj->shape.pl);
+	else if (obj->type == CYLINDER)
 		dist = hit_cy(cam.pos,
 				ray->direction,
-				&obj->cylinder);
-	if (dist > 0 && (ray->dist == -1.0
+				&obj->shape.cy);
+	if (dist > 0.0 && (ray->dist == -1.0
 			|| dist < ray->dist))
 	{
 		ray->dist = dist;
@@ -52,7 +52,7 @@ t_color	color_mix(t_color *arr, int len)
 }
 #include <stdio.h>
 #include "debug_print.h"
-int	render(t_scene scene_info, t_rt_mlx *app)
+int	render(t_scene *s, t_rt_mlx *app)
 {
 	int		i;
 	int		j;
@@ -64,6 +64,7 @@ int	render(t_scene scene_info, t_rt_mlx *app)
 	double	pixel_start[2];
 	double	pre_calc[4];
 
+	app->cam = cam_init(*s, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!dir_vector_init(&(app->cam)))
 		return (rt_error_msg("malloc\n"), 0);
 	pre_calc[0] = sin(app->cam.vp.horOffset);
@@ -87,10 +88,10 @@ int	render(t_scene scene_info, t_rt_mlx *app)
 				{
 					dir = get_dir_vector(&app->cam, pre_calc);
 					k = -1;
-					while (++k < scene_info.objs_n)
-						update_ray_dist(app->cam, &((*(*app).cam.items)[k]), &dir);
+					while (++k < s->objects_len)
+						update_ray_dist(app->cam, &s->objects_array[k], &dir);
 					if (dir.closestitem)
-						buf[(l * MSAA) + m] = compute_color(*app, dir, app->cam.items);
+						buf[(l * MSAA) + m] = compute_color(*app, dir, s->objects_array, s->objects_len);
 					else
 						buf[(l * MSAA) + m] = color_rgb(0, 0, 0);
 					pre_calc[3] -= app->cam.vp.deltaHorAngle;

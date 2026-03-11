@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:49:27 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:47:08 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int	rt_run(t_rt_mlx *rt)
 	mlx_hook(rt->win, DestroyNotify, StructureNotifyMask, rt_on_destroy, rt);
 	mlx_expose_hook(rt->win, rt_on_expose, rt);
 	mlx_loop(rt->mlx);
-	//rt_destroy(rt);
+	rt_destroy(rt);
 	return (0);
 }

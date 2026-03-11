@@ -6,13 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/06 16:31:52 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:46:12 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
 #include "libft.h"
-
 
 static void clamp_to_screen(void *mlx, int *w, int *h)
 {

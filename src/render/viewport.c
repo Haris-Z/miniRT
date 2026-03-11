@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:52:31 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/08 19:18:24 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/11 22:34:11 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,18 @@
 
 // t_cam_rt	cam_init(t_vec3 pos, t_vec3 orientation, int fov, int screendim[2])
 // light color and dir vector has to be added, also ambient color, or amb.rgb, light.rgb is an int
-t_cam_rt	cam_init(t_scene s, int w, int h)
+t_cam_rt	cam_init(t_scene s, int w, int h) // take W/H from app.w - app.h - function checks boundaries and assigns correct w/h
 {
-	t_cam_rt	cam = {0};
+	t_cam_rt	cam;
 
+	cam = (t_cam_rt){0};
 	cam.orientation = vec_norm(s.cam.dir);
 	cam.pos = s.cam.pos;
 	cam.pixels[0] = w;
 	cam.pixels[1] = h;
-	cam.ambient = s.amb;
+	cam.ambient = s.amb;	// remove this - make function that takes ratio
 	cam.fov = s.cam.fov_deg;
-	cam.light = s.light;
+	cam.light = s.light;	// same here - info doesnt belong to camera
 	return (cam);
 }
 

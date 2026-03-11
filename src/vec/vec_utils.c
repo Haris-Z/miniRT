@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:27:34 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/06 16:26:53 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:50:05 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,9 @@ int	vec_near_zero(t_vec3 v)
 t_vec3	vec_reflect(t_vec3 v, t_vec3 norm)
 {
 	return (vec_sub(v, vec_scale(norm, 2.0 * vec_dot(v, norm))));
+}
+
+t_vec3	reject_axis(t_vec3 v, t_vec3 axis)
+{
+	return (vec_sub(v, vec_scale(axis, vec_dot(v, axis))));
 }
