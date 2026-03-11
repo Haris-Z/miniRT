@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/13 21:52:16 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:11:18 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 
 # include <string.h>
 # include <errno.h>
+# include <stdio.h>
+# include "libft.h"
+# include "parse.h"
+# include "print_colors.h"
 
 // mandatory for Subject
 # define MSG_ERROR "Error\n"
 # define MSG_USAGE "Usage: ./miniRT <../path/to/file.rt>"
-
 // file 
 # define MSG_FILE_EXT "Invalid file extension - expect [.rt]"
 # define MSG_FILE_EMPTY "File is empty"
@@ -35,11 +38,13 @@
 # define MSG_PARSE_ID "Unknown Identifier "
 # define MSG_INVALID_LINE "Invalid format: "
 # define MSG_FORMAT_C " Camera (C): expected 'C x,y,z nx,ny,nz fov' "
-# define MSG_FORMAT_A " Ambient (A): expected 'A ratio (r,g,b)' "
+# define MSG_FORMAT_A "Format: expected 'A ratio (r,g,b)' "
 # define MSG_FORMAT_L " Light (L): expected 'L x,y,z ratio R,G,B'"
 # define MSG_FORMAT_SP "Sphere (sp): expected 'sp x,y,z diameter R,G,B'"
 # define MSG_FORMAT_PL "Plane (pl): expected 'pl x,y,z nx,ny,nz R,G,B'"
 # define MSG_FORMAT_CY "Cylinder (cy): expected 'cy x,y,z nx,ny,nz diameter height R,G,B'"
+//
+# define MSG_DIAMETER " diameter must be > 0"
 # define MSG_SP_D "Sphere (sp): diameter must be > 0"
 // missing scene element
 # define MSG_MISSING_TOKEN "Missing parameter(s) "
@@ -53,16 +58,17 @@
 // validation
 # define MSG_PARSE_BAD_FLOAT "Invalid float "
 # define MSG_PARSE_BAD_INT "Invalid integer "
-
+//
 # define MSG_PARSE_BAD_RATIO "Ratio must be between [0.0,1.0] "
 # define MSG_PARSE_BAD_FOV "FOV must be between 0 and 180 degrees"
-
-# define MSG_PARSE_BAD_VEC "Invalid vector format (expected: x,y,z)"
+//
+# define MSG_PARSE_BAD_VEC "Invalid vector format (expected: px,py,pz)"
+# define MSG_PARSE_BAD_UNIT "Invalid vector format (expected: nx,ny,nz)"
 # define MSG_PARSE_BAD_COLOR "RGB values must be between 0 and 255"
-
+//
 # define MSG_PARSE_BAD_NORMAL "Normal vector must be normalized (length = 1)"
 # define MSG_PARSE_BAD_AXIS "Axis vector must be normalized (length = 1)"
-
+//
 # define MSG_PARSE_BAD_POSITIVE "Value must be positive"
 # define MSG_PARSE_BAD_UNIT_VEC "Vector components must be between -1 and 1"
 // MLX errors
@@ -70,7 +76,45 @@
 # define MSG_RT_WIN_CREATE "Failed to create window "
 # define MSG_RT_IMG_CREATE "Failed to create image "
 
+typedef enum e_rt_err
+{
+	RT_SUCCESS = 0,
+	RT_ERR_MALLOC,
 
+	RT_ERR_ARG,
+	RT_ERR_USAGE,
+	RT_ERR_EXT,
+	
+	RT_ERR_OPEN,
+	RT_ERR_READ,
+	RT_ERR_EMPTY,
+
+	RT_ERR_TOK,
+	RT_ERR_ID,
+	RT_ERR_DUP,
+	RT_ERR_MISSING,
+
+	RT_ERR_FORMAT,
+	RT_ERR_FORMAT_LIGHT,
+	RT_ERR_BAD_INT,
+	RT_ERR_BAD_FLOAT,
+	RT_ERR_BAD_RATIO,
+	RT_ERR_RANGE,
+	RT_ERR_URANGE,
+	RT_ERR_RANGE_COLOR,
+	RT_ERR_UZERO,
+	RT_ERR_UNORM,
+
+	RT_ERR_RANGE_FOV,
+
+
+	RT_ERR_DIAMETER,
+	RT_ERR_HEIGHT
+}	t_rt_err;
+
+typedef struct s_rt_file t_rt_file;
+
+//
 /**
  * @brief	struct containing error codes for miniRT
  * 			corresponding error message defined with prefix MSG 
@@ -79,11 +123,7 @@ typedef enum e_eflag
 {
 	E_OK = 0,					// Success
 	E_SYS,						// Sys errors
-	E_USAGE,					//  "Usage: ./miniRT <../path/to/file.rt>"
 	E_PARSE_BASE,
-	E_FILE_EXT,					// "Invalid file extension - expect [.rt]"
-	E_FILE_EMPTY,				// "File empty .."
-	E_FILE_OPEN,
 	E_PARSE_UNKNOWN_ID,			// 
 	E_PARSE_BAD_FLOAT,
 	E_PARSE_BAD_INT,
@@ -121,23 +161,19 @@ typedef enum e_eflag
 	E_COUNT
 }	t_eflag;
 
-/**
- * @brief 
- * 
- * @param code 
- * @param msg 
- * @param i 
- * @param arg 
- * @return int 
- */
-int	rt_error_log(int code, const char *msg, int i, char *arg);
 
 /**
- * @brief 
+ * @brief
  * 
- * @param msg 
- * @return int 
+ * @param msg
+ * @return int
  */
-int	rt_error_msg(const char *msg);
+int			rt_error_msg(const char *msg);
+
+const char	*rt_file_strerror(t_rt_err err);
+void		rt_print_error(const char *path, t_rt_err err, const t_rt_file *f);
+
+const char	*rt_parse_strerror(int err);
+void		print_parse_err(int lineno, char *id, int err);//, int sys_errno);
 
 #endif // RT_ERROR_H
