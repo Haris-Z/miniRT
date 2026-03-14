@@ -176,11 +176,11 @@ typedef struct s_rt_cam
 {
 	t_vec3		orientation;
 	t_vec3		pos;
-	t_light		light;
+	// t_light		light;
 	t_ray		*rays;
-	int			pixels[2]; // not needed maybe? rt_img->w, rt->h | mlx->w, mlx-h
+	// int			pixels[2]; // not needed maybe? rt_img->w, rt->h | mlx->w, mlx-h
 	double		fov;
-	t_ambient	ambient; // ??
+	// t_ambient	ambient; // ??
 	t_viewport	vp;
 }	t_cam_rt;
 
@@ -285,14 +285,16 @@ int			rt_on_loop(void *param);
 int			save_to_ppm(const char *path, const t_rt_img *img);
 
 // ----------- CAMERA -----------
-t_cam_rt	cam_init(t_scene s, int w, int h);
-void		add_dir_vector_row(t_cam_rt *cam);
+t_cam_rt	cam_init(t_scene s);
+void		add_dir_vector_row(t_cam_rt *cam, int w);
 
 // ----------- SHADER -----------
 t_vec3		get_surface_normal(t_vec3 point, t_vec3 ray_dir, t_object *item);
 t_vec3		get_reflection_v(t_vec3 surfaceToLight, t_vec3 surfaceNormal);
-t_color		compute_color(t_rt_mlx vars, t_ray ray,
-			t_object *objs, int n);
+// t_color		compute_color(t_rt_mlx vars, t_ray ray,
+// 			t_object *objs, int n);
+t_color	compute_color(t_scene s, t_ray ray);
+
 
 // ----------- MINI -----------
 
@@ -312,7 +314,7 @@ double		min_pos(double a, double b);
 // render utils
 int			render(t_scene *scene_info, t_rt_mlx *app);
 t_ray		get_dir_vector(t_cam_rt *cam, double preCalc[4]);
-int			dir_vector_init(t_cam_rt *cam);
+int			dir_vector_init(t_cam_rt *cam, int w, int h);
 double		get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light,
 			t_object *objs, int n);
 t_color		scale_color(t_color min, t_color max, double amount);

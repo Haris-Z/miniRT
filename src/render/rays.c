@@ -19,7 +19,7 @@ static void	update_ray_dist(t_rt_mlx *vars, t_object *obj)
 	double	dist;
 
 	j = -1;
-	while (++j < vars->cam.pixels[0])
+	while (++j < vars->w)
 	{
 		if (obj->type == SPHERE)
 			dist = hit_sp(vars->cam.pos,
@@ -48,23 +48,22 @@ int	render(t_scene *s, t_rt_mlx *app) // pass only obj-array and len
 	int	j;
 	int	k;
 
-	app->cam = cam_init(*s, SCREEN_WIDTH, SCREEN_HEIGHT);
-	if (!dir_vector_init(&(app->cam)))
+	app->cam = cam_init(*s);
+	if (!dir_vector_init(&(app->cam), app->w, app->h))
 		return (rt_error_msg("malloc\n"), 0);
-	printf("deltaH %.6f deltaV %.6f\n", app->cam.vp.deltaVerRange,app->cam.vp.deltaHorAngle);
 	i = -1;
-	while (++i < app->cam.pixels[1])
+	while (++i < app->h)
 	{
-		add_dir_vector_row(&(app->cam));
+		add_dir_vector_row(&(app->cam), app->w);
 		k = -1;
 		while (++k < s->objects_len)
 			update_ray_dist(app, &s->objects_array[k]);
 		j = -1;
-		while (++j < app->cam.pixels[0])
+		while (++j < app->w)
 		{
 			if (app->cam.rays[j].closestitem)
 				app->img.addr[i * app->w + j] = color_to_mlx(
-						compute_color(*app, app->cam.rays[j], s->objects_array, s->objects_len));
+						compute_color(*s, app->cam.rays[j]));
 			// print_vector("	",app->cam.rays[j].direction);
 		}
 	}

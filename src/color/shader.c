@@ -26,18 +26,18 @@ t_color	scale_color(t_color min, t_color max, double amount)
 	return (res);
 }
 
-t_color	compute_color(t_rt_mlx vars, t_ray ray, t_object *items, int n)
+t_color	compute_color(t_scene s, t_ray ray)
 {
 	t_color	ambient_color;
 	t_color	diffuse_color;
 	double	light_angle;
 
-	ambient_color = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, vars.cam.ambient.ratio);
-	ambient_color = vec_mul(ambient_color, vars.cam.ambient.color);
-	light_angle = get_light_angle(vars.cam.pos, ray, vars.cam.light.pos, items, n);
+	ambient_color = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, s.amb.ratio);
+	ambient_color = vec_mul(ambient_color, s.amb.color);
+	light_angle = get_light_angle(s.cam.pos, ray, s.light.pos, s.objects_array, s.objects_len);
 	if (light_angle < 0)
 		return (ambient_color);
 	diffuse_color = scale_color(ambient_color,
-			ray.closestitem->color, light_angle * vars.cam.light.bright);
+			ray.closestitem->color, light_angle * s.light.bright);
 	return (diffuse_color);
 }
