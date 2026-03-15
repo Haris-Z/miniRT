@@ -68,28 +68,6 @@ typedef struct s_ambient
 	t_color	color;
 }	t_ambient;
 
-typedef struct s_camera
-{
-	t_vec3	pos;
-	t_vec3	dir;
-	double	fov_deg;
-}	t_camera;
-
-typedef struct s_light
-{
-	t_vec3	pos;
-	double	bright;
-	t_color	color;
-	int		rgb;
-}	t_light;
-
-// typedef struct s_scene_elements
-// {
-// 	t_ambient	amb;
-// 	t_camera	cam;
-// 	t_light		light[MAX_LIGHTS];
-// }	t_elements;
-
 typedef struct s_sphere
 {
 	t_vec3	center;
@@ -137,19 +115,6 @@ typedef struct s_object
 }	t_object;
 	//int	idx?;
 
-typedef struct s_scene
-{
-	int			has_light;
-	int			has_ambient;
-	int			has_camera;
-	t_ambient	amb;
-	t_camera	cam;
-	t_light		light;
-	t_object	*objects_array;	// make object stack?
-	int			objects_len;	// used mem
-	int			objects_cap;	// allocated
-}	t_scene;
-
 // ----------- CAMERA -----------
 
 typedef struct s_ray
@@ -172,17 +137,51 @@ typedef struct s_viewport
 	t_mat3	rotationM;
 }	t_viewport;
 
-typedef struct s_rt_cam
+typedef struct s_camera
 {
-	t_vec3		orientation;
 	t_vec3		pos;
-	// t_light		light;
+	t_vec3		dir;
+	double		fov_deg;
 	t_ray		*rays;
-	// int			pixels[2]; // not needed maybe? rt_img->w, rt->h | mlx->w, mlx-h
-	double		fov;
-	// t_ambient	ambient; // ??
 	t_viewport	vp;
-}	t_cam_rt;
+}	t_camera;
+
+typedef struct s_light
+{
+	t_vec3	pos;
+	double	bright;
+	t_color	color;
+	int		rgb;
+}	t_light;
+
+// typedef struct s_scene_elements
+// {
+// 	t_ambient	amb;
+// 	t_camera	cam;
+// 	t_light		light[MAX_LIGHTS];
+// }	t_elements;
+
+
+typedef struct s_scene
+{
+	int			has_light;
+	int			has_ambient;
+	int			has_camera;
+	t_ambient	amb;
+	t_camera	cam;
+	t_light		light;
+	t_object	*objects_array;	// make object stack?
+	int			objects_len;	// used mem
+	int			objects_cap;	// allocated
+}	t_scene;
+
+
+// typedef struct s_rt_cam
+// {
+// 	t_vec3		orientation;
+// 	t_vec3		pos;
+// 	double		fov;
+// }	t_cam_rt;
 
 // ----------- MLX / IMAGE -----------
 
@@ -203,7 +202,7 @@ typedef struct s_rt_mlx
 	void		*mlx;
 	void		*win;
 	t_rt_img	img; // colors
-	t_cam_rt	cam; // t_vars colors
+	t_camera	cam; // t_vars colors
 	int			w;
 	int			h;
 }	t_rt_mlx;
@@ -285,8 +284,8 @@ int			rt_on_loop(void *param);
 int			save_to_ppm(const char *path, const t_rt_img *img);
 
 // ----------- CAMERA -----------
-t_cam_rt	cam_init(t_scene s);
-void		add_dir_vector_row(t_cam_rt *cam, int w);
+t_camera	cam_init(t_scene s);
+void		add_dir_vector_row(t_camera *cam, int w);
 
 // ----------- SHADER -----------
 t_vec3		get_surface_normal(t_vec3 point, t_vec3 ray_dir, t_object *item);
@@ -313,11 +312,11 @@ double		min_pos(double a, double b);
 
 // render utils
 int			render(t_scene *scene_info, t_rt_mlx *app);
-t_ray		get_dir_vector(t_cam_rt *cam, double preCalc[4]);
-int			dir_vector_init(t_cam_rt *cam, int w, int h);
+t_ray		get_dir_vector(t_camera *cam, double preCalc[4]);
+int			dir_vector_init(t_camera *cam, int w, int h);
 double		get_light_angle(t_vec3 oPoint, t_ray ray, t_vec3 light,
 			t_object *objs, int n);
 t_color		scale_color(t_color min, t_color max, double amount);
-void		kill_cam(t_cam_rt	*cam);
+void		kill_cam(t_camera	*cam);
 
 #endif // MRT_H

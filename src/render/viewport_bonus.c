@@ -13,23 +13,7 @@
 #include <stdio.h>
 #include "mrt.h"
 
-// t_cam_rt	cam_init(t_vec3 pos, t_vec3 orientation, int fov, int screendim[2])
-// light color and dir vector has to be added, also ambient color, or amb.rgb, light.rgb is an int
-t_cam_rt	cam_init(t_scene s, int w, int h)
-{
-	t_cam_rt	cam = {0};
-
-	cam.orientation = vec_norm(s.cam.dir);
-	cam.pos = s.cam.pos;
-	cam.pixels[0] = w;
-	cam.pixels[1] = h;
-	cam.ambient = s.amb;
-	cam.fov = s.cam.fov_deg;
-	cam.light = s.light;
-	return (cam);
-}
-
-t_ray	get_dir_vector(t_cam_rt *cam, double preCalc[4])
+t_ray	get_dir_vector(t_camera *cam, double preCalc[4])
 {
 	double	pre_rot_x;
 	t_ray	res;
@@ -65,18 +49,18 @@ static void	get_matrix(t_mat3 *mat, t_vec3 orientation)
 					+ (orientation.y * orientation.y))));
 }
 
-int	dir_vector_init(t_cam_rt *cam)
+int	dir_vector_init(t_camera *cam, int w, int h)
 {
-	cam->vp.focalLength = (double)powf(180.0 / cam->fov, FOCAL_SCALE_EXP);
-	cam->vp.horRange = asin(sin(cam->fov / (2 * RADIAN)) / cam->vp.focalLength);
+	cam->vp.focalLength = (double)powf(180.0 / cam->fov_deg, FOCAL_SCALE_EXP);
+	cam->vp.horRange = asin(sin(cam->fov_deg / (2 * RADIAN)) / cam->vp.focalLength);
 	cam->vp.focusDist = (cos(cam->vp.horRange) * cam->vp.focalLength)
-		- (cos(cam->fov / (RADIAN * 2)));
-	cam->vp.deltaHorAngle = (2 * cam->vp.horRange) / (cam->pixels[0] * MSAA);
-	if (fabs(cam->orientation.x) < EPSILON)
-		cam->orientation.x += 2 * EPSILON;
+		- (cos(cam->fov_deg / (RADIAN * 2)));
+	cam->vp.deltaHorAngle = (2 * cam->vp.horRange) / (w * MSAA);
+	if (fabs(cam->dir.x) < EPSILON)
+		cam->dir.x += 2 * EPSILON;
 	cam->vp.verRange = (cam->vp.horRange * SCREEN_HEIGHT) / SCREEN_WIDTH;
-	cam->vp.deltaVerRange = (cam->vp.verRange * 2) / (cam->pixels[1] * MSAA);
-	cam->vp.horOffset = atan2(cam->orientation.y, cam->orientation.x);
-	get_matrix(&cam->vp.rotationM, cam->orientation);
+	cam->vp.deltaVerRange = (cam->vp.verRange * 2) / (h * MSAA);
+	cam->vp.horOffset = atan2(cam->dir.y, cam->dir.x);
+	get_matrix(&cam->vp.rotationM, cam->dir);
 	return (1);
 }

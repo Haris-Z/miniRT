@@ -48,7 +48,7 @@ int	render(t_scene *s, t_rt_mlx *app) // pass only obj-array and len
 	int	j;
 	int	k;
 
-	app->cam = cam_init(*s);
+	app->cam = s->cam;
 	if (!dir_vector_init(&(app->cam), app->w, app->h))
 		return (rt_error_msg("malloc\n"), 0);
 	i = -1;

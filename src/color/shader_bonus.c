@@ -35,7 +35,7 @@ t_color	mix_color(t_color ambient, t_color *diffuse, t_color *specular, int num)
 	return (res);
 }
 
-t_color	compute_color(t_rt_mlx vars, t_ray ray, t_object *items, int n)
+t_color	compute_color(t_scene s, t_ray ray)
 {
 	t_color	ambientColor;
 	t_color	diffuseColor;
@@ -46,9 +46,9 @@ t_color	compute_color(t_rt_mlx vars, t_ray ray, t_object *items, int n)
 	t_vec3	reflectionV;
 	double	shining;
 
-	ambientColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, vars.cam.ambient.ratio);
-	ambientColor = vec_mul(ambientColor, vars.cam.ambient.color);
-	lightAngle = get_light_angle(vars.cam.pos, ray, vars.cam.light.pos, items, n);
+	ambientColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, s.amb.ratio);
+	ambientColor = vec_mul(ambientColor, s.amb.color);
+	lightAngle = get_light_angle(s.cam.pos, ray, s.light.pos, s.objects_array, s.objects_len);
 	if (lightAngle < 0)
 	{
 		diffuseColor = color_rgb(0, 0, 0);
@@ -56,17 +56,17 @@ t_color	compute_color(t_rt_mlx vars, t_ray ray, t_object *items, int n)
 	}
 	else
 	{
-		diffuseColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, lightAngle * vars.cam.light.bright);
-		diffuseColor = vec_mul(diffuseColor, vars.cam.light.color);
-		point = vec_add(vars.cam.pos, vec_scale(ray.direction, ray.dist));
+		diffuseColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, lightAngle * s.light.bright);
+		diffuseColor = vec_mul(diffuseColor, s.light.color);
+		point = vec_add(s.cam.pos, vec_scale(ray.direction, ray.dist));
 		surfaceNormal = get_surface_normal(point, ray.direction, ray.closestitem);
-		reflectionV = get_reflection_v(vec_norm(vec_sub(vars.cam.light.pos, point)), surfaceNormal);
+		reflectionV = get_reflection_v(vec_norm(vec_sub(s.light.pos, point)), surfaceNormal);
 		shining = vec_dot(reflectionV, ray.direction);
 	}
 	if (shining > 0)
 		specularColor = color_rgb(0, 0, 0);
 	else
-		specularColor = scale_color(color_rgb(0, 0, 0), vars.cam.light.color, (double)powf(shining, SHINE) * vars.cam.light.bright);
+		specularColor = scale_color(color_rgb(0, 0, 0), s.light.color, (double)powf(shining, SHINE) * s.light.bright);
 	(void)shining;
 	(void)diffuseColor;
 	(void)reflectionV;

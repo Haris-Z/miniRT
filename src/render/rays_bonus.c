@@ -13,7 +13,7 @@
 #include "mrt.h"
 #include "rt_error.h"
 
-static void	update_ray_dist(t_cam_rt cam, t_object *obj, t_ray *ray)
+static void	update_ray_dist(t_camera cam, t_object *obj, t_ray *ray)
 {
 	double	dist;
 
@@ -64,19 +64,19 @@ int	render(t_scene *s, t_rt_mlx *app)
 	double	pixel_start[2];
 	double	pre_calc[4];
 
-	app->cam = cam_init(*s, SCREEN_WIDTH, SCREEN_HEIGHT);
-	if (!dir_vector_init(&(app->cam)))
+	app->cam = s->cam;
+	if (!dir_vector_init(&(app->cam), app->w, app->h))
 		return (rt_error_msg("malloc\n"), 0);
 	pre_calc[0] = sin(app->cam.vp.horOffset);
 	pre_calc[1] = cos(app->cam.vp.horOffset);
 	i = -1;
 	pixel_start[0] = app->cam.vp.verRange;
 	printf("deltaH %.6f deltaV %.6f/n", app->cam.vp.deltaVerRange,app->cam.vp.deltaHorAngle);
-	while (++i < (app->cam.pixels[1]))
+	while (++i < (app->h))
 	{
 		pixel_start[1] = app->cam.vp.horRange;
 		j = -1;
-		while (++j < (app->cam.pixels[0]))
+		while (++j < (app->w))
 		{
 			pre_calc[2] = pixel_start[0];
 			l = -1;
@@ -91,7 +91,7 @@ int	render(t_scene *s, t_rt_mlx *app)
 					while (++k < s->objects_len)
 						update_ray_dist(app->cam, &s->objects_array[k], &dir);
 					if (dir.closestitem)
-						buf[(l * MSAA) + m] = compute_color(*app, dir, s->objects_array, s->objects_len);
+						buf[(l * MSAA) + m] = compute_color(*s, dir);
 					else
 						buf[(l * MSAA) + m] = color_rgb(0, 0, 0);
 					pre_calc[3] -= app->cam.vp.deltaHorAngle;

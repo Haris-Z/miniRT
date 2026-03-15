@@ -15,18 +15,18 @@
 
 // t_cam_rt	cam_init(t_vec3 pos, t_vec3 orientation, int fov, int screendim[2])
 // light color and dir vector has to be added, also ambient color, or amb.rgb, light.rgb is an int
-t_cam_rt	cam_init(t_scene s) // take W/H from app.w - app.h - function checks boundaries and assigns correct w/h
-{
-	t_cam_rt	cam;
+// t_cam_rt	cam_init(t_scene s) // take W/H from app.w - app.h - function checks boundaries and assigns correct w/h
+// {
+// 	t_cam_rt	cam;
 
-	cam = (t_cam_rt){0};
-	cam.orientation = vec_norm(s.cam.dir);
-	cam.pos = s.cam.pos;
-	cam.fov = s.cam.fov_deg;
-	return (cam);
-}
+// 	cam = (t_cam_rt){0};
+// 	cam.orientation = vec_norm(s.cam.dir);
+// 	cam.pos = s.cam.pos;
+// 	cam.fov = s.cam.fov_deg;
+// 	return (cam);
+// }
 
-static void	add_dir_vector(t_cam_rt *cam, double preCalc[3], int i)
+static void	add_dir_vector(t_camera *cam, double preCalc[3], int i)
 {
 	double	pre_rot_x;
 
@@ -48,7 +48,7 @@ static void	add_dir_vector(t_cam_rt *cam, double preCalc[3], int i)
 	preCalc[2] += cam->vp.deltaHorAngle;
 }
 
-void	add_dir_vector_row(t_cam_rt *cam, int w)
+void	add_dir_vector_row(t_camera *cam, int w)
 {
 	int		i;
 	double	pre_calc[3];
@@ -71,21 +71,21 @@ static void	get_matrix(t_mat3 *mat, t_vec3 orientation)
 					+ (orientation.y * orientation.y))));
 }
 
-int	dir_vector_init(t_cam_rt *cam, int w, int h)
+int	dir_vector_init(t_camera *cam, int w, int h)
 {
 	cam->rays = malloc(sizeof(t_ray) * w);
 	if (!cam->rays)
 		return (0);
-	cam->vp.focalLength = (double)powf(180.0 / cam->fov, FOCAL_SCALE_EXP);
-	cam->vp.horRange = asin(sin(cam->fov / (2 * RADIAN)) / cam->vp.focalLength);
+	cam->vp.focalLength = (double)powf(180.0 / cam->fov_deg, FOCAL_SCALE_EXP);
+	cam->vp.horRange = asin(sin(cam->fov_deg / (2 * RADIAN)) / cam->vp.focalLength);
 	cam->vp.focusDist = (cos(cam->vp.horRange) * cam->vp.focalLength)
-		- (cos(cam->fov / (RADIAN * 2)));
+		- (cos(cam->fov_deg / (RADIAN * 2)));
 	cam->vp.deltaHorAngle = (2 * cam->vp.horRange) / w;
-	if (fabs(cam->orientation.x) < EPSILON)
-		cam->orientation.x += 2 * EPSILON;
+	if (fabs(cam->dir.x) < EPSILON)
+		cam->dir.x += 2 * EPSILON;
 	cam->vp.verRange = (cam->vp.horRange * SCREEN_HEIGHT) / SCREEN_WIDTH;
 	cam->vp.deltaVerRange = (cam->vp.verRange * 2) / h;
-	cam->vp.horOffset = atan2(cam->orientation.y, cam->orientation.x);
-	get_matrix(&cam->vp.rotationM, cam->orientation);
+	cam->vp.horOffset = atan2(cam->dir.y, cam->dir.x);
+	get_matrix(&cam->vp.rotationM, cam->dir);
 	return (1);
 }
