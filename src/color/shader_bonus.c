@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shader_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 18:48:09 by agara             #+#    #+#             */
+/*   Updated: 2026/03/16 18:49:53 by agara            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mrt.h"
 
 // ambient : 0			-> itemColor	| userInput
@@ -48,7 +60,10 @@ t_color	compute_color(t_scene s, t_ray ray)
 
 	ambientColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, s.amb.ratio);
 	ambientColor = vec_mul(ambientColor, s.amb.color);
-	lightAngle = get_light_angle(s.cam.pos, ray, s.light.pos, s.objects_array, s.objects_len);
+	
+
+	
+	lightAngle = get_light_angle(s.cam.pos, ray, s.light[0].pos, s.objects_array, s.objects_len);
 	if (lightAngle < 0)
 	{
 		diffuseColor = color_rgb(0, 0, 0);
@@ -56,24 +71,29 @@ t_color	compute_color(t_scene s, t_ray ray)
 	}
 	else
 	{
-		diffuseColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, lightAngle * s.light.bright);
-		diffuseColor = vec_mul(diffuseColor, s.light.color);
+		diffuseColor = scale_color(color_rgb(0, 0, 0), ray.closestitem->color, lightAngle * s.light[0].bright);
+		diffuseColor = vec_mul(diffuseColor, s.light[0].color);
 		point = vec_add(s.cam.pos, vec_scale(ray.direction, ray.dist));
 		surfaceNormal = get_surface_normal(point, ray.direction, ray.closestitem);
-		reflectionV = get_reflection_v(vec_norm(vec_sub(s.light.pos, point)), surfaceNormal);
+		reflectionV = get_reflection_v(vec_norm(vec_sub(s.light[0].pos, point)), surfaceNormal);
 		shining = vec_dot(reflectionV, ray.direction);
 	}
 	if (shining > 0)
 		specularColor = color_rgb(0, 0, 0);
 	else
-		specularColor = scale_color(color_rgb(0, 0, 0), s.light.color, (double)powf(shining, SHINE) * s.light.bright);
-	(void)shining;
-	(void)diffuseColor;
-	(void)reflectionV;
-	(void)specularColor;
-	(void)ambientColor;
-	// return (specularColor);	
+		specularColor = scale_color(color_rgb(0, 0, 0), s.light[0].color, (double)powf(shining, SHINE) * s.light[0].bright);
+
+
+
+		
 	return (mix_color(ambientColor, &diffuseColor, &specularColor, 1));
+
+	// (void)shining;
+	// (void)diffuseColor;
+	// (void)reflectionV;
+	// (void)specularColor;
+	// (void)ambientColor;
+	// return (specularColor);	
 	// if (shining < 0)
 	// 	return (scale_color(,diffuseColor,2.0 / 3.0));
 	// else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_set_elem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:51:49 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:50:31 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 17:57:59 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,15 @@ int	scene_set_camera(t_scene *s, t_camera c)
 */
 int	scene_set_light(t_scene *s, t_light l)
 {
-	if (s->has_light)
+	if (s->light_count == MAX_LIGHTS)
+	{
+		//printf("Max light reached\n");
 		return (1);
-	s->light = l;
+	}
+	// if (s->has_light)
+	// 	return (1);
+	s->light[s->light_count] = l;
 	s->has_light = 1;
+	s->light_count++;
 	return (0);
 }

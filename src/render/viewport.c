@@ -3,28 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:52:31 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:34:11 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 17:32:01 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "mrt.h"
-
-// t_cam_rt	cam_init(t_vec3 pos, t_vec3 orientation, int fov, int screendim[2])
-// light color and dir vector has to be added, also ambient color, or amb.rgb, light.rgb is an int
-// t_cam_rt	cam_init(t_scene s) // take W/H from app.w - app.h - function checks boundaries and assigns correct w/h
-// {
-// 	t_cam_rt	cam;
-
-// 	cam = (t_cam_rt){0};
-// 	cam.orientation = vec_norm(s.cam.dir);
-// 	cam.pos = s.cam.pos;
-// 	cam.fov = s.cam.fov_deg;
-// 	return (cam);
-// }
 
 static void	add_dir_vector(t_camera *cam, double preCalc[3], int i)
 {
@@ -77,7 +64,8 @@ int	dir_vector_init(t_camera *cam, int w, int h)
 	if (!cam->rays)
 		return (0);
 	cam->vp.focalLength = (double)powf(180.0 / cam->fov_deg, FOCAL_SCALE_EXP);
-	cam->vp.horRange = asin(sin(cam->fov_deg / (2 * RADIAN)) / cam->vp.focalLength);
+	cam->vp.horRange = asin(sin(cam->fov_deg
+				/ (2 * RADIAN)) / cam->vp.focalLength);
 	cam->vp.focusDist = (cos(cam->vp.horRange) * cam->vp.focalLength)
 		- (cos(cam->fov_deg / (RADIAN * 2)));
 	cam->vp.deltaHorAngle = (2 * cam->vp.horRange) / w;

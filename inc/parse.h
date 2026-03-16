@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:49:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 21:53:44 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 18:02:32 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PARSER_H
 
 # define DFLT_OBJ_CAP 8
-# define MAX_LIGHTS 5
 # define EXT_RT ".rt"
 # define EXT_LEN 3
 

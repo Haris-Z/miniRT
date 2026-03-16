@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_print.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 19:22:35 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 21:45:11 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 18:00:43 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdio.h>
 # include "mrt.h"
 
-void	print_scene_info(t_scene scene, char *file);
+// void	print_scene_info(t_scene scene, char *file);
 void	print_vector(char *name, t_vec3 v);
 void	printV(t_vec3 a);
 void	printM(t_mat3 a);

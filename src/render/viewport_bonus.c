@@ -6,7 +6,7 @@
 /*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:52:31 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/10 18:25:36 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/16 17:32:22 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ t_ray	get_dir_vector(t_camera *cam, double preCalc[4])
 	res.closestitem = NULL;
 	return (res);
 }
-
-// void	add_dir_vector_row(t_cam_rt *cam)
-// {
-// 	int		i;
-// 	i = -1;
-// 	while (++i < cam->pixels[0])
-// 		add_dir_vector(cam, pre_calc, i);
-//	cam->vp.verRange -= cam->vp.deltaVerRange;
-// }
 
 static void	get_matrix(t_mat3 *mat, t_vec3 orientation)
 {

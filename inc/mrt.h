@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:53:14 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 18:42:31 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@
 # define BOT_CAP 0
 # define TOP_CAP 1
 # define NO_HIT -1.0
+
+//# define BONUS 0
+
+# ifndef MAX_LIGHTS
+#  define MAX_LIGHTS 1
+# endif
+
+// # ifndef MAX_LIGHTS
+// #  define MAX_LIGHTS 5
+// # else
+// #  define MAX_LIGHTS 1
+// # endif //BONUS
 
 # define MSAA 2
 # define FOCAL_SCALE_EXP 5 // 1 to inf
@@ -42,6 +54,9 @@
 
 # include <mlx.h>
 
+// # ifndef BONUS
+// #  define BONUS 0
+// # endif
 // ----------- VECTOR -----------
 typedef struct s_vec3
 {
@@ -160,7 +175,7 @@ typedef struct s_light
 // 	t_camera	cam;
 // 	t_light		light[MAX_LIGHTS];
 // }	t_elements;
-
+//# ifndef BONUS
 
 typedef struct s_scene
 {
@@ -169,12 +184,14 @@ typedef struct s_scene
 	int			has_camera;
 	t_ambient	amb;
 	t_camera	cam;
-	t_light		light;
+	t_light		light[MAX_LIGHTS];
+	size_t		light_count;
 	t_object	*objects_array;	// make object stack?
 	int			objects_len;	// used mem
 	int			objects_cap;	// allocated
 }	t_scene;
 
+//# endif
 
 // typedef struct s_rt_cam
 // {

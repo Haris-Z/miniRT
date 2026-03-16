@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:53 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 23:09:13 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 17:59:52 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 // test_load_scene
 int	main(int argc, char **argv)
 {
+	printf("maxlights %d\n", MAX_LIGHTS);
 	t_rt_file	f;
 	t_scene		scene_info;
 	t_rt_mlx	app;

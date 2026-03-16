@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shader_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:59:32 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:14:41 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 17:34:25 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_vec3	get_surface_normal(t_vec3 point, t_vec3 ray_dir, t_object *item)
 {
 	t_vec3	surface_normal;
 
-	surface_normal = (t_vec3 ){0};
+	surface_normal = (t_vec3){0};
 	if (item->type == SPHERE)
 		surface_normal = vec_norm(vec_sub(point, item->shape.sp.center));
 	else if (item->type == CYLINDER)
