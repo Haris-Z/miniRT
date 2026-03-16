@@ -36,7 +36,7 @@ DEPFLAGS	:= -MMD -MP
 DEBUG	?= 1
 PROFILER ?= 0
 SAN		?= 1
-BONUS ?= 1
+# BONUS ?= 1
 
 DEBUG_STR = OFF
 SAN_STR := OFF
@@ -55,9 +55,9 @@ ifeq ($(PROFILER),1)
 	LDFLAGS += -pg
 endif
 
-ifeq ($(BONUS),1)
-	CFLAGS += -DMAX_LIGHTS=5
-endif
+# ifeq ($(BONUS),1)
+# 	CFLAGS += -DMAX_LIGHTS=5
+# endif
 
 # ifeq ($(BONUS),1)
 # 	CFLAGS += -ggdb3 -O0
@@ -216,9 +216,11 @@ $(NAME): $(LIBFT) $(OBJS)
 	$(MODE_MSG)
 # ============================================================================ #
 
-bonus: $(LIBFT) $(B_OBJS)
-	@$(CC) $(CFLAGS) -DMAX_LIGHTS=5 $(B_OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME) 
+bonus: CFLAGS += -DMAX_LIGHTS=5
+bonus:	$(LIBFT) $(B_OBJS)
+	@$(CC) $(CFLAGS) $(B_OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME) 
 	$(MODE_MSG)
+
 # ============================================================================ #
 # if mlx sources in libs - has to compile per subject
 # $(MLX_LIB):
