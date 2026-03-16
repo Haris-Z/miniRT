@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 22:20:19 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/16 19:47:08 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 20:53:11 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,28 +71,27 @@ static void	pobjects(t_scene scene)
 	t_object	*obj;
 
 	obj = scene.objects_array;
+	
 	i = -1;
 	while (++i < scene.objects_len)//while (++i < scene.objects_len / 2)
 	{
-		printf("  - ");
-		if (obj->type == SPHERE)
+		if (obj[i].type == SPHERE)
 			printf("SP: cxyz(%.2f,%.2f,%.2f)	| r=%.2f\t\t\t\t\t\t\t\t\t| crgb=(%f,%f,%f) |\n",
-				obj->shape.sp.center.x, obj->shape.sp.center.y, obj->shape.sp.center.z,
-				obj->shape.sp.radius, obj->shape.sp.color.x, obj->shape.sp.color.y, obj->shape.sp.color.z
+				obj[i].shape.sp.center.x, obj[i].shape.sp.center.y, obj[i].shape.sp.center.z,
+				obj[i].shape.sp.radius, obj[i].shape.sp.color.x, obj[i].shape.sp.color.y, obj[i].shape.sp.color.z
 				);
-		else if (obj->type == PLANE)
+		else if (obj[i].type == PLANE)
 			printf("PL: pxyz(%.2f,%.2f,%.2f)	| nxyz(%.2f,%.2f,%.2f)\t\t\t\t\t\t| crgb=(%f,%f,%f) |\n",
-					obj->shape.pl.point.x, obj->shape.pl.point.y, obj->shape.pl.point.z,
-					obj->shape.pl.normal.x, obj->shape.pl.normal.y, obj->shape.pl.normal.z, \
-					obj->shape.pl.color.x, obj->shape.pl.color.y, obj->shape.pl.color.z
+					obj[i].shape.pl.point.x, obj[i].shape.pl.point.y, obj[i].shape.pl.point.z,
+					obj[i].shape.pl.normal.x, obj[i].shape.pl.normal.y, obj[i].shape.pl.normal.z, \
+					obj[i].shape.pl.color.x, obj[i].shape.pl.color.y, obj[i].shape.pl.color.z
 				);
-		else if (obj->type == CYLINDER)
+		else if (obj[i].type == CYLINDER)
 			printf("CY: cxyz(%.2f,%.2f,%.2f)	| axyz=(%.2f,%.2f,%.2f) | d=%.2f | h=%.2f\t| crgb=(%f,%f,%f) |\n",
-				obj->shape.cy.center.x, obj->shape.cy.center.y, obj->shape.cy.center.z, \
-				obj->shape.cy.axis.x, obj->shape.cy.axis.y, obj->shape.cy.axis.z, \
-				obj->shape.cy.diameter, obj->shape.cy.height, \
-				obj->shape.cy.color.x, obj->shape.cy.color.y, obj->shape.cy.color.z);
-		obj++;
+				obj[i].shape.cy.center.x, obj[i].shape.cy.center.y, obj[i].shape.cy.center.z, \
+				obj[i].shape.cy.axis.x, obj[i].shape.cy.axis.y, obj[i].shape.cy.axis.z, \
+				obj[i].shape.cy.diameter, obj[i].shape.cy.height, \
+				obj[i].shape.cy.color.x, obj[i].shape.cy.color.y, obj[i].shape.cy.color.z);
 	}
 	print_sep('=', 114);
 	printf("Objects: %d/%d\n", i, scene.objects_len);
