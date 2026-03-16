@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elem.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:02:44 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/16 17:51:47 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/16 19:52:27 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,47 +99,47 @@ int	parse_camera(t_scene *s, char **t)
 // LIGHT
 // id	Pos			Brightness	Colors
 // L	-40,0,30	0.7 		255,255,255
-// int	parse_light(t_scene *s, char **t)
-// {
-// 	t_light	light;
-// 	int		err;
-
-// 	if (!t[1] || !t[2] || !t[3] || t[4])
-// 		return (RT_ERR_FORMAT_LIGHT);
-// 	err = parse_vec3(t[1], &light.pos);
-// 	if (err != RT_SUCCESS)
-// 		return(err);
-// 	if (ft_strtod(t[2], &light.bright) != 0)
-// 		return (RT_ERR_BAD_FLOAT);
-// 	if (light.bright < 0.0 || light.bright > 1.0)
-// 		return (RT_ERR_BAD_RATIO);
-// 	err = parse_color_vec(t[3], &light.color);
-// 	if (err != RT_SUCCESS)
-// 		return (err);
-// 	if (scene_set_light(s, light) != 0)
-// 		return (RT_ERR_DUP);
-// 	return (0);
-// }
-
-
 int	parse_light(t_scene *s, char **t)
 {
-	t_light	light[MAX_LIGHTS];
+	t_light	light;
 	int		err;
 
 	if (!t[1] || !t[2] || !t[3] || t[4])
 		return (RT_ERR_FORMAT_LIGHT);
-	err = parse_vec3(t[1], &light[s->light_count].pos);
+	err = parse_vec3(t[1], &light.pos);
 	if (err != RT_SUCCESS)
 		return(err);
-	if (ft_strtod(t[2], &light[s->light_count].bright) != 0)
+	if (ft_strtod(t[2], &light.bright) != 0)
 		return (RT_ERR_BAD_FLOAT);
-	if (light[s->light_count].bright < 0.0 || light[s->light_count].bright > 1.0)
+	if (light.bright < 0.0 || light.bright > 1.0)
 		return (RT_ERR_BAD_RATIO);
-	err = parse_color_vec(t[3], &light[s->light_count].color);
+	err = parse_color_vec(t[3], &light.color);
 	if (err != RT_SUCCESS)
 		return (err);
-	if (scene_set_light(s, light[s->light_count]) != 0)
-		return (RT_ERR_DUP);
+	if (scene_set_light(s, light) != 0)
+		return (RT_ERR_LIGHT_COUNT);
 	return (0);
 }
+
+
+// int	parse_light(t_scene *s, char **t)
+// {
+// 	t_light	light[MAX_LIGHTS];
+// 	int		err;
+// 
+// 	if (!t[1] || !t[2] || !t[3] || t[4])
+// 		return (RT_ERR_FORMAT_LIGHT);
+// 	err = parse_vec3(t[1], &light[s->light_count].pos);
+// 	if (err != RT_SUCCESS)
+// 		return(err);
+// 	if (ft_strtod(t[2], &light[s->light_count].bright) != 0)
+// 		return (RT_ERR_BAD_FLOAT);
+// 	if (light[s->light_count].bright < 0.0 || light[s->light_count].bright > 1.0)
+// 		return (RT_ERR_BAD_RATIO);
+// 	err = parse_color_vec(t[3], &light[s->light_count].color);
+// 	if (err != RT_SUCCESS)
+// 		return (err);
+// 	if (scene_set_light(s, light[s->light_count]) != 0)
+// 		return (RT_ERR_DUP);
+// 	return (0);
+// }

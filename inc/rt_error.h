@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 23:24:39 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 19:51:40 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef enum e_rt_err
 	RT_ERR_TOK,
 	RT_ERR_ID,
 	RT_ERR_DUP,
+	RT_ERR_LIGHT_COUNT,
 	RT_ERR_MISSING,
 
 	RT_ERR_FORMAT,

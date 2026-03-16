@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 22:20:19 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/16 18:00:36 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/16 19:47:08 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,70 +14,97 @@
 #include "libft.h"
 #include "debug_print.h"
 
-// static void	pelements(t_scene scene);
-// static void	pobjects(t_scene scene);
+/*
+		DELETE BEFORE SUBMISSION, JUST FOR PRINTING IN DEBUG
+*/
 
-// void	print_scene_info(t_scene scene, char *file)
-// {
-// 	printf("========== PARSED SCENE (%s) ===========\n\n", ft_strrchr(file, '/') + 1);
-// 	pelements(scene);
-// 	printf("==========  OBJECTS  ==========\n\n");
-// 	pobjects(scene);
-// }
+static void	pelements(t_scene scene);
+static void	pobjects(t_scene scene);
+static void	print_sep(char c, int len);
 
-// static void	pelements(t_scene scene)
-// {
-// 	printf("==========  ELEMENTS  ==========\n\n");
-// 	if (scene.has_ambient)
-// 		printf("Ambient: ratio=%.2f			| color=(r=%f,g=%f,b=%f)\n \
-// 					| color=%d | colorhex=0x%X\n\n",
-// 			   scene.amb.ratio, \
-// 			   scene.amb.color.x, \
-// 			   scene.amb.color.y, \
-// 			   scene.amb.color.z, color_to_int(scene.amb.color), color_to_int(scene.amb.color));
-// 	if (scene.has_camera)
-// 		printf("Camera:	 pos(x=%.2f,y=%.2f,z=%.2f)	| dir(x=%.2f,y=%.2f,z=%.2f)	| fov=%.1f°\n\n",
-// 			   scene.cam.pos.x, scene.cam.pos.y, scene.cam.pos.z,
-// 			   scene.cam.dir.x, scene.cam.dir.y, scene.cam.dir.z,
-// 			   scene.cam.fov_deg);
-// 	if (scene.has_light)
-// 		printf("Light:	 pos(%.2f,%.2f,%.2f)		| brightness=%.2f		| color=(%f,%f,%f) \n\
-// 									| color=%d | colorhex=0x%X\n",
-// 			   scene.light.pos.x, scene.light.pos.y, scene.light.pos.z,
-// 			   scene.light.bright, \
-// 			   scene.light.color.x, \
-// 			   scene.light.color.y, \
-// 			   scene.light.color.z, \
-// 			   color_to_int(scene.light.color), color_to_int(scene.light.color));
-// }
+void	print_scene_info(t_scene scene, char *file)
+{
+	print_sep('=', 114);
+	printf("PARSED SCENE (%s)\n", ft_strrchr(file, '/') + 1);
+	print_sep('=', 114);
+	printf("ELEMENTS\n");
+	print_sep('=', 114);
+	pelements(scene);
+	print_sep('=', 114);
+	printf("OBJECTS\n");
+	print_sep('=', 114);
+	pobjects(scene);
+}
 
-// static void	pobjects(t_scene scene)
-// {
-// 	int			i;
-// 	t_object	*obj;
+static void	pelements(t_scene scene)
+{
+	size_t	i;
 
-// 	obj = scene.objects_array;
-// 	i = -1;
-// 	while (++i < scene.objects_len / 2)
-// 	{
-// 		printf("  - ");
-// 		if (obj->type == SPHERE)
-// 			printf("SP: cxyz(%.2f,%.2f,%.2f) | r=%.2f | crgb=(%f,%f,%f) |\n",
-// 				obj->shape.sp.center.x, obj->shape.sp.center.y, obj->shape.sp.center.z,
-// 				obj->shape.sp.radius, obj->shape.sp.color.x, obj->shape.sp.color.y, obj->shape.sp.color.z
-// 				);
-// 		else if (obj->type == PLANE)
-// 			printf("PL:  pxyz(%.2f,%.2f,%.2f) | nxyz(%.2f,%.2f,%.2f) | crgb=(%f,%f,%f) |\n",
-// 					obj->shape.pl.point.x, obj->shape.pl.point.y, obj->shape.pl.point.z,
-// 					obj->shape.pl.normal.x, obj->shape.pl.normal.y, obj->shape.pl.normal.z, \
-// 					obj->shape.pl.color.x, obj->shape.pl.color.y, obj->shape.pl.color.z
-// 				);
-// 		else if (obj->type == CYLINDER)
-// 			printf("CY: cxyz(%.2f,%.2f,%.2f) | axyz=(%.2f,%.2f,%.2f) | d=%.2f | h=%.2f | crgb=(%f,%f,%f) |\n",
-// 				obj->shape.cy.center.x, obj->shape.cy.center.y, obj->shape.cy.center.z, \
-// 				obj->shape.cy.axis.x, obj->shape.cy.axis.y, obj->shape.cy.axis.z, \
-// 				obj->shape.cy.diameter, obj->shape.cy.height, \
-// 				obj->shape.cy.color.x, obj->shape.cy.color.y, obj->shape.cy.color.z);
-// 	}
-// 	printf("------\nObjects: %d------\n", i);
-// }
+	if (scene.has_ambient)
+		printf("Ambient: ratio = %.2f\f\r\t\t color = (r=%f,g=%f,b=%f)", scene.amb.ratio, \
+			   scene.amb.color.x, \
+			   scene.amb.color.y, \
+			   scene.amb.color.z);
+	if (scene.has_camera)
+		printf("\n\nCamera:\t pos = (x=%.2f, y=%.2f, z=%.2f)\f\r\t\t dir = (x=%.2f,y=%.2f,z=%.2f)\f\r\t\t fov = %.1f°",
+			   scene.cam.pos.x, scene.cam.pos.y, scene.cam.pos.z,
+			   scene.cam.dir.x, scene.cam.dir.y, scene.cam.dir.z,
+			   scene.cam.fov_deg);
+	printf("\n\n");
+	if (scene.has_light)
+	{
+		i = -1;
+		while (++i < scene.light_count)
+		printf("Light:\t pos(%.2f,%.2f,%.2f) \t | brightness=%.2f \t | color=(%f,%f,%f)\n", \
+			   scene.light[i].pos.x, scene.light[i].pos.y, scene.light[i].pos.z,
+			   scene.light[i].bright, \
+			   scene.light[i].color.x, \
+			   scene.light[i].color.y, \
+			   scene.light[i].color.z \
+			   );
+	}
+}
+
+static void	pobjects(t_scene scene)
+{
+	int			i;
+	t_object	*obj;
+
+	obj = scene.objects_array;
+	i = -1;
+	while (++i < scene.objects_len)//while (++i < scene.objects_len / 2)
+	{
+		printf("  - ");
+		if (obj->type == SPHERE)
+			printf("SP: cxyz(%.2f,%.2f,%.2f)	| r=%.2f\t\t\t\t\t\t\t\t\t| crgb=(%f,%f,%f) |\n",
+				obj->shape.sp.center.x, obj->shape.sp.center.y, obj->shape.sp.center.z,
+				obj->shape.sp.radius, obj->shape.sp.color.x, obj->shape.sp.color.y, obj->shape.sp.color.z
+				);
+		else if (obj->type == PLANE)
+			printf("PL: pxyz(%.2f,%.2f,%.2f)	| nxyz(%.2f,%.2f,%.2f)\t\t\t\t\t\t| crgb=(%f,%f,%f) |\n",
+					obj->shape.pl.point.x, obj->shape.pl.point.y, obj->shape.pl.point.z,
+					obj->shape.pl.normal.x, obj->shape.pl.normal.y, obj->shape.pl.normal.z, \
+					obj->shape.pl.color.x, obj->shape.pl.color.y, obj->shape.pl.color.z
+				);
+		else if (obj->type == CYLINDER)
+			printf("CY: cxyz(%.2f,%.2f,%.2f)	| axyz=(%.2f,%.2f,%.2f) | d=%.2f | h=%.2f\t| crgb=(%f,%f,%f) |\n",
+				obj->shape.cy.center.x, obj->shape.cy.center.y, obj->shape.cy.center.z, \
+				obj->shape.cy.axis.x, obj->shape.cy.axis.y, obj->shape.cy.axis.z, \
+				obj->shape.cy.diameter, obj->shape.cy.height, \
+				obj->shape.cy.color.x, obj->shape.cy.color.y, obj->shape.cy.color.z);
+		obj++;
+	}
+	print_sep('=', 114);
+	printf("Objects: %d/%d\n", i, scene.objects_len);
+	print_sep('=', 114);
+}
+
+static void	print_sep(char sep, int len)
+{
+	int	i;
+
+	i = -1;
+	while (++i < len)
+		printf("%c", sep);
+	printf("\n");
+}

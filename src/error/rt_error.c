@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:09:01 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:22:45 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 19:59:35 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ const char	*rt_parse_strerror(int err)
 		return ("Unknown ID");
 	if (err == RT_ERR_DUP)
 		return ("Duplicate Element");
+	if (err == RT_ERR_LIGHT_COUNT)
+		return ("Too many lights");
 	if (err == RT_ERR_FORMAT)
 		return ("Invalid line format");
 
@@ -125,6 +127,11 @@ void	print_parse_err(int lineno, char *id, int err)//, int sys_errno)
 		ft_putstr_fd("): ", STDERR_FILENO);
 		ft_putstr_fd(C_DIM, STDERR_FILENO);
 		ft_putstr_fd((char *)rt_parse_strerror(err), STDERR_FILENO); // eg. Duplicate ID, MISSING ID, etc...
+		if (err == RT_ERR_LIGHT_COUNT)
+		{
+			ft_putstr_fd(" | MAX_LIGHTS: ", STDERR_FILENO);
+			ft_putnbr_fd(MAX_LIGHTS, STDERR_FILENO);
+		}
 		ft_putstr_fd(C_RESET, STDERR_FILENO);
 	}
 	// if (sys_errno)
