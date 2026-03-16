@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 19:25:53 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:22:15 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/16 21:24:42 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,17 @@ void	print_vector(char *name, t_vec3 v)
 {
 	if (name)
 		printf("%s: ", name);
-	printf("(%.5f, %.5f, %.5f)", v.x, v.y, v.z);
+	printf("(%.2f, %.2f, %.2f)", v.x, v.y, v.z);
 	printf("\n");
 }
+
+// void	print_vec(char *name, t_vec3 v, double val)
+// {
+// 	if (name)
+// 		printf("%s: ", name);
+// 	printf("(%.2f, %.2f, %.2f)", v.x, v.y, v.z);
+// 	printf("\n");
+// }
 
 void	printV(t_vec3 a)
 {
