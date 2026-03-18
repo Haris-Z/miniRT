@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:12:15 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/18 20:49:25 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/18 21:03:50 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,3 @@ int	solve_quadratic(double a, double b, double c, double roots[2])
 	roots[1] = (-b + discriminant) / (2.0 * a);
 	return (1);
 }
-
-// int	solve_quadratic(double a, double b, double c, double roots[2])
-// {
-// 	double	discriminant;
-// 	
-// 	if (fabs(a) < EPSILON)
-// 			return (0);
-// 	discriminant = (b * b - 4 * a * c);
-// 	if (discriminant < 0.0)
-// 		return (0);
-// 	discriminant = sqrt(discriminant);
-// 	// dist_near = (b - discriminant) / (2.0 * a);
-// 	roots[0] = (-b - discriminant) / (2.0 * a);
-// 	// dist_far = (b + discriminant) / (2.0 * a);
-// 	roots[1] = (-b + discriminant) / (2.0 * a);
-// 	return (1);
-// }

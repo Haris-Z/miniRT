@@ -6,15 +6,11 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:05:10 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/18 20:48:18 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/18 21:04:30 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
-
-/*#########################################################################*/
-/* ray-cylinder intersection (called in update_ray_dist and dist_visible() */
-/*#########################################################################*/
 
 /*
 ** get all cylinder intersections
