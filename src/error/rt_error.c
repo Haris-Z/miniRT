@@ -153,7 +153,7 @@ void	print_parse_err(int lineno, char *id, int err)
 // 	if (err == RT_ERR_FORMAT)
 // 		return ("Invalid line format");
 // 	if (err == RT_ERR_FORMAT_LIGHT)
-// 		return ("Invalid line format\nExpected:\nId\tPos \
+// 		return ("Invalid line format\nExpected:\nId\tPos 
 // 		Brightness\tColors\nL\t-40,0,30\t0.7\t\t\t255,255,255\n");
 // 	if (err == RT_ERR_MISSING)
 // 		return ("Missing Element Identifier - expected at least A, C, L");
