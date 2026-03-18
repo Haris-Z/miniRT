@@ -36,7 +36,6 @@ DEPFLAGS	:= -MMD -MP
 DEBUG	?= 1
 PROFILER ?= 0
 SAN		?= 1
-# BONUS ?= 1
 
 DEBUG_STR = OFF
 SAN_STR := OFF
@@ -54,16 +53,6 @@ ifeq ($(PROFILER),1)
 	CFLAGS += -pg
 	LDFLAGS += -pg
 endif
-
-# ifeq ($(BONUS),1)
-# 	CFLAGS += -DMAX_LIGHTS=5
-# endif
-
-# ifeq ($(BONUS),1)
-# 	CFLAGS += -ggdb3 -O0
-# 	DEBUG_STR := ON
-# endif
-
 
 define MODE_MSG
 	@echo "$(GRAY)[miniRT mode]$(RESET)"
@@ -216,7 +205,7 @@ $(NAME): $(LIBFT) $(OBJS)
 	$(MODE_MSG)
 # ============================================================================ #
 
-bonus: CFLAGS += -DMAX_LIGHTS=5
+bonus:	CFLAGS += -DMAX_LIGHTS=5
 bonus:	$(LIBFT) $(B_OBJS)
 	@$(CC) $(CFLAGS) $(B_OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME) 
 	$(MODE_MSG)

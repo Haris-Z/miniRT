@@ -13,8 +13,8 @@
 #ifndef MRT_H
 # define MRT_H
 
-# define SCREEN_WIDTH	800 // make usage of get_window_size_function
-# define SCREEN_HEIGHT	600
+# define SCREEN_WIDTH	1980 // make usage of get_window_size_function
+# define SCREEN_HEIGHT	1400
 # define RT_WINDOW_NAME	"miniRT"
 
 # define RADIAN 57.295779513 // 180/π⁠° ≈ 57.295779513°
@@ -35,12 +35,11 @@
 // #  define MAX_LIGHTS 1
 // # endif //BONUS
 
-# define MSAA 2
+# define MSAA 1
 # define FOCAL_SCALE_EXP 5 // 1 to inf
 # define SHINE 12 // 1 to inf
 
 # define DFLT_OBJ_CAP 8
-// # define MAX_LIGHTS 5
 
 # include <limits.h>
 # include <stdbool.h>
