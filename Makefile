@@ -33,9 +33,9 @@ DEPFLAGS	:= -MMD -MP
 #   make DEBUG=1        → adds -g3 -O0
 #   make SAN=1          → adds -fsanitize=address (compile + link)
 #   make DEBUG=1 SAN=1  → both
-DEBUG	?= 1
+DEBUG	?= 0
 PROFILER ?= 0
-SAN		?= 1
+SAN		?= 0
 
 DEBUG_STR = OFF
 SAN_STR := OFF
@@ -74,7 +74,7 @@ LIBS_DIR	:= libs
 # Location of test files
 TEST_DIR    := tests
 TEST_FILES	:= tests/test_files
-DEFAULT_TEST:= $(TEST_FILES)/mini_field.rt
+DEFAULT_TEST:= $(TEST_FILES)/03_basic.rt
 # ============================================================================ #
 LIBFT_DIR	:= $(LIBS_DIR)/libft
 #MLX_DIR		:= $(LIBS_DIR)/minilibx-linux

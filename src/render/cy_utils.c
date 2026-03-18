@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:05:10 by hazunic           #+#    #+#             */
-/*   Updated: 2026/02/26 11:11:10 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/18 20:48:18 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
 */
 t_vec3	cy_cap_center(t_cylinder *cy, int top)
 {
-	double	half_height;
+	double	hheight;
 
-	half_height = cy->height * 0.5;
+	hheight = cy->height * 0.5;
 	if (top)
-		return (vec_add(cy->center, vec_scale(cy->axis, half_height)));
-	return (vec_sub(cy->center, vec_scale(cy->axis, half_height)));
+		return (vec_add(cy->center, vec_scale(cy->axis, hheight)));
+	return (vec_sub(cy->center, vec_scale(cy->axis, hheight)));
 }
 
 /*
@@ -41,13 +41,10 @@ t_vec3	cy_cap_center(t_cylinder *cy, int top)
 */
 static int	is_on_cap(t_vec3 p, t_vec3 cap, t_cylinder *cy)
 {
-	double	d; // distance alonx axis from cap plane
+	double	d;
 
-	// vec_sub(p, cap) = v from cap to center p
-	// project vec on axis direction
-	// if p on plane, than d ~ 0
 	d = vec_dot(vec_sub(p, cap), cy->axis);
-	return (fabs(d) <= 5.0 * EPSILON); // to avoid cap, hits getting treated as side hits
+	return (fabs(d) <= 5.0 * EPSILON);
 }
 
 /*
@@ -57,10 +54,10 @@ static int	is_on_cap(t_vec3 p, t_vec3 cap, t_cylinder *cy)
 */
 static t_vec3	cy_side_normal(t_vec3 p, t_cylinder *cy)
 {
-	t_vec3	cp; // v from cy->center to point p
-	t_vec3	r;  // (x,y,0)
+	t_vec3	cp;
+	t_vec3	r;
 
-	cp = vec_sub(p, cy->center); // from center to hit point
+	cp = vec_sub(p, cy->center);
 	r = reject_axis(cp, cy->axis);
 	return (vec_norm(r));
 }
@@ -73,17 +70,17 @@ static t_vec3	cy_side_normal(t_vec3 p, t_cylinder *cy)
 */
 t_vec3	cy_normal(t_vec3 p, t_cylinder *cy)
 {
-	t_vec3	top; // top cap center
-	t_vec3	bot; // bot cap center
-	t_vec3	n; // normal
+	t_vec3	top;
+	t_vec3	bot;
+	t_vec3	n;
 
 	bot = cy_cap_center(cy, BOT_CAP);
 	top = cy_cap_center(cy, TOP_CAP);
 	if (is_on_cap(p, top, cy))
-		n = cy->axis;						// outward for top cap
+		n = cy->axis;
 	else if (is_on_cap(p, bot, cy))
-		n = vec_scale(cy->axis, -1.0); // outwarod for bot
+		n = vec_scale(cy->axis, -1.0);
 	else
-		n = cy_side_normal(p, cy);			// outward for sid
+		n = cy_side_normal(p, cy);
 	return (vec_norm(n));
 }

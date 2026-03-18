@@ -6,14 +6,14 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:12:15 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/10 15:43:30 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/18 20:49:25 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
 
 // always face against incoming ray
-t_vec3	set_face_normal(t_vec3 ray_dir, t_vec3 outward) // normal from object
+t_vec3	set_face_normal(t_vec3 ray_dir, t_vec3 outward)
 {
 	if (vec_dot(ray_dir, outward) > 0.0)
 		return (vec_scale(outward, -1.0));
@@ -22,8 +22,6 @@ t_vec3	set_face_normal(t_vec3 ray_dir, t_vec3 outward) // normal from object
 
 /*
 ** utils
-** note: refactor
-** 
 ** return the smallest positive value between a and b
 ** used to pick the closest visible hit afer getting all
 ** possible intersections in hit_cy()  --> (side vs caps).
@@ -44,3 +42,35 @@ double	min_pos(double a, double b)
 		return (b);
 	return (NO_HIT);
 }
+
+int	solve_quadratic(double a, double b, double c, double roots[2])
+{
+	double	discriminant;
+
+	if (fabs(a) < EPSILON)
+		return (0);
+	discriminant = (b * b - 4 * a * c);
+	if (discriminant < 0.0)
+		return (0);
+	discriminant = sqrt(discriminant);
+	roots[0] = (-b - discriminant) / (2.0 * a);
+	roots[1] = (-b + discriminant) / (2.0 * a);
+	return (1);
+}
+
+// int	solve_quadratic(double a, double b, double c, double roots[2])
+// {
+// 	double	discriminant;
+// 	
+// 	if (fabs(a) < EPSILON)
+// 			return (0);
+// 	discriminant = (b * b - 4 * a * c);
+// 	if (discriminant < 0.0)
+// 		return (0);
+// 	discriminant = sqrt(discriminant);
+// 	// dist_near = (b - discriminant) / (2.0 * a);
+// 	roots[0] = (-b - discriminant) / (2.0 * a);
+// 	// dist_far = (b + discriminant) / (2.0 * a);
+// 	roots[1] = (-b + discriminant) / (2.0 * a);
+// 	return (1);
+// }
