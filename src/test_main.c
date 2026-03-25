@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:53 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/16 20:01:39 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/25 20:10:02 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 		//exit(1);
 	}
 	if (rt_init(&app, RT_WINDOW_NAME) != 0)
-		return (1);
+		return (scene_clear(&scene_info), 1);
 	if (render(&scene_info, &app))
 		mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
 	// save_to_ppm(argv[1], &app.img);

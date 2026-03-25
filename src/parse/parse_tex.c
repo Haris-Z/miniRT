@@ -9,27 +9,32 @@ static int	read_header(int fd, char ***header)
 	ft_bzero(head, 32);
 	bytes = read(fd, &head, 31);
 	if (bytes < 1)
-		return (1);
+		return (RT_ERR_READ);
 	*header = ft_split_ws(head);
 	if (!*header)
-		return (1);
+		return (RT_ERR_MALLOC);
 	return (0);
 }
 
 int	parse_tex(const char *t, t_tex *out)
 {
-	// t_rt_file	f;
 	int			fd;
 	char		**head;
 	int			read_pixels;;
+	int			err;
+	char		buf[512];
 
+	buf[0] = '\0';
+	ft_strlcat(buf, "textures/", sizeof buf);
+	ft_strlcat(buf, t, sizeof(buf));
 	head = NULL;
 	(void) out;
-	fd = open(t, O_RDONLY);
+	fd = open(buf, O_RDONLY);
 	if (fd < 0)
-		return (1);
-	if (read_header(fd, &head))
-		return (close(fd), 1);
+		return (RT_ERR_OPEN);
+	err = read_header(fd, &head);
+	if (err)
+		return (close(fd), err);
 	out->w = ft_atoi(head[1]);
 	out->h = ft_atoi(head[2]);
 	out->color_depth = ft_atoi(head[3]);
@@ -37,21 +42,12 @@ int	parse_tex(const char *t, t_tex *out)
 	if (!out->ptr)
 	{
 		free_array(head);
-		return (1);
+		return (RT_ERR_MALLOC);
 	}
 	read_pixels = ft_strlen(head[4]);
 	ft_memcpy(out->ptr, head[4], read_pixels);
 	free_array(head);
 	read(fd, out->ptr + read_pixels,(out->w *out->h * 3) - read_pixels);
-
-	// t_rt_img	img;
-	// img.addr = out->ptr;
-	// img.img_h = out->h;
-	// img.img_w = out->w;
-	// img.bpp = 24;
-	// img.line_len = img.img_w * 3;
-	// save_to_ppm("/ASDASDASDASD.rt",&img);
-
 	return (0);
 }
 

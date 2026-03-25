@@ -6,7 +6,7 @@
 /*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/16 18:42:31 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/25 20:12:09 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 // #  define MAX_LIGHTS 1
 // # endif //BONUS
 
-# define MSAA 1
+# define MSAA 4
 # define FOCAL_SCALE_EXP 5 // 1 to inf
 # define SHINE 12 // 1 to inf
 

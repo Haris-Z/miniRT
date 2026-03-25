@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_obj.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:28:21 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/25 20:28:59 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,10 @@ int	parse_sphere(t_scene *s, char **t)
 		return (RT_ERR_BAD_FLOAT);
 	if (sp.diameter <= 0.0)
 		return (RT_ERR_DIAMETER);
-
-
 	sp.radius = sp.diameter * 0.5;
-	if (!ft_strncmp(t[3], "textures/", 9))
+	err = parse_color_vec(t[3], &sp.color);
+	if (err == RT_ERR_FORMAT)
 		err = parse_tex(t[3], &sp.tex);
-	else
-		err = parse_color_vec(t[3], &sp.color);
-
-
 	if (err != RT_SUCCESS)
 		return (err);
 	if (scene_add_sphere(s, sp) != 0)
