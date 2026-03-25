@@ -1,176 +1,131 @@
-#include "../includes/mini.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/03 21:01:00 by hazunic           #+#    #+#             */
+/*   Updated: 2026/01/24 11:53:07 by hazunic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	close_game(t_vars *vars)
+#include <stdio.h>
+#include "rt_error.h"
+#include "mrt.h"
+#include "libft.h"
+
+static int	test_rt_init(int argc, char **av);
+static int	test_file_parsing(int argc, char **argv);
+static void	rt_draw_test_pattern(t_rt_mlx *rt);
+static void	print_scene_info(t_scene scene, char *file);
+
+int	main(int argc, char **argv)
 {
-	kill_cam(vars->cam);
-	mlx_destroy_image(vars->mlx, vars->colors->img);
-	mlx_destroy_window(vars->mlx, vars->win);
-	mlx_destroy_display(vars->mlx);
-	free(vars->mlx);
-	free(vars->colors);
-	exit(0);
+	(void)argc;
+	(void)argv;
+	test_rt_init(argc, argv);
+	sleep(2);
+	test_file_parsing(argc, argv);
 	return (0);
 }
 
-int	key_hook(int keycode, t_vars *vars)
+static int	test_rt_init(int argc, char **argv)
 {
-	if (keycode == 65307)
-		close_game(vars);
+	t_rt_mlx	app;
+
+	(void)argc;
+	(void)argv;
+	ft_bzero(&app, sizeof(app));
+	if (rt_init(&app, RT_WINDOW_NAME) != 0)
+		return (1);
+	rt_draw_test_pattern(&app);
+	rt_run(&app);
+	rt_destroy(&app);
 	return (0);
 }
 
-static t_data	*init_data(t_vars *vars, int screendim[2])
+static int	test_file_parsing(int argc, char **argv)
 {
-	t_data	*data;
+	t_scene		scene_info;
 
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (NULL);
+	if (argc != 2)
+		return(rt_error_msg(MSG_USAGE));
+	ft_bzero(&scene_info, sizeof(scene_info));
+	if(parse_file(argv[1], &scene_info) != 0)
+		return (1);
+	print_scene_info(scene_info, argv[1]);
+	scene_clear(&scene_info);
+	return (0);
+}
+
+static void	print_scene_info(t_scene scene, char *file)
+{
+	printf("=========================   PARSED SCENE (%s) ==========================================================================\n\n", ft_strrchr(file, '/') + 1);
 	
-	data->img = mlx_new_image(vars->mlx, screendim[0], screendim[1]);
-	data->bits_per_pixel = 32;
-	data->line_length = screendim[0];
-	data->endian = 1;
-	data->addr = (int *)mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length,
-							&data->endian);	
-	if (!(data->img))
-		return (free(data), NULL);
-	return (data);
-}
-
-int	init_vars(t_vars *vars, int screendim[2])
-{
-	vars->mlx = NULL;
-	vars->mlx = mlx_init();
-	if (!(vars->mlx))
-		return (0);
-	vars->win = mlx_new_window(vars->mlx, screendim[0], screendim[1], "Trace my rays!");
-	if (!(vars->win))
+	printf("=========================  ELEMENTS  ==========================================================================\n\n");
+	if (scene.has_ambient)
+		printf("Ambient: ratio=%.2f			| color=(r=%f,g=%f,b=%f)\n \
+					| color=%d | colorhex=0x%X\n\n",
+			   scene.amb.ratio, scene.amb.color.x, scene.amb.color.x, scene.amb.color.z, scene.amb.rgb, scene.amb.rgb);
+	if (scene.has_camera)
+		printf("Camera:	 pos(x=%.2f,y=%.2f,z=%.2f)	| dir(x=%.2f,y=%.2f,z=%.2f)	| fov=%.1f°\n\n",
+			   scene.cam.pos.x, scene.cam.pos.y, scene.cam.pos.z,
+			   scene.cam.dir.x, scene.cam.dir.y, scene.cam.dir.z,
+			   scene.cam.fov_deg);
+	if (scene.has_light)
+		printf("Light:	 pos(%.2f,%.2f,%.2f)		| brightness=%.2f		| color=(%f,%f,%f) \n\
+									| color=%d | colorhex=0x%X\n",
+			   scene.light.pos.x, scene.light.pos.y, scene.light.pos.z,
+			   scene.light.bright, scene.light.color.x, scene.light.color.y, scene.light.color.z, scene.light.rgb, scene.light.rgb);
+	printf("=========================  OBJECTS  ============================================================================\n\n");
+	t_obj *obj = scene.objs;
+	int i = 0;
+	while (obj)
 	{
-		mlx_destroy_display(vars->mlx);
-		free(vars->mlx);
-		return (0);
+		printf("  - ");
+		if (obj->type == OBJ_SPHERE)
+			printf("Sphere:     center(%.2f,%.2f,%.2f) | radius=%.2f | sp.color=(%f,%f,%f) | obj.color=%d | obj.color=0x%X |\n",
+				   obj->sphere.center.x, obj->sphere.center.y, obj->sphere.center.z,
+				   obj->sphere.radius, obj->sphere.color.x, obj->sphere.color.y, obj->sphere.color.z, \
+				   obj->color, obj->color\
+				);
+		else if (obj->type == OBJ_SPHERE)
+			printf("Plane:      point(%.2f,%.2f,%.2f) | normal(%.2f,%.2f,%.2f) | pl.color=(%f,%f,%f) | obj.color=%d | obj.color=0x%X |\n",
+				   obj->plane.point.x, obj->plane.point.y, obj->plane.point.z,
+				   obj->plane.normal.x, obj->plane.normal.y, obj->plane.normal.z, \
+				obj->plane.color.x, obj->plane.color.y, obj->plane.color.z, \
+			obj->color, obj->color);
+		else if (obj->type == OBJ_CYLINDER)
+			printf("Cylinder:   center(%.2f,%.2f,%.2f) | axis=(%.2f,%.2f,%.2f) | diameter=%.2f | height=%.2f | cy.color=(%f,%f,%f) | obj.color=%d | obj.color=0x%X |\n",
+				   obj->cylinder.center.x, obj->cylinder.center.y, obj->cylinder.center.z, \
+				   obj->cylinder.axis.x, obj->cylinder.axis.y, obj->cylinder.axis.z, \
+				   obj->cylinder.diameter, obj->cylinder.height, \
+				obj->cylinder.color.x, obj->cylinder.color.y, obj->cylinder.color.z, obj->color, obj->color);
+		i++;
+		obj = obj->next;
 	}
-	return (1);
+	printf("=============================================================\n");
+	printf("Objects: %d\n", i);
+	printf("=============================================================\n");
 }
 
-int main()
+static void	rt_draw_test_pattern(t_rt_mlx *rt)
 {
-	int			fov = 120;
-	vector		campos;
-	vector		camdir;
-	campos.x = 0;
-	campos.y = 0;
-	campos.z = 7;
-	camdir.x = 1;
-	camdir.y = -0.4;
-	camdir.z = -0.5;
-	camdir = normalizev(camdir);
+	int	x;
+	int	y;
 
-	int	screendim[2] = {1400,800};
-
-	t_item	*items;
-	
-	t_item	plane;
-	plane.t_type = PLANE;
-	plane.plane.point.x = 0;
-	plane.plane.point.y = 0;
-	plane.plane.point.z = 0;
-	plane.plane.orientation.x = 0;
-	plane.plane.orientation.y = 0;
-	plane.plane.orientation.z = 1;
-	plane.plane.orientation = normalizev(plane.plane.orientation);
-	plane.color = 0x000000FF;
-
-	t_item	plane2;
-	plane2.t_type = PLANE;
-	plane2.plane.point.x = 0;
-	plane2.plane.point.y = 10;
-	plane2.plane.point.z = 0;
-	plane2.plane.orientation.x = 0;
-	plane2.plane.orientation.y = -1;
-	plane2.plane.orientation.z = 0;
-	plane2.plane.orientation = normalizev(plane2.plane.orientation);
-	plane2.color = 0x0000FFFF;
-	
-	t_item	plane3;
-	plane3.t_type = PLANE;
-	plane3.plane.point.x = 30;
-	plane3.plane.point.y = 0;
-	plane3.plane.point.z = 0;
-	plane3.plane.orientation.x = -1;
-	plane3.plane.orientation.y = 0;
-	plane3.plane.orientation.z = 0;
-	plane3.plane.orientation = normalizev(plane3.plane.orientation);
-	plane3.color = 0x00FFFFFF;
-
-	t_item	ball;
-	ball.t_type = SHPERE;
-	ball.sphere.pos.x = 9;
-	ball.sphere.pos.y = 1;
-	ball.sphere.pos.z = 3;
-	ball.sphere.radius = 2;
-	ball.color = 0x00AAAAAA;
-
-	t_item	ball2;
-	ball2.t_type = SHPERE;
-	ball2.sphere.pos.x = 8;
-	ball2.sphere.pos.y = 1;
-	ball2.sphere.pos.z = 6.5;
-	ball2.sphere.radius = 1;
-	ball2.color = 0x00FF0000;
-	
-	t_item	ball3;
-	ball3.t_type = SHPERE;
-	ball3.sphere.pos.x = 5;
-	ball3.sphere.pos.y = 3.5;
-	ball3.sphere.pos.z = 4;
-	ball3.sphere.radius = 0.5;
-	ball3.color = 0x0000FF00;
-
-	items = &plane;
-	plane.next = &plane2;
-	plane2.next = &plane3;
-	plane3.next = &ball;
-	ball.next = &ball2;
-	ball2.next = &ball3;
-	ball3.next = NULL;
-
-	
-	t_vars	vars;
-	init_vars(&vars, screendim);
-	vars.cam = cam_init(campos, camdir, fov, screendim);
-	dirVector_init(vars.cam);
-	vars.colors = init_data(&vars, screendim);
-
-	vars.cam->light.x = 1;
-	vars.cam->light.y  = -6;
-	vars.cam->light.z  = 10;
-
-	int	i = -1;
-	vars.cam->items = &items;
-	t_item	*item;
-	while(++i < vars.cam->pixels[1])
+	y = 0; 
+	while (y < rt->img.img_h)
 	{
-		item = *(vars.cam->items);
-		int j;
-		while(item)
+		x = 0;
+		while (x < rt->img.img_w)
 		{
-			updateRayDist(i, &vars, item);
-			item = item->next;
+			if (x == y || x == rt->img.img_w - y - 1)
+				rt_img_put_pixel(&rt->img, x, y, mlx_get_color_value(rt->mlx, 0x00FFAAAA)); //rt_img_put_pixel(&rt->img, x, y, 0x00FFAA00);
+			x++;
 		}
-		j = -1;
-		while(++j < screendim[0])
-		{
-			if (vars.cam->rays[i][j].closestitem)
-				vars.colors->addr[i*screendim[0]+j] = computeColor(vars, vars.cam->rays[i][j], vars.cam->items);
-		}
+		y++;
 	}
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.colors->img, 0, 0);
-
-	mlx_hook(vars.win, 2, 1L << 0, key_hook, &vars);
-	mlx_hook(vars.win, DestroyNotify, StructureNotifyMask, &close_game, &vars);
-	mlx_loop(vars.mlx);
-
-	return (0);
+	mlx_put_image_to_window(rt->mlx, rt->win, rt->img.ptr, 0, 0);
 }

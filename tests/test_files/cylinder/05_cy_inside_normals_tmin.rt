@@ -1,0 +1,16 @@
+# camera inside cylinder (inside hits)
+# Expected:
+# inside a long cylinder, looking forward (+X).
+# interior wall shading and/or the far cap - depending on fov.
+
+A 0.05 255,255,255
+C 5,0,0 1,0,0 90
+L 20,10,10 0.8 255,255,255
+
+pl 0,0,-6 0,0,1 120,120,120
+
+# big diameter + long height so camera is inside
+cy 10,0,0 1,0,0 6 20 0,255,0
+
+# reference object outside to verify if really inside
+sp 25,6,0 2 255,0,0
