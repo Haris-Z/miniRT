@@ -75,7 +75,7 @@ static void	get_pixel_color(t_rt_mlx *app, t_scene *s,
 				buf[(l * MSAA) + m] = compute_color(*s, dir);
 			else
 				buf[(l * MSAA) + m] = color_rgb(0, 0, 0);
-			pre_calc[3] -= app->cam.vp.delta_hor_angle;
+			pre_calc[3] += app->cam.vp.delta_hor_angle;
 		}
 		pre_calc[2] -= app->cam.vp.delta_ver_range;
 	}
@@ -98,7 +98,7 @@ int	render(t_scene *s, t_rt_mlx *app)
 	pre_calc[4] = app->cam.vp.ver_range;
 	while (++i < (app->h))
 	{
-		pre_calc[5] = app->cam.vp.hor_range;
+		pre_calc[5] = -1 * app->cam.vp.hor_range;
 		j = -1;
 		while (++j < (app->w))
 		{
