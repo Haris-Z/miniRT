@@ -19,6 +19,7 @@
 
 # include "rt_error.h"
 # include "mrt.h" // t_vec3, t_color, t_scene, s_ambient, s_camera, s_light
+# include "textures.h"
 
 typedef struct s_rt_file
 {

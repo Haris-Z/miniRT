@@ -14,7 +14,7 @@
 #include "rt_error.h"
 #include "libft.h"
 
-static bool tok_count(char **tok, int expected)
+static bool	tok_count(char **tok, int expected)
 {
 	int	n;
 
@@ -25,18 +25,6 @@ static bool tok_count(char **tok, int expected)
 		return (false);
 	return (true);
 }
-
-// int	parse_ratio(const char *tok, double *out)
-// {
-// 	double	r;
-// 
-// 	if (parse_double(tok, &r) != 0)
-// 		return (E_PARSE_BAD_RATIO);
-// 	if (r < 0.0 || r > 1.0)
-// 		return (E_PARSE_BAD_RATIO);
-// 	*out = r;
-// 	return (0);
-// }
 
 // id	Ratio	r	g	b
 // A	0.2 	255,255,255
@@ -87,10 +75,10 @@ int	parse_camera(t_scene *s, char **t)
 		return (err);
 	err = parse_unit_vec3(t[2], &cam.dir);
 	if (err != RT_SUCCESS)
-		return(err);
+		return (err);
 	err = parse_fov(t[3], &cam.fov_deg);
 	if (err != RT_SUCCESS)
-		return(err);
+		return (err);
 	if (scene_set_camera(s, cam) != 0)
 		return (RT_ERR_DUP);
 	return (0);
@@ -108,7 +96,7 @@ int	parse_light(t_scene *s, char **t)
 		return (RT_ERR_FORMAT_LIGHT);
 	err = parse_vec3(t[1], &light.pos);
 	if (err != RT_SUCCESS)
-		return(err);
+		return (err);
 	if (ft_strtod(t[2], &light.bright) != 0)
 		return (RT_ERR_BAD_FLOAT);
 	if (light.bright < 0.0 || light.bright > 1.0)
@@ -120,26 +108,3 @@ int	parse_light(t_scene *s, char **t)
 		return (RT_ERR_LIGHT_COUNT);
 	return (0);
 }
-
-
-// int	parse_light(t_scene *s, char **t)
-// {
-// 	t_light	light[MAX_LIGHTS];
-// 	int		err;
-// 
-// 	if (!t[1] || !t[2] || !t[3] || t[4])
-// 		return (RT_ERR_FORMAT_LIGHT);
-// 	err = parse_vec3(t[1], &light[s->light_count].pos);
-// 	if (err != RT_SUCCESS)
-// 		return(err);
-// 	if (ft_strtod(t[2], &light[s->light_count].bright) != 0)
-// 		return (RT_ERR_BAD_FLOAT);
-// 	if (light[s->light_count].bright < 0.0 || light[s->light_count].bright > 1.0)
-// 		return (RT_ERR_BAD_RATIO);
-// 	err = parse_color_vec(t[3], &light[s->light_count].color);
-// 	if (err != RT_SUCCESS)
-// 		return (err);
-// 	if (scene_set_light(s, light[s->light_count]) != 0)
-// 		return (RT_ERR_DUP);
-// 	return (0);
-// }

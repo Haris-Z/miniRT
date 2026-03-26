@@ -76,6 +76,23 @@ static void	compute_color_l(t_scene s, t_ray ray,
 				(double)powf(shining, SHINE) * s.light[i].bright);
 }
 
+static void	map_tex(t_vec3 cam, t_tex tex, t_ray *ray)
+{
+	t_vec3			point;
+	t_vec3			surface_normal;
+	unsigned char	rgb[3];
+	void			*pixel;
+
+	point = vec_add(cam, vec_scale(ray->direction, ray->dist));
+	surface_normal = get_surface_normal(point,
+			ray->direction, ray->closestitem);
+	pixel = (tex.ptr) + (get_tex_index(surface_normal, tex));
+	rgb[0] = *(unsigned char *)pixel;
+	rgb[1] = *((unsigned char *)pixel + 1);
+	rgb[2] = *((unsigned char *)pixel + 2);
+	ray->closestitem->color = color_rgb(rgb[0], rgb[1], rgb[2]);
+}
+
 t_color	compute_color(t_scene s, t_ray ray)
 {
 	t_color	ambient_color;
@@ -83,6 +100,8 @@ t_color	compute_color(t_scene s, t_ray ray)
 	t_color	colors[2][MAX_LIGHTS];
 
 	ft_bzero(colors, sizeof(colors));
+	if (ray.closestitem->type == SPHERE && ray.closestitem->shape.sp.tex.ptr)
+		map_tex(s.cam.pos, ray.closestitem->shape.sp.tex, &ray);
 	ambient_color = scale_color(color_rgb(0, 0, 0),
 			ray.closestitem->color, s.amb.ratio);
 	ambient_color = vec_mul(ambient_color, s.amb.color);

@@ -18,6 +18,7 @@
 # define RT_WINDOW_NAME	"miniRT"
 
 # define RADIAN 57.295779513 // 180/π⁠° ≈ 57.295779513°
+# define PI	3.1415926535
 # define EPSILON 1e-12
 # define BOT_CAP 0
 # define TOP_CAP 1
@@ -45,6 +46,7 @@
 
 # include <mlx.h>
 
+# include "textures.h"
 # include "vec.h"
 
 // ----------- COLOR -----------
@@ -63,6 +65,7 @@ typedef struct s_sphere
 	double	radius;
 	double	diameter;
 	t_color	color;
+	t_tex	tex;
 }	t_sphere;
 
 typedef struct s_plane
@@ -94,6 +97,7 @@ typedef union u_shape
 	t_sphere	sp;
 	t_plane		pl;
 	t_cylinder	cy;
+	t_tex		tex;
 }	t_shape;
 
 typedef struct s_object

@@ -53,7 +53,8 @@ typedef enum e_rt_err
 	RT_ERR_UNORM,
 	RT_ERR_RANGE_FOV,
 	RT_ERR_DIAMETER,
-	RT_ERR_HEIGHT
+	RT_ERR_HEIGHT,
+	RT_ERR_TEX
 }	t_rt_err;
 
 typedef struct s_rt_file	t_rt_file;

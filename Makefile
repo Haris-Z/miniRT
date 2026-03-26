@@ -109,6 +109,7 @@ B_COLOR := \
 		color/color1.c \
 		color/color2.c \
 		color/shader_bonus.c \
+		color/tex_mapping.c \
 		color/shader_utils.c 
 
 ERROR := \
@@ -118,6 +119,15 @@ PARSE := \
 		parse/parse_file.c \
 		parse/parse_elem.c \
 		parse/parse_obj.c \
+		parse/parse_utils.c \
+		parse/parse_utils2.c \
+		parse/file_open.c
+
+PARSE_B := \
+		parse/parse_file.c \
+		parse/parse_elem.c \
+		parse/parse_obj_bonus.c \
+		parse/parse_tex.c \
 		parse/parse_utils.c \
 		parse/parse_utils2.c \
 		parse/file_open.c
@@ -172,7 +182,7 @@ B_SRCS := \
 		main.c \
 		$(B_COLOR) \
 		$(ERROR) \
-		$(PARSE) \
+		$(PARSE_B) \
 		$(B_RENDER) \
 		$(RT) \
 		$(VEC) \

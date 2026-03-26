@@ -111,6 +111,8 @@ const char	*rt_parse_strerror(int err)
 			return ("Diameter should be bigger than 0");
 	if (err == RT_ERR_HEIGHT)
 			return ("Height should be bigger than 0");
+	if (err == RT_ERR_TEX)
+			return ("Invalid texture");
 	return ("Unknown error");
 }
 
