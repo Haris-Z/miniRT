@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/16 19:51:40 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/28 23:16:14 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,19 @@ typedef enum e_rt_err
 	RT_ERR_EXT,
 	RT_ERR_OPEN,
 	RT_ERR_READ,
-	RT_ERR_EMPTY,
+	RT_ERR_EMPTY, // file
 	RT_ERR_TOK,
 	RT_ERR_ID,
 	RT_ERR_DUP,
 	RT_ERR_LIGHT_COUNT,
 	RT_ERR_MISSING,
 	RT_ERR_FORMAT,
-	RT_ERR_FORMAT_LIGHT,
+	RT_ERR_FORMAT_LIGHT, // input format
+	RT_ERR_FORMAT_CAM,
+	RT_ERROR_FORMAT_AMBIENT,
 	RT_ERR_BAD_INT,
 	RT_ERR_BAD_FLOAT,
 	RT_ERR_BAD_RATIO,
-	RT_ERR_RANGE,
 	RT_ERR_URANGE,
 	RT_ERR_RANGE_COLOR,
 	RT_ERR_UZERO,
@@ -74,12 +75,8 @@ typedef enum e_eflag
 	E_COUNT
 }	t_eflag;
 
-int			rt_error_msg(const char *msg);
-
-const char	*rt_file_strerror(t_rt_err err);
-void		rt_print_error(const char *path, t_rt_err err, const t_rt_file *f);
-
-const char	*rt_parse_strerror(int err);
-void		print_parse_err(int lineno, char *id, int err);//, int sys_errno);
+int		rt_error_msg(const char *msg);
+void	print_file_err(const char *path, t_rt_err err, const t_rt_file *f);
+void	print_parse_err(int lineno, char *id, int err, char *line);
 
 #endif // RT_ERROR_H

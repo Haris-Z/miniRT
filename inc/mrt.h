@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/18 19:52:51 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/28 22:02:57 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,9 +242,8 @@ t_color		compute_color(t_scene s, t_ray ray);
 // ----------- MINI -----------
 
 // intersections
-int			solve_quadratic(double a, double b, 
-	double c, double roots[2]);
-
+int			solve_quadratic(double a, double b,
+				double c, double roots[2]);
 
 double		hit_sp(t_vec3 origin, t_vec3 ray, t_sphere *sphere);
 double		hit_pl(t_vec3 origin, t_vec3 ray, t_plane plane);

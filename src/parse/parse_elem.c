@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:02:44 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/16 19:52:27 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/28 23:05:23 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	parse_ambient(t_scene *s, char **t)
 
 	ft_bzero(&a, sizeof(a));
 	if (tok_count(t, 3) == false)
-		return (RT_ERR_TOK);
+		return (RT_ERROR_FORMAT_AMBIENT);
 	if (ft_strtod(t[1], &a.ratio) != 0)
 		return (RT_ERR_BAD_FLOAT);
 	if (a.ratio < 0.0 || a.ratio > 1.0)
@@ -69,7 +69,7 @@ int	parse_camera(t_scene *s, char **t)
 
 	ft_bzero(&cam, sizeof(cam));
 	if (!t[1] || !t[2] || !t[3] || t[4])
-		return (RT_ERR_TOK);
+		return (RT_ERR_FORMAT_CAM);
 	err = parse_vec3(t[1], &cam.pos);
 	if (err != RT_SUCCESS)
 		return (err);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shader_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 18:48:09 by agara             #+#    #+#             */
-/*   Updated: 2026/03/16 18:49:53 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/28 23:18:25 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static void	compute_color_l(t_scene s, t_ray ray,
 		point = vec_add(s.cam.pos, vec_scale(ray.direction, ray.dist));
 		surface_normal = get_surface_normal(point,
 				ray.direction, ray.closestitem);
-		reflection_v = get_reflection_v(vec_norm(\
-			vec_sub(s.light[i].pos, point)), surface_normal);
+		reflection_v = get_reflection_v(vec_norm(
+					vec_sub(s.light[i].pos, point)), surface_normal);
 		shining = vec_dot(reflection_v, ray.direction);
 	}
 	if (shining < 0)

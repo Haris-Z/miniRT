@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:31:13 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/28 22:54:57 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	load_scene(int fd, t_scene *s)
 	int		err;
 
 	ft_bzero(s, sizeof(*s));
-	line_no = 1;
+	line_no = 0;
 	while (true)
 	{
 		line = get_next_line(fd);
@@ -37,19 +37,16 @@ int	load_scene(int fd, t_scene *s)
 		line = sanitize_line(line);
 		if (!line)
 			continue ;
-		err = parse_line(s, line, line_no);
+		err = parse_line(s, line, line_no++);
 		if (err != E_OK)
 		{
-			// add to print_parse_errror
-			printf(C_ULINE"   -->  [%s]\n"C_RESET, line);
 			free(line);
 			break ;
 		}
-		line_no++;
 		free(line);
 	}
 	close(fd);
-	if (!err)
+	if (err == E_OK)
 		err = validate_scene(s);
 	if (err != E_OK)
 		scene_clear(s);
@@ -80,7 +77,7 @@ static int	parse_line(t_scene *s, char *line, int line_num)
 	else
 		err = RT_ERR_ID;
 	if (err != E_OK)
-		print_parse_err(line_num, tokens[0], err);
+		print_parse_err(line_num, tokens[0], err, line);
 	free_array(tokens);
 	return (err);
 }
@@ -90,17 +87,17 @@ static int	validate_scene(t_scene *s)
 {
 	if (!s->has_ambient)
 	{
-		print_parse_err(0, C_RED"[!] -> [A]"C_RESET, RT_ERR_MISSING);
+		print_parse_err(0, C_RED"[!] -> [A]"C_RESET, RT_ERR_MISSING, NULL);
 		return (RT_ERR_MISSING);
 	}
 	if (!s->has_camera)
 	{
-		print_parse_err(0, C_RED"[!]-> [C]"C_RESET, RT_ERR_MISSING);
+		print_parse_err(0, C_RED"[!]-> [C]"C_RESET, RT_ERR_MISSING, NULL);
 		return (RT_ERR_MISSING);
 	}
 	if (!s->has_light)
 	{
-		print_parse_err(0, C_RED"[!] -> [L]"C_RESET, RT_ERR_MISSING);
+		print_parse_err(0, C_RED"[!] -> [L]"C_RESET, RT_ERR_MISSING, NULL);
 		return (RT_ERR_MISSING);
 	}
 	return (0);
@@ -110,8 +107,6 @@ static char	*sanitize_line(char *s)
 {
 	size_t	i;
 
-	// if (!s)
-	// 	return (NULL);
 	i = 0;
 	while (s[i] && s[i] != '\n')
 		i++;
@@ -153,4 +148,3 @@ static char	*sanitize_line(char *s)
 // 	}
 // 	return (NULL);
 // }
-

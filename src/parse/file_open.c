@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:28:12 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:26:01 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/28 22:22:28 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	rt_load_file(int argc, const char *path, t_rt_file *out)
 
 	if (argc != 2 || !path || !out || path[0] == '\0')
 	{
-		rt_print_error(0, RT_ERR_USAGE, 0);
+		print_file_err(0, RT_ERR_USAGE, 0);
 		exit(EXIT_FAILURE);
 	}
 	out->fd = -1;
@@ -42,13 +42,13 @@ void	rt_load_file(int argc, const char *path, t_rt_file *out)
 	err = rt_open(path, out);
 	if (err != RT_SUCCESS)
 	{
-		rt_print_error(path, err, out);
+		print_file_err(path, err, out);
 		exit(EXIT_FAILURE);
 	}
 	err = rt_read(path, out);
 	if (err != RT_SUCCESS)
 	{
-		rt_print_error(path, err, out);
+		print_file_err(path, err, out);
 		exit(EXIT_FAILURE);
 	}
 }

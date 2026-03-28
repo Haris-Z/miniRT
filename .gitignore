@@ -42,3 +42,7 @@ obj/*
 #examples/
 #MY_DOCS/
 miniRT
+.vscode/
+pull.txt
+miniRT_submission_eval.md
+todo.txt

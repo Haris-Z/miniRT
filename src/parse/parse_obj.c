@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:28:21 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/28 23:19:51 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	parse_plane(t_scene *s, char **t)
 		return (err);
 	err = parse_color_vec(t[3], &pl.color);
 	if (err != 0)
-		return (err);;
+		return (err);
 	if (scene_add_plane(s, pl) != 0)
 		return (RT_ERR_MALLOC);
 	return (0);

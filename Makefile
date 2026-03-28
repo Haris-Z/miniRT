@@ -9,16 +9,16 @@ NAME = miniRT
 # ============================================================================ #
 #   COMPILE FLAGS                                                              #
 # ============================================================================ #
-CC				:= cc
+CC			:= cc
 # CFLAGS → compile flags (-Wall ..., -Iinclude, -g, etc.)
-CFLAGS			:= -Wall -Wextra -Werror \
+CFLAGS		:= -Wall -Wextra -Werror \
 				-Wno-unused-function -Wdouble-promotion
 # CPPFLAGS  -> preprocessor flags ( -I..., -D... )
-CPPFLAGS		:=
+CPPFLAGS	:=
 # LDFLAGS → link flags for paths/options (-L..., -Wl,...)
-LDFLAGS     	:=
+LDFLAGS     :=
 # LDLIBS (or LIBS) → the libraries (-lft -lm ...)
-LDLIBS			:=
+LDLIBS		:= -lft -lmlx -lXext -lX11 -lm
 DEPFLAGS	:= -MMD -MP
 # ============================================================================ #
 #   COMPILER PRE-PROCESSOR OPTIONS                                             #
@@ -67,9 +67,11 @@ endef
 #                             PROJECT LAYOUT                                   #
 # ============================================================================ #
 # Location of sources files
-SRC_DIR     := src
-OBJ_DIR     := obj
-INC_DIR    	:= inc
+SRC_DIR		:= src
+OBJ_DIR		:= obj
+M_OBJ_DIR	:= $(OBJ_DIR)/mandatory
+B_OBJ_DIR	:= $(OBJ_DIR)/bonus
+INC_DIR		:= inc
 LIBS_DIR	:= libs
 # Location of test files
 TEST_DIR    := tests
@@ -77,22 +79,16 @@ TEST_FILES	:= tests/test_files
 DEFAULT_TEST:= $(TEST_FILES)/03_basic.rt
 # ============================================================================ #
 LIBFT_DIR	:= $(LIBS_DIR)/libft
-#MLX_DIR		:= $(LIBS_DIR)/minilibx-linux
-LIBFT		= $(LIBFT_DIR)/libft.a
-#MLX			= $(MLX_DIR)/libmlx.a
+LIBFT		:= $(LIBFT_DIR)/libft.a
 # ============================================================================ #
 # include dirs -> CPPFLAGS (-I...)
-INC_DIRS  := $(INC_DIR)/ $(LIBFT_DIR)/inc
-CPPFLAGS  += $(addprefix -I,$(INC_DIRS))
+INC_DIRS	:= $(INC_DIR)/ $(LIBFT_DIR)/inc
+CPPFLAGS	+= $(addprefix -I,$(INC_DIRS))
 # ============================================================================ #
 # library dirs -> LDFLAGS (-L...)
 # LIB_DIRS  := $(LIBFT_DIR) $(MLX_DIR)
-LIB_DIRS  := $(LIBFT_DIR)
-LDFLAGS   += $(addprefix -L,$(LIB_DIRS))
-# ============================================================================ #
-# libraries -> LDLIBS (-l...)
-LDLIBS    += -lft -lmlx -lXext -lX11 -lm
-
+LIB_DIRS	:= $(LIBFT_DIR)
+LDFLAGS		+= $(addprefix -L,$(LIB_DIRS))
 # ============================================================================ #
 
 # ============================================================================ #
@@ -113,7 +109,9 @@ B_COLOR := \
 		color/shader_utils.c 
 
 ERROR := \
-		error/rt_error.c
+		error/rt_error.c \
+		error/file_error.c \
+		error/parse_error.c
 
 PARSE := \
 		parse/parse_file.c \
@@ -190,13 +188,15 @@ B_SRCS := \
 
 # ============================================================================ #
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
-OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS := $(SRCS:$(SRC_DIR)/%.c=$(M_OBJ_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 # ============================================================================ #
 # ============================================================================ #
 B_SRCS := $(addprefix $(SRC_DIR)/,$(B_SRCS))
-B_OBJS := $(B_SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+B_OBJS := $(B_SRCS:$(SRC_DIR)/%.c=$(B_OBJ_DIR)/%.o)
 B_DEPS := $(B_OBJS:.o=.d)
+
+B_CPPFLAGS := -DMAX_LIGHTS=5
 # ============================================================================ #
 
 # ============================================================================ #
@@ -208,7 +208,6 @@ $(NAME): $(LIBFT) $(OBJS)
 	$(MODE_MSG)
 # ============================================================================ #
 
-bonus:	CFLAGS += -DMAX_LIGHTS=5
 bonus:	$(LIBFT) $(B_OBJS)
 	@$(CC) $(CFLAGS) $(B_OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME) 
 	$(MODE_MSG)
@@ -219,25 +218,33 @@ bonus:	$(LIBFT) $(B_OBJS)
 # 	$(MAKE) -C $(MLX_DIR)
 $(LIBFT):
 	@echo "Compiling libft .."
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) \
-	SAN=$(SAN) DEBUG=$(DEBUG)
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) SAN=$(SAN) DEBUG=$(DEBUG)
 # ============================================================================ #
 # compile .c -> .o
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(M_OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CPPFLAGS) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
 	@echo "[miniRT] compiled. $<"
 # ============================================================================ #
+$(B_OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CPPFLAGS) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
+	@echo "[miniRT bonus] compiled. $<"
 
+# ============================================================================ #
+# CLEANUP
+# ============================================================================ #
 clean:
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(TEST_P) gmon.out gprof_report.txt
 
 re: fclean all
+
+rebonus: fclean bonus
 
 # runs with tui
 # bminirt are breakpoints set in gdbinit
@@ -279,7 +286,7 @@ TEST_P = tst_rtparse
 $(TEST_P): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) \
 	tests/parse/test_parser.c \
-	$(filter-out $(OBJ_DIR)/main.o, $(OBJS)) \
+	$(filter-out $(M_OBJ_DIR)/main.o, $(OBJS)) \
 	$(LDLIBS) $(LDFLAGS) \
 	$(LIBFT) -o \
 	$(TEST_P)
@@ -339,9 +346,11 @@ help: ## Show this help
 
 -include $(DEPS) $(B_DEPS)
 
-.PHONY: all clean fclean re \
+.PHONY: all clean fclean re rebonus\
 		debug \
 		test \
 		help \
 		test_parse \
-		test_errors
+		test_errors \
+		prof \
+		prof_b
