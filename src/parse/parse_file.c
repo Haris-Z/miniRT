@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/28 22:54:57 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/28 23:43:33 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	load_scene(int fd, t_scene *s)
 	int		line_no;
 	int		err;
 
-	ft_bzero(s, sizeof(*s));
 	line_no = 0;
 	while (true)
 	{
@@ -48,8 +47,6 @@ int	load_scene(int fd, t_scene *s)
 	close(fd);
 	if (err == E_OK)
 		err = validate_scene(s);
-	if (err != E_OK)
-		scene_clear(s);
 	return (err);
 }
 
@@ -87,17 +84,17 @@ static int	validate_scene(t_scene *s)
 {
 	if (!s->has_ambient)
 	{
-		print_parse_err(0, C_RED"[!] -> [A]"C_RESET, RT_ERR_MISSING, NULL);
+		print_parse_err(0, C_RED"[A]"C_RESET, RT_ERR_MISSING, NULL);
 		return (RT_ERR_MISSING);
 	}
 	if (!s->has_camera)
 	{
-		print_parse_err(0, C_RED"[!]-> [C]"C_RESET, RT_ERR_MISSING, NULL);
+		print_parse_err(0, C_RED"[C]"C_RESET, RT_ERR_MISSING, NULL);
 		return (RT_ERR_MISSING);
 	}
 	if (!s->has_light)
 	{
-		print_parse_err(0, C_RED"[!] -> [L]"C_RESET, RT_ERR_MISSING, NULL);
+		print_parse_err(0, C_RED"[L]"C_RESET, RT_ERR_MISSING, NULL);
 		return (RT_ERR_MISSING);
 	}
 	return (0);

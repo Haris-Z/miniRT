@@ -35,7 +35,7 @@ DEPFLAGS	:= -MMD -MP
 #   make DEBUG=1 SAN=1  → both
 DEBUG	?= 0
 PROFILER ?= 0
-SAN		?= 0
+SAN		?= 1
 
 DEBUG_STR = OFF
 SAN_STR := OFF

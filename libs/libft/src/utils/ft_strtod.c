@@ -6,10 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 16:22:36 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 21:24:43 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 00:07:36 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <float.h>
+#include <math.h>
 #include "libft.h"
 
 static const char	*skip_ws(const char *s)
@@ -33,26 +35,44 @@ static int	parse_sign(const char **s)
 	return (sign);
 }
 
-static int	parse_fraction(const char **p, double *val)
+static int	parse_int_part(const char **p, double *val)
 {
-	double	frac;
-	double	div;
+	int	digit;
+
+	*val = 0.0;
+	if (!ft_isdigit((unsigned char)**p))
+		return (1);
+	while (ft_isdigit((unsigned char)**p))
+	{
+		digit = **p - '0';
+		if (*val > (DBL_MAX - (double)digit) / 10.0)
+			return (1);
+		*val = *val * 10.0 + (double)digit;
+		(*p)++;
+	}
+	return (0);
+}
+
+static int	parse_frac_part(const char **p, double *val)
+{
+	double	place;
+	int		digit;
 
 	if (**p == '\0')
 		return (0);
-	if (**p == '.')
-		(*p)++;
+	if (**p != '.')
+		return (0);
+	(*p)++;
 	if (!ft_isdigit((unsigned char)**p))
 		return (1);
-	frac = 0.0;
-	div = 1.0;
+	place = 0.1;
 	while (ft_isdigit((unsigned char)**p))
 	{
-		frac = frac * 10.0 + (double)(**p - '0');
-		div *= 10.0;
+		digit = **p - '0';
+		*val += (double)digit * place;
+		place *= 0.1;
 		(*p)++;
 	}
-	*val += frac / div;
 	return (0);
 }
 
@@ -66,16 +86,16 @@ int	ft_strtod(const char *s, double *out)
 		return (1);
 	p = skip_ws(s);
 	sign = parse_sign(&p);
-	if (!ft_isdigit((unsigned char)*p))
+	if (parse_int_part(&p, &val) != 0)
 		return (1);
-	val = 0.0;
-	while (ft_isdigit((unsigned char)*p))
-		val = val * 10.0 + (double)(*p++ - '0');
-	if (parse_fraction(&p, &val) != 0)
+	if (parse_frac_part(&p, &val) != 0)
 		return (1);
 	p = skip_ws(p);
 	if (*p != '\0')
 		return (1);
-	*out = (double)sign * val;
+	val *= (double)sign;
+	if (!isfinite(val))
+		return (1);
+	*out = val;
 	return (0);
 }

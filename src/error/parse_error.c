@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 22:27:23 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/28 23:13:00 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/28 23:46:48 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_parse_err(int lineno, char *id, int err, char *line)
 	}
 	if (line)
 	{
-		ft_putstr_fd("--> ", STDERR_FILENO);
+		ft_putstr_fd("\n--> ", STDERR_FILENO);
 		ft_putstr_fd(line, STDERR_FILENO);
 	}
 	ft_putstr_fd("\n", STDERR_FILENO);

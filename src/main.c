@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_main.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:53 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/16 20:01:39 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/28 23:51:40 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ int	main(int argc, char **argv)
 	t_rt_mlx	app;
 
 	rt_load_file(argc, argv[1], &f);
+	ft_bzero(&scene_info, sizeof(scene_info));
 	if (load_scene(f.fd, &scene_info) != 0)
+	{
+		scene_clear(&scene_info);
 		return (1);
+	}
 	if (rt_init(&app, RT_WINDOW_NAME) != 0)
 		return (1);
 	if (render(&scene_info, &app))
