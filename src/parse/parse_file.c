@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 13:42:11 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 14:55:03 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	load_scene(int fd, t_scene *s)
 	int		err;
 
 	err = E_OK;
-	line_no = 1;
+	line_no = 0;
 	while (true)
 	{
 		line = get_next_line(fd);
