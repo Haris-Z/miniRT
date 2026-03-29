@@ -11,8 +11,7 @@ NAME = miniRT
 # ============================================================================ #
 CC			:= cc
 # CFLAGS → compile flags (-Wall ..., -Iinclude, -g, etc.)
-CFLAGS		:= -Wall -Wextra -Werror \
-				-Wno-unused-function -Wdouble-promotion
+CFLAGS		:= -Wall -Wextra -Werror
 # CPPFLAGS  -> preprocessor flags ( -I..., -D... )
 CPPFLAGS	:=
 # LDFLAGS → link flags for paths/options (-L..., -Wl,...)

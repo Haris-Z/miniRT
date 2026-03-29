@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 17:04:18 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:48:43 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:27:20 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 // ends the window loop
 static int	rt_request_quit(t_rt_mlx *rt)
 {
-	rt->should_quit = 1;
 	mlx_loop_end(rt->mlx);
 	return (0);
 }

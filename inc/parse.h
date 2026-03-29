@@ -6,14 +6,13 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:49:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 16:17:22 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:28:53 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-# define DFLT_OBJ_CAP 8
 # define EXT_RT ".rt"
 # define EXT_LEN 3
 

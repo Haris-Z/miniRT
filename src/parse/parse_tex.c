@@ -6,11 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 23:19:09 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 14:17:59 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:21:21 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "textures.h"
+#include "rt_error.h"
 #include "parse.h"
 
 static int	read_header(int fd, char ***header)

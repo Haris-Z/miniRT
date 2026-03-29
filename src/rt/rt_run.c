@@ -6,14 +6,13 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/11 22:47:08 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:28:18 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
 
 /* 
-** Description ............................
 ** events and mask found in <X11/X.h>
 */
 int	rt_run(t_rt_mlx *rt)

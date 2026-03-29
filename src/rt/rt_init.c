@@ -6,26 +6,26 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:29:17 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 13:41:01 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:24:57 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
 #include "libft.h"
 
-static void	clamp_to_screen(void *mlx, int *w, int *h)
-{
-	int	sw;
-	int	sh;
-
-	if (mlx_get_screen_size(mlx, &sw, &sh) == 0)
-	{
-		if (*w > sw)
-			*w = sw;
-		if (*h > sh)
-			*h = sh;
-	}
-}
+// static void	clamp_to_screen(void *mlx, int *w, int *h)
+// {
+// 	int	sw;
+// 	int	sh;
+// 
+// 	if (mlx_get_screen_size(mlx, &sw, &sh) == 0)
+// 	{
+// 		if (*w > sw)
+// 			*w = sw;
+// 		if (*h > sh)
+// 			*h = sh;
+// 	}
+// }
 
 int	rt_init(t_rt_mlx *rt, const char *title)
 {

@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/28 22:02:57 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:27:17 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ typedef struct s_rt_img
 
 typedef struct s_rt_mlx
 {
-	int			should_quit;
 	void		*mlx;
 	void		*win;
 	t_rt_img	img;
