@@ -1,13 +1,13 @@
 #A 0.8 255,255,255
 A 0.2 255,255,255
 C 40,0,0 -1,0,0 120
-sp 80,8,1 60 earthcloudmap.ppm
+# sp 80,8,1 60 earthcloudmap.ppm
 
 
-sp 20,0,0 8 earthmap1k.ppm
-sp 10,-14,12 8 rtfm.ppm
+# sp 20,0,0 8 earthmap1k.ppm
 sp 20,-7,-2 16 nums.ppm
-sp 20,27,-8 16 square-grid.ppm
+# sp 20,-7,-2 16 rtfm.ppm
+# sp 20,27,-8 16 squaasdre-grid.ppm
 # cy 10,10,0 0,0,1 1 4 200,150,150
 # sp 130,-6,0 5 0,0,255
 # C 10,-11,-30 0,0,1 70

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_img.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:39:31 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 15:48:49 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 18:47:53 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ void	rt_img_destroy(t_rt_mlx *rt, t_rt_img *img)
 	img->img_w = 0;
 	img->img_h = 0;
 }
-

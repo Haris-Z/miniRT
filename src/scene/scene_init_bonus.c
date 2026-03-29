@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 21:50:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 18:56:03 by agara            ###   ########.fr       */
+/*   Updated: 2026/03/29 13:35:00 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,18 @@ void	scene_init(t_scene *s)
  */
 void	scene_clear(t_scene *s)
 {
+	int	i;
+
 	if (!s)
 		return ;
+	i = 0;
+	while (i < s->objects_len)
+	{
+		if (s->objects_array[i].type == SPHERE
+			&& (s->objects_array[i].shape.sp.tex.ptr))
+			free(s->objects_array[i].shape.sp.tex.ptr);
+		i++;
+	}
 	if (s->objects_array)
 		free(s->objects_array);
 	scene_init(s);

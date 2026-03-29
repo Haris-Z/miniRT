@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   mrt.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:13:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 16:27:17 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 19:01:37 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MRT_H
 # define MRT_H
 
-# define SCREEN_WIDTH	1980 // make usage of get_window_size_function
-# define SCREEN_HEIGHT	1400
+# define SCREEN_WIDTH	800 // make usage of get_window_size_function
+# define SCREEN_HEIGHT	600
 # define RT_WINDOW_NAME	"miniRT"
 
 # define RADIAN 57.295779513 // 180/π⁠° ≈ 57.295779513°

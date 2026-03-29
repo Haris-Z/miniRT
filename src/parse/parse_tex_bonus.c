@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_tex.c                                        :+:      :+:    :+:   */
+/*   parse_tex_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 23:19:09 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 16:21:21 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 20:13:56 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 #include "rt_error.h"
 #include "parse.h"
 
-static int	read_header(int fd, char ***header)
+static int	read_header(int fd, char ***header, int *len)
 {
-	char	head[32];
-	int		bytes;
+	char			head[32];
+	int				bytes;
+	const size_t	spaces = 4;
 
-	ft_bzero(head, 32);
-	bytes = read(fd, &head, 31);
+	ft_bzero(head, sizeof(head));
+	bytes = read(fd, &head, sizeof(head) - 1);
 	if (bytes < 1)
 		return (RT_ERR_TEX);
 	*header = ft_split_ws(head);
 	if (!*header)
 		return (RT_ERR_MALLOC);
+	*len = bytes - (ft_strlen((*header)[0])
+			+ ft_strlen((*header)[1])
+			+ ft_strlen((*header)[2]) + ft_strlen((*header)[3]) + spaces);
 	return (0);
 }
 
-static int	load_tex(int fd, t_tex *out, char *tex)
+static int	load_tex(int fd, t_tex *out, char *tex, int read_pixels)
 {
-	int	read_pixels;
 	int	read_bites;
 
-	read_pixels = ft_strlen(tex);
 	ft_memcpy(out->ptr, tex, read_pixels);
 	read_bites = read(fd, out->ptr + read_pixels,
 			(out->w * out->h * 3) - read_pixels);
@@ -61,6 +63,7 @@ int	parse_tex(const char *t, t_tex *out)
 	char		**head;
 	int			err;
 	char		buf[512];
+	int			s;
 
 	buf[0] = '\0';
 	ft_strlcat(buf, "textures/", sizeof buf);
@@ -69,7 +72,7 @@ int	parse_tex(const char *t, t_tex *out)
 	fd = open(buf, O_RDONLY);
 	if (fd < 0)
 		return (RT_ERR_TEX);
-	err = read_header(fd, &head);
+	err = read_header(fd, &head, &s);
 	if (err != 0)
 		return (close(fd), err);
 	out->w = ft_atoi(head[1]);
@@ -78,8 +81,7 @@ int	parse_tex(const char *t, t_tex *out)
 	out->ptr = malloc(out->w * out->h * 3);
 	if (!out->ptr)
 		return (free_array(head), close(fd), RT_ERR_MALLOC);
-	if (load_tex(fd, out, head[4]) != 0)
+	if (load_tex(fd, out, head[4], s) != 0)
 		return (free(out->ptr), free_array(head), RT_ERR_TEX);
-	free_array(head);
-	return (close(fd), 0);
+	return (free_array(head), close(fd), 0);
 }

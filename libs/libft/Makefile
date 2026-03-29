@@ -36,7 +36,7 @@ DEPFLAGS	:= -MMD -MP
 #   make DEBUG=1        → adds -g3 -O0
 #   make SAN=1          → adds -fsanitize=address (compile + link)
 #   make DEBUG=1 SAN=1  → both
-DEBUG	?= 0
+DEBUG	?= 1
 DEBUG_STR = OFF
 SAN		?= 0
 SAN_STR := OFF

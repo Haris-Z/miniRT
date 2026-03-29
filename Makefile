@@ -32,7 +32,7 @@ DEPFLAGS	:= -MMD -MP
 #   make DEBUG=1        → adds -g3 -O0
 #   make SAN=1          → adds -fsanitize=address (compile + link)
 #   make DEBUG=1 SAN=1  → both
-DEBUG	?= 0
+DEBUG	?= 1
 PROFILER ?= 0
 SAN		?= 1
 
@@ -104,7 +104,7 @@ B_COLOR := \
 		color/color1.c \
 		color/color2.c \
 		color/shader_bonus.c \
-		color/tex_mapping.c \
+		color/tex_mapping_bonus.c \
 		color/shader_utils.c 
 
 ERROR := \
@@ -124,7 +124,7 @@ PARSE_B := \
 		parse/parse_file.c \
 		parse/parse_elem.c \
 		parse/parse_obj_bonus.c \
-		parse/parse_tex.c \
+		parse/parse_tex_bonus.c \
 		parse/parse_utils.c \
 		parse/parse_utils2.c \
 		parse/file_open.c
@@ -156,6 +156,11 @@ SCENE := \
 		scene/scene_init.c \
 		scene/scene_set_elem.c
 
+SCENE_B := \
+		scene/scene_add_obj.c \
+		scene/scene_init_bonus.c \
+		scene/scene_set_elem.c
+
 VEC := \
 		vec/vec.c \
 		vec/vec_basic_ops.c \
@@ -183,7 +188,7 @@ B_SRCS := \
 		$(B_RENDER) \
 		$(RT) \
 		$(VEC) \
-		$(SCENE)
+		$(SCENE_B)
 
 # ============================================================================ #
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))

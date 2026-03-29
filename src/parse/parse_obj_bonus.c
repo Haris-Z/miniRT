@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_obj_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: agara <agara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 15:45:55 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 18:44:34 by agara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
 #include "libft.h"
+#include "parse.h"
 #include "rt_error.h"
 
 // id	center	diameter		color
