@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 14:55:03 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 15:45:25 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	parse_line(t_scene *s, char *line, int line_num);
 static int	validate_scene(t_scene *s);
 static char	*sanitize_line(char *s);
 
-// filename for error
 int	load_scene(int fd, t_scene *s)
 {
 	char	*line;
@@ -77,7 +76,6 @@ static int	parse_line(t_scene *s, char *line, int line_num)
 	return (err);
 }
 
-//else if () "too many lights"
 static int	validate_scene(t_scene *s)
 {
 	if (!s->has_ambient)
@@ -120,26 +118,3 @@ static char	*sanitize_line(char *s)
 	}
 	return (s);
 }
-
-// const t_parse_entry	*rt_find_entry(const char *id)
-// {
-// 	static const t_parse_entry	table[] = {
-// 		{"A",  parse_ambient},
-// 		{"C",  parse_camera},
-// 		{"L",  parse_light},
-// 		{"sp", parse_sphere},
-// 		{"pl", parse_plane},
-// 		{"cy", parse_cylinder},
-// 		{NULL, NULL}
-// 	};
-// 	int	i;
-// 
-// 	i = 0;
-// 	while (table[i].id)
-// 	{
-// 		if (ft_strncmp(table[i].id, id, ft_strlen(id)) == 0)
-// 			return (&table[i]);
-// 		i++;
-// 	}
-// 	return (NULL);
-// }

@@ -228,7 +228,7 @@ $(M_OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # ============================================================================ #
 $(B_OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CPPFLAGS) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CPPFLAGS) $(B_CPPFLAGS) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
 	@echo "[miniRT bonus] compiled. $<"
 
 # ============================================================================ #

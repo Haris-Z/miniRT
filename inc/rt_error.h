@@ -6,15 +6,9 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 13:16:39 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:17:30 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/**
- * @file	rt_error.h
- * @brief	This file contains error info etc ... (add more info later)
- * 
- */
 
 #ifndef RT_ERROR_H
 # define RT_ERROR_H
@@ -23,7 +17,7 @@
 # include <errno.h>
 # include <stdio.h>
 # include "libft.h"
-# include "parse.h"
+//# include "parse.h"
 # include "print_colors.h"
 
 typedef enum e_rt_err

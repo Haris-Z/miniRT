@@ -6,11 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:11:22 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 13:11:19 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:18:20 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
+#include "parse.h"
 #include "rt_error.h"
 #include "libft.h"
 

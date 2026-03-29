@@ -6,12 +6,13 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:02:44 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/28 23:05:23 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:17:56 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mrt.h"
 #include "rt_error.h"
+#include "parse.h"
 #include "libft.h"
 
 static bool	tok_count(char **tok, int expected)

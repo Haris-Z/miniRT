@@ -6,11 +6,12 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:28:12 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 13:25:49 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:18:36 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h> // open, close, read
+#include "rt_error.h"
 #include "parse.h" // EXT_RT, EXT_LEN
 
 static bool			validate_ext(const char *path);

@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:49:47 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/29 13:20:55 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 16:17:22 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define EXT_RT ".rt"
 # define EXT_LEN 3
 
-# include "rt_error.h"
+//# include "rt_error.h"
 # include "mrt.h" // t_vec3, t_color, t_scene, s_ambient, s_camera, s_light
 # include "textures.h"
 
@@ -45,23 +45,5 @@ int		parse_light(t_scene *s, char **t);
 int		parse_sphere(t_scene *s, char **t);
 int		parse_plane(t_scene *s, char **t);
 int		parse_cylinder(t_scene *s, char **t);
-
-// typedef struct s_parse_err
-// {
-// 	int			err;
-// 	int			sys_errno;
-// 	int			lineno;
-// 	char		id[8];
-// }	t_parse_err;
-
-// typedef int	(*t_parse_fn)(t_scene *s, char **tok);
-// 
-// typedef struct s_parse_entry
-// {
-// 	const char	*id;
-// 	t_parse_fn	parse_fn;
-// }	t_parse_entry;
-
-// t_parse_entry	*rt_find_entry(const char *id);
 
 #endif // PARSER_H

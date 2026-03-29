@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 00:39:31 by hazunic           #+#    #+#             */
-/*   Updated: 2026/01/24 11:48:48 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 15:48:49 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,3 @@ void	rt_img_destroy(t_rt_mlx *rt, t_rt_img *img)
 	img->img_h = 0;
 }
 
-/* 
-** Description 
-*/
-// void	rt_img_put_pixel(t_rt_img *img, int x, int y, int color)
-// {
-// 	char	*pixel;
-// 	int		xoffset;
-
-// 	if (x < 0 || y < 0 || x >= img->img_w || y >= img->img_h)
-// 		return ;
-// 	xoffset = (y * img->line_len) + (x * (img->bpp / 8));
-// 	pixel = img->addr + xoffset;
-// 	*(unsigned int *)pixel = (unsigned int)color;
-// }
