@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:28:12 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/28 22:22:28 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 13:25:49 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,6 @@ static t_rt_err		rt_open(const char *path, t_rt_file *out);
 static t_rt_err		rt_read(const char *path, t_rt_file *out);
 static void			rt_file_close(t_rt_file *f);
 
-/**
- * @brief This function loades the scene data from an .rt file
- * 
- * adsflajölföa
- * 
- * @param argc
- * @
- * @param argv 
- * @param f 
- */
 void	rt_load_file(int argc, const char *path, t_rt_file *out)
 {
 	t_rt_err	err;

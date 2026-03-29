@@ -6,15 +6,14 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 18:58:54 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/28 23:43:33 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 13:42:11 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h> // remove
 #include "mrt.h"
 #include "rt_error.h"
+#include "parse.h"
 #include "libft.h"
-#include <stdio.h> // remove
 
 static int	parse_line(t_scene *s, char *line, int line_num);
 static int	validate_scene(t_scene *s);
@@ -27,22 +26,21 @@ int	load_scene(int fd, t_scene *s)
 	int		line_no;
 	int		err;
 
-	line_no = 0;
+	err = E_OK;
+	line_no = 1;
 	while (true)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
+		line_no++;
 		line = sanitize_line(line);
 		if (!line)
 			continue ;
-		err = parse_line(s, line, line_no++);
-		if (err != E_OK)
-		{
-			free(line);
-			break ;
-		}
+		err = parse_line(s, line, line_no);
 		free(line);
+		if (err != E_OK)
+			break ;
 	}
 	close(fd);
 	if (err == E_OK)

@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:45:42 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/28 23:16:14 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 13:16:39 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,12 @@ typedef enum e_rt_err
 
 typedef struct s_rt_file	t_rt_file;
 
-//
-/**
- * @brief	struct containing error codes for miniRT
- * 			corresponding error message defined with prefix MSG 
- */
 typedef enum e_eflag
 {
-	E_OK = 0,					// Success
-	E_RT_MLX_INIT,				// "Failed to Initialize mlx."
-	E_RT_WIN_CREATE,			// "Errror\n Failed to init mlx_window ... "
-	E_RT_IMG_CREATE,			// "Failed to initialize mlx_image ... "
+	E_OK = 0,			// Success
+	E_RT_MLX_INIT,		// "Failed to Initialize mlx."
+	E_RT_WIN_CREATE,	// "Errror\n Failed to init mlx_window ... "
+	E_RT_IMG_CREATE,	// "Failed to initialize mlx_image ... "
 	E_RT_END,
 	E_COUNT
 }	t_eflag;

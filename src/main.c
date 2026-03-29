@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 11:53:53 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/28 23:51:40 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 13:42:06 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,19 @@ int	main(int argc, char **argv)
 	t_scene		scene_info;
 	t_rt_mlx	app;
 
-	rt_load_file(argc, argv[1], &f);
+	ft_bzero(&app, sizeof(app));
 	ft_bzero(&scene_info, sizeof(scene_info));
+	rt_load_file(argc, argv[1], &f);
 	if (load_scene(f.fd, &scene_info) != 0)
 	{
 		scene_clear(&scene_info);
 		return (1);
 	}
 	if (rt_init(&app, RT_WINDOW_NAME) != 0)
+	{
+		scene_clear(&scene_info);
 		return (1);
+	}
 	if (render(&scene_info, &app))
 		mlx_put_image_to_window(app.mlx, app.win, app.img.ptr, 0, 0);
 	rt_run(&app);

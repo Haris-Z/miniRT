@@ -6,7 +6,7 @@
 /*   By: hazunic <hazunic@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 23:19:09 by hazunic           #+#    #+#             */
-/*   Updated: 2026/03/28 23:19:11 by hazunic          ###   ########.fr       */
+/*   Updated: 2026/03/29 14:17:59 by hazunic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ static int	load_tex(int fd, t_tex *out, char *tex)
 	return (0);
 }
 
+// static bool	tok_count(char **tok, int expected)
+// {
+// 	int	n;
+// 
+// 	n = 0;
+// 	while (tok && tok[n])
+// 		n++;
+// 	if (n != expected)
+// 		return (false);
+// 	return (true);
+// }
+// check invalid format with tok_count?
 int	parse_tex(const char *t, t_tex *out)
 {
 	int			fd;
@@ -57,16 +69,16 @@ int	parse_tex(const char *t, t_tex *out)
 	if (fd < 0)
 		return (RT_ERR_TEX);
 	err = read_header(fd, &head);
-	if (err)
+	if (err != 0)
 		return (close(fd), err);
 	out->w = ft_atoi(head[1]);
 	out->h = ft_atoi(head[2]);
 	out->color_depth = ft_atoi(head[3]);
 	out->ptr = malloc(out->w * out->h * 3);
 	if (!out->ptr)
-		return (free_array(head), RT_ERR_MALLOC);
-	if (load_tex(fd, out, head[4]))
-		return (free_array(head), RT_ERR_TEX);
+		return (free_array(head), close(fd), RT_ERR_MALLOC);
+	if (load_tex(fd, out, head[4]) != 0)
+		return (free(out->ptr), free_array(head), RT_ERR_TEX);
 	free_array(head);
-	return (0);
+	return (close(fd), 0);
 }
